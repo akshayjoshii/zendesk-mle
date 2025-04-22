@@ -17,13 +17,13 @@ or follow the instructions in the [Poetry documentation](https://python-poetry.o
 
 We have 4 environments to prevent conflicts between the dependencies of different components. Environments:
 
-- `Training`': for training local LLM models.
+- `Training`: for training local LLM models.
   
 - `Inference`: for running inference on local LLM models & 3rd-party LLM services.
   
 - `Evaluation`: for evaluating LLM models' performance on sequence/intent understanding benchmarks.
   
-- `App Server`: for hosting the AI REST apis & serving the LLM models.
+- `App Server`: for hosting the REST apis & serving the LLM services.
 
 ### 1.3 Create Environments
 

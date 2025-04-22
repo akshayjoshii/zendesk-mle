@@ -1,0 +1,10 @@
+[tool.poetry]
+name = "zendesk-inference"
+version = "0.0.1"
+description = "Zendesk Senior MLE Coding Challenge"
+authors = ["Akshay <akshay@akjo.tech>"]
+readme = "/coding_task/README.md"
+package-mode = false
+
+[tool.poetry.dependencies]
+python = ">=3.9, <=3.11"
