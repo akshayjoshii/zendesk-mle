@@ -135,6 +135,7 @@ class CustomTextDataset:
         if cleanup_fn:
             logger.info(f"Preprocessing dataframe with cleanup function: {cleanup_fn.__name__}")
             logger.info(f"Preprocessing columns: {preprocess_col_indices}")
+            logger.info(f"Dataframe before cleanup has {len(df)} rows and {len(df.columns)} columns.")
             for idx in preprocess_col_indices:
                 col = df.columns[idx]  # Get the column name at this index
                 if self.use_dask:
@@ -228,7 +229,9 @@ if __name__ == "__main__":
     FILE_PATH = "/workspaces/zendesk-mle/coding_task/data/atis/train.tsv"
 
     # let's try with Dask
-    loader = CustomTextDataset(FILE_PATH, use_dask=True)
+    loader = CustomTextDataset(FILE_PATH,
+                               column_names=["atis_text", "atis_labels"], 
+                               use_dask=True)
     df = loader.load_to_dataframe()
     df = loader.preprocess_dataframe(df, 
             preprocess_col_indices=[0], cleanup_fn=basic_text_cleanup)
