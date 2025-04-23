@@ -16,6 +16,40 @@ The analysis was conducted using a Python script (`analysis.py`) leveraging libr
     *   `atis_labels`: The corresponding intent label (e.g., "flight").
 *   **Task:** Multiclass classification (predicting the intent from the utterance).
 
+
+## IMPORTANT: Handling Combined Intents: Multi-Class vs. Multi-Label
+
+A key observation from the EDA is the presence of combined intent labels (e.g., `aircraft+flight+flight_no`, `ground_service+ground_fare`, `flight+airfare`). This indicates that some utterances inherently represent multiple user intentions simultaneously. This presents a choice to us in how to frame the modelling problem:
+
+**Option 1: Treat as Multi-Class (Simple & Easy)**
+
+*   **Approach:** Keep each combined label (like `flight+airfare`) as a single, distinct class.
+*   **Implementation:** This is the default approach if no label preprocessing is done. Standard multi-class classification models and loss functions (e.g., Cross-Entropy Loss with softmax output) can be used directly.
+*   **Pros:**
+    *   Easier initial implementation.
+    *   Uses standard widely available multi-class loss functions and frameworks.
+*   **Cons:**
+    *   Ignores the underlying relationship between the combined intents (e.g., doesn't explicitly leverage that `flight+airfare` contains `flight` information).
+    *   **IMP:** Creates a larger number of classes overall!!!.
+    *   **IMP:** Leads to extremely sparse/rare classes for the combined labels, making them hard for the model to learn effectively (as seen in the EDA results below where combined labels have very few instances).
+
+**Option 2: Treat as Multi-Label (More Accurate Representation)**
+
+*   **Approach:** We preprocess the combined labels by unpacking them into their constituent intents. For example, an utterance labeled `flight+airfare` would be assigned both the `flight` label *and* the `airfare` label.
+*   **Implementation:**
+    *   We would have to preprocess labes, typically converting labels into a **multi-hot encoded vector** (e.g., a vector of length `num_base_classes` where multiple positions can be '1').
+    *   Requires a model architecture capable of multi-label prediction.
+    *   Requires an appropriate loss function (e.g., summed **Binary Cross-Entropy** or averaged across labels, like `BCEWithLogitsLoss`).
+    *   Requires multi-label specific evaluation metrics (like Hamming Loss, subset accuracy, F1-score per label, micro/macro/samples F1-score).
+*   **Pros:**
+    *   **IMP:** More accurately models the real-world scenario where a single query can have multiple intents.
+    *   May improve learning for the constituent intents by providing more diverse examples.
+    *   **IMP:** Reduces the total number of *base* intent classes the model needs to distinguish directly (though it learns combinations).
+*   **Cons:**
+    *   Requires more complex data preprocessing.
+    *   Requires adjustments to the model architecture, loss function, and evaluation metrics compared to standard multi-class setup.
+
+
 ## EDA Script
 
 The EDA was performed using `analysis.py`, which utilizes the `TextDatasetExplorer` class. Key functionalities include:
@@ -208,3 +242,17 @@ Comparing the test set analysis against the training set reveals several key dif
 The differences in class distribution (missing/new classes), imbalance ratio, and particularly the shift in common entities (locations) and phrasing (n-grams) strongly suggest **data drift** between the train and test sets. The model's ability to generalize to the different location focus and potentially different phrasing styles present in the test set will be crucial for performance. 
 
 The presence of an unseen class (`day_name`) guarantees some errors and highlights a limitation of the training data coverage relative to this specific test set. Evaluating performance requires careful consideration of these distributional differences.
+
+
+## IMPORTANT: Next Steps
+
+As we have seen above, given that the combined labels are very rare and represent a real phenomenon of multi-intent utterances, pursuing the **Multi-Label Classification** approach (outlined in the **3rd section**) is likely to yield a more robust and representative model, despite the increased implementation complexity.
+
+This will involve:
+
+*   Preprocessing the labels to unpack combined intents into their constituent parts.
+*   Select a pretrained multilingual baseline & a SOTA LLMmodel architecture capable of multi-label classification.
+*   Implement light-weight adapters or fine-tuning strategies to adapt the model for multi-label outputs.
+*   Implement a multi-label loss function and evaluation metrics.
+*   Evaluate the model on the test set, considering the data drift and class imbalance.
+*   [**Optional, if time permits**]: Benchmark the multi-label baseline & SOTA model's performance against the multi-class baseline approach to validate the benefits of the multi-label strategy.
