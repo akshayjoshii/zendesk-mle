@@ -10,6 +10,7 @@ package-mode = false
 python = ">=3.9, <=3.12.1"
 dask = "^2025.4.0"
 datasets = "^3.5.0"
+scikit-learn = "^1.6.1"
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
