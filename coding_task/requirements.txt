@@ -1,0 +1,5 @@
+adapter-transformers==4.0.0
+fastapi[standard]==0.115.6
+gunicorn==23.0.0
+dask==2025.4.0
+datasets==3.5.0

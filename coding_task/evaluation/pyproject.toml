@@ -1,10 +1,16 @@
 [tool.poetry]
 name = "zendesk-evaluation"
-version = "0.0.1"
+version = "0.1.0"
 description = "Zendesk Senior MLE Coding Challenge"
-authors = ["Akshay <akshay@akjo.tech>"]
+authors = ["Akshay Joshi akshay@akjo.tech"]
 readme = "/coding_task/README.md"
 package-mode = false
 
 [tool.poetry.dependencies]
-python = ">=3.9, <=3.11"
+python = ">=3.9, <=3.12.1"
+dask = "^2025.4.0"
+datasets = "^3.5.0"
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
