@@ -1,4 +1,5 @@
 # AI Agents - ML Engineer Coding Challenge
+
 We're excited that you want to join the AI Agents team.  If you have any questions regarding this task, please don't hesitate to ask.
 
 We understand that this challenge involves significant effort, and some parts may not be fully completed. However, our main focus is on understanding your thought process, decision-making, and approach, especially how you would tackle the problem in a real production setting. Clearly documenting your choices and reasoning is key.
@@ -14,6 +15,7 @@ If you prefer to use an external LLM, you should adopt a Zero-Shot or Few-Shot c
 
 
 ## Implementation Notes / Requirements
+
 - ATIS data can be used for training and developing the network. You'll find the data files in `data/atis` directory. Files are TSV files where the first column is the text and the second column is the intent label. ATIS data is in English only but extra points are given for language-agnostic implementation.
 - The given codebase contains one bug (that we know of). You need to find and fix this bug.
 - Your service needs to adopt the following API Documentation.
@@ -21,6 +23,7 @@ If you prefer to use an external LLM, you should adopt a Zero-Shot or Few-Shot c
 
 
 ## API Documentation
+
 API documentation for intent classification service.
 
 ### `GET /ready`
@@ -89,6 +92,7 @@ Given with any other exception. Human readable message includes the exception te
 ```
 
 ## Evaluation
+
 - **Scenario fitness:** How does your solution meet the requirements?
 - **Modularity:** Can your code easily be modified? How much effort is needed to add a new kind of ML model to your inference service?
 - **Research & Experimentation:** What kind of experiments you did to select best model and features?
