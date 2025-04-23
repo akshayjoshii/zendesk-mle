@@ -1,3 +1,9 @@
+"""
+This script contains a class for loading and preprocessing ML datasets.
+It supports both pandas and Dask for handling large files.
+It also provides a func for basic text cleanup.
+"""
+
 import os
 import pandas as pd
 import dask.dataframe as dd
@@ -5,7 +11,7 @@ from datasets import load_dataset, Dataset
 from typing import Callable, Optional, List, Dict, Any, Union
 
 # import constants from root directory
-from coding_task.constants import DATA_DIR, LOG_DIR
+from coding_task.constants import LOG_DIR
 from coding_task.logging_utils import get_logger
 
 logger = get_logger(
@@ -13,7 +19,6 @@ logger = get_logger(
     log_file_path=os.path.join(LOG_DIR, "data_utils.log"),
     stream=True
 )
-logger.info("Data Utils logger initialized...")
 
 
 class CustomTextDataset:
@@ -42,9 +47,15 @@ class CustomTextDataset:
         self.use_dask = use_dask
         self.split = split
 
+    def __post_init__(self):
+        logger.info(f"CustomTextDataset initialized with file_path: {self.file_path}, "
+                    f"file_type: {self.file_type}, column_names: {self.column_names}, "
+                    f"use_dask: {self.use_dask}")
+
     def _infer_file_type(self) -> str:
         """ Infer the file type based on the file extension."""
         ext = os.path.splitext(self.file_path)[-1].lower()
+        logger.info(f"File extension: {ext}")
         if ext in ['.tsv']:
             return 'tsv'
         elif ext in ['.csv']:
@@ -83,8 +94,10 @@ class CustomTextDataset:
                                 lines=True)
             else:
                 raise ValueError("Unsupported file type for Dask.")
+            logger.info(f"Loaded Dask dataframe with {len(df)} rows and {len(df.columns)} columns.")
             return df
         else:
+            logger.info(f"Loading file with PD chunksize: {chunksize}")
             # pandas for smaller files or chunked reading (if dataset is too large)
             if self.file_type == 'tsv':
                 return pd.read_csv(self.file_path, 
@@ -120,6 +133,8 @@ class CustomTextDataset:
             Union[pd.DataFrame, dd.DataFrame]: The preprocessed dataframe.
         """
         if cleanup_fn:
+            logger.info(f"Preprocessing dataframe with cleanup function: {cleanup_fn.__name__}")
+            logger.info(f"Preprocessing columns: {preprocess_col_indices}")
             for idx in preprocess_col_indices:
                 col = df.columns[idx]  # Get the column name at this index
                 if self.use_dask:
@@ -129,8 +144,10 @@ class CustomTextDataset:
         
         # If cleanup deletes all rows, return an empty DataFrame with the same columns
         if hasattr(df, "empty") and df.empty:
+            logger.warning("Dataframe is empty after cleanup. Returning empty dataframe.")
             return pd.DataFrame(columns=df.columns)
         else:
+            logger.info(f"Dataframe after cleanup has {len(df)} rows and {len(df.columns)} columns.")
             # drop any empty rows (if any col is NAN, then drop the row)
             df = df.dropna(how='any')
             df = df.reset_index(drop=True)
@@ -146,8 +163,8 @@ class CustomTextDataset:
         Returns:
             Dataset: Huggingface Dataset.
         """
-        # convert to pandas if using dask so that it's usable with HF
         if isinstance(df, dd.DataFrame) and self.use_dask:
+            logger.info("Converting Dask dataframe to pandas dataframe...")
             df = df.compute()
         return Dataset.from_pandas(df, preserve_index=False)
 
@@ -169,6 +186,7 @@ class CustomTextDataset:
 
         # hugingface Datasets uses csv for tsv files & need to specify the delimiter
         if self.file_type == 'tsv':
+            logger.info("Loading TSV file as CSV with tab delimiter...")
             delimiter = "\t"
             dataset = load_dataset(
                 'csv',
@@ -181,6 +199,7 @@ class CustomTextDataset:
                 **kwargs
             )
         else:
+            logger.info(f"Loading {self.file_type} file directly as HF dataset...")
             dataset = load_dataset(
                 self.file_type,
                 data_files=data_files,
@@ -214,7 +233,7 @@ if __name__ == "__main__":
     df = loader.preprocess_dataframe(df, 
             preprocess_col_indices=[0], cleanup_fn=basic_text_cleanup)
     hf_dataset = loader.to_hf_dataset_from_dataframe(df)
-    print(hf_dataset)
+    logger.info(f"Huggingface ATIS Dataset: {hf_dataset}")
 
 """     # or, for direct Huggingface streaming (for very large files)
     hf_streaming_dataset = loader.load_to_hf_dataset(streaming=True)
