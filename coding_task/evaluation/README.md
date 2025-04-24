@@ -218,6 +218,9 @@ This section is for the EDA of the **test split**. The same analyses performed o
 ![Test Zipf (stopwords included)](plots/zipf_distribution_stopwords_included_test.png)
 *Caption: Zipf Distribution for Test Dataset*
 
+![Test Zipf (stopwords removed)](plots/zipf_distribution_stopwords_removed_test.png)
+*Caption: Zipf Distribution (Stopwords Removed) for Test Dataset*
+
 ![Test Sequence Length by Class](plots/length_by_class_atis_labels_test.png)
 *Caption: Sequence Length by Class for Test Dataset*
 
