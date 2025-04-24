@@ -82,11 +82,13 @@ class TextDatasetExplorer:
 
     Attributes:
         data_loader (CustomTextDataset): Instance of the data loader.
-        df (Union[pd.DataFrame, dd.DataFrame]): Loaded dataframe.
+        df (pd.DataFrame): Loaded and preprocessed Pandas dataframe.
+                           (Note: Dask df is computed to Pandas during init).
         text_column (str): Name of the column containing the text data.
         label_column (str): Name of the column containing the class labels.
-        is_dask (bool): Flag indicating if the dataframe is a Dask dataframe.
         analysis_results (Dict[str, Any]): Stores results of various analyses.
+        plot_output_dir (Optional[str]): Directory to save plots.
+        split (str): Dataset split being analyzed.
     """
     def __init__(self,
                 file_path: str,
@@ -96,6 +98,8 @@ class TextDatasetExplorer:
                 column_names: Optional[List[str]] = None,
                 split: Optional[str] = 'train',
                 use_dask: bool = False,
+                unpack_multi_labels: bool = False,
+                label_delimiter: str = '+',
                 apply_basic_cleanup: bool = True,
                 plot_output_dir: Optional[str] = PLOT_DIR):
         """
@@ -104,26 +108,31 @@ class TextDatasetExplorer:
         Args:
             file_path (str): Path to the dataset file.
             text_column (str): Name of the text column.
-            label_column (str): Name of the label column.
-            file_type (str, optional): Type of the file ('csv', 'tsv', 'json').
-                                       Inferred if None.
+            label_column (str): Name of the label column (used for analysis AND unpacking).
+            file_type (str, optional): Type of the file ('csv', 'tsv', 'json'). Inferred if None.
             column_names (List[str], optional): List of column names. Inferred if None.
-            split (str, optional): Dataset split name (e.g., 'train', 'test'). Defaults to 'train'.
-            use_dask (bool): Whether to use Dask for loading. Defaults to False.
-            apply_basic_cleanup (bool): Whether to apply basic_text_cleanup
-                                        to the text column. Defaults to True.
+            split (str, optional): Dataset split name. Defaults to 'train'.
+            use_dask (bool): Whether to use Dask for *initial loading*. Defaults to False.
+                             Note: The dataframe is computed to Pandas within this init.
+            unpack_multi_labels (bool): Whether to unpack combined labels during loading. Defaults to False.
+            label_delimiter (str): Delimiter used for combined labels if unpacking. Defaults to '+'.
+            apply_basic_cleanup (bool): Whether to apply basic_text_cleanup to the text column. Defaults to True.
+            plot_output_dir (str, optional): Directory to save plots. Defaults to PLOT_DIR constant.
         """
         logger.info(f"Initializing TextDatasetExplorer for file: {file_path}")
+        
         self.data_loader = CustomTextDataset(
             file_path=file_path,
             file_type=file_type,
             column_names=column_names,
             split=split,
-            use_dask=use_dask
+            use_dask=use_dask,
+            unpack_multi_labels=unpack_multi_labels,
+            label_column_name=label_column,
+            label_delimiter=label_delimiter
         )
         self.text_column = text_column
         self.label_column = label_column
-        self.is_dask = use_dask
         self.plot_output_dir = plot_output_dir
         self.analysis_results = {}
         self.split = split
@@ -136,23 +145,27 @@ class TextDatasetExplorer:
                 logger.error(f"Could not create plot directory {self.plot_output_dir}: {e}")
                 self.plot_output_dir = None
 
-        raw_df = self.data_loader.load_to_dataframe()
-
+        # Load Data (unpacking happens inside, if configured)
         try:
-            if isinstance(raw_df, dd.DataFrame):
-                df_columns = list(raw_df.columns) if column_names is None else column_names
-            else: # pandas DF or Series
-                df_columns = list(raw_df.columns)
+            # Load using the loader (handles dask/pandas & unpacking)
+            df_loaded = self.data_loader.load_to_dataframe()
 
-            if self.text_column not in df_columns:
-                raise ValueError(f"Text col '{self.text_column}' not found in dataframe columns: {df_columns}")
+            # force compute if Dask was used for loading
+            # This simplifies subsquent analysis steps as self.df will be Pandas
+            if use_dask and isinstance(df_loaded, dd.DataFrame):
+                logger.warning("Dask used for loading, computing DataFrame to Pandas for EDA...")
+                self.df = df_loaded.compute()
+                logger.info("Dask compute complete.")
+            elif isinstance(df_loaded, pd.DataFrame):
+                self.df = df_loaded
+            else:
+                raise TypeError(f"Loaded data is not a Pandas or Dask DataFrame: {type(df_loaded)}")
 
-            text_col_idx = df_columns.index(self.text_column)
             cleanup_func = basic_text_cleanup if apply_basic_cleanup else None
 
             self.df = self.data_loader.preprocess_dataframe(
-                raw_df,
-                preprocess_col_indices=[text_col_idx],
+                self.df, # pass the potentially computed Pandas df
+                preprocess_col_names=[self.text_column],
                 cleanup_fn=cleanup_func
             )
             logger.info("Data loaded and basic preprocessing applied.")
@@ -163,49 +176,25 @@ class TextDatasetExplorer:
                  raise ValueError(f"Label column '{self.label_column}' missing after preprocessing")
 
         except Exception as e:
-            logger.error(f"error during data loading or initial preprocessing: {e}")
+            logger.error(f"Error during data loading or initial preprocessing: {e}")
             raise
 
-        # WARNING: many analysis below will trigger computation implicitly or explicitly.
-        # This can be slow or memory-intensive for large datasets.
-        # TODO: In future, will Dask's map_partitions to avoid triggering full computation.
-        if self.is_dask:
-            logger.warning("Using Dask. Some analyses might trigger computation "
-                            "which can be slow or memory-intensive for large datasets")
-            self.df = self.df.compute() # Optional: Compute upfront
-            self.is_dask = False        # If computed, treat as pandas
-
-    def _compute_if_dask(self, series: Union[pd.Series, dd.Series]) -> pd.Series:
-        """Helper to compute a Dask Series to Pandas Series if necessary"""
-        if isinstance(series, dd.Series):
-            logger.debug("computing Dask Series...")
-            computed_series = series.compute()
-            logger.debug("computation complete.")
-            return computed_series
-        return series
-
-    def _compute_df_if_dask(self, df: Union[pd.DataFrame, dd.DataFrame]) -> pd.DataFrame:
-        """Helper to compute a Dask DataFrame to Pandas DataFrame if necessary."""
-        if isinstance(df, dd.DataFrame):
-            logger.warning("Computing entire Dask DataFrame. This may require significant memory")
-            computed_df = df.compute()
-            logger.debug("Computation complete.")
-            return computed_df
-        return df
 
     def display_basic_info(self, head_n: int = 5):
         """Displays basic information about the dataset"""
         logger.info("--- EDA: Basic Dataset Information ---")
-        computed_df = self._compute_df_if_dask(self.df.copy())
+        # no need for compute checks, self.df is Pandas
+        computed_df = self.df
 
         logger.info(f"Dataset Shape: {computed_df.shape}")
         logger.info(f"Columns: {computed_df.columns.tolist()}")
         logger.info("Data Types:\n" + str(computed_df.dtypes))
 
         missing_values = computed_df.isnull().sum()
-        logger.info("Missing Values per Column:\n" + str(missing_values[missing_values > 0]))
-        
-        if missing_values.sum() == 0:
+        missing_filtered = missing_values[missing_values > 0]
+        if not missing_filtered.empty:
+            logger.info("Missing Values per Column:\n" + str(missing_filtered))
+        else:
             logger.info("No missing values found")
 
         logger.info(f"Dataset Head (Top {head_n} rows):\n" + str(computed_df.head(head_n)))
@@ -218,9 +207,6 @@ class TextDatasetExplorer:
         """Analyzes and optionally plots the distribution of the target variable"""
         logger.info("--- Target Variable (Intent) Analysis ---")
         target_counts = self.df[self.label_column].value_counts()
-
-        # Compute if Dask Series
-        target_counts = self._compute_if_dask(target_counts)
 
         num_classes = len(target_counts)
         logger.info(f"Number of unique classes (intents): {num_classes}")
@@ -257,7 +243,7 @@ class TextDatasetExplorer:
             max_count = target_counts.max()
             imbalance_ratio = max_count / min_count if min_count > 0 else float('inf')
             logger.info(f"Class Imbalance Ratio (Max/Min): {imbalance_ratio:.2f}")
-            if imbalance_ratio > 10: # Arbitrary threshold
+            if imbalance_ratio > 10:
                 logger.warning("Significant class imbalance detected. Consider resampling techniques")
             self.analysis_results['imbalance_ratio'] = imbalance_ratio
 
@@ -266,36 +252,17 @@ class TextDatasetExplorer:
         """Analyzes and optionally plots the distribution of text lengths."""
         logger.info("--- Text Length Analysis ---")
 
-        # calculate lengths (character and word)
-        char_lengths = self.df[self.text_column].astype(str).str.len()
-        # Tokenize for word count - requires computation if Dask
-        # WARNING: this can be slow on large Dask dataframes without map_partitions
-        if self.is_dask:
-            logger.info("Calculating word lengths using Dask map_partitions...")
-            meta = ('word_len', 'int64')
-            word_lengths = self.df[self.text_column].astype(str).map_partitions(
-            lambda s: s.apply(lambda x: len(word_tokenize(x)) if pd.notna(x) else 0),
-            meta=meta
+        char_lengths_pd = self.df[self.text_column].astype(str).str.len()
+        try:
+            word_lengths_pd = self.df[self.text_column].astype(str).apply(
+                lambda x: len(word_tokenize(x)) if pd.notna(x) else 0
             )
-        else:
-             logger.info("Calculating word lengths using pandas apply...")
-             # make sure NLTK's punkt tokenizer is available
-             try:
-                word_lengths = self.df[self.text_column].astype(str).apply(
-                    lambda x: len(word_tokenize(x)) if pd.notna(x) else 0
-                )
-             except LookupError:
-                logger.error("\n\nNLTK 'punkt' tokenizer data not found. Cannot calculate word lengths accurately.")
-                word_lengths = pd.Series([np.nan] * len(self.df))
-
-
-        # compute lengths if they are Dask Series
-        char_lengths_pd = self._compute_if_dask(char_lengths)
-        word_lengths_pd = self._compute_if_dask(word_lengths)
+        except LookupError:
+            logger.error("NLTK 'punkt' tokenizer data not found. Cannot calculate word lengths accurately.")
+            word_lengths_pd = pd.Series([np.nan] * len(self.df))
 
         logger.info("Character Length Statistics:\n" + str(char_lengths_pd.describe()))
         logger.info("Word Length Statistics:\n" + str(word_lengths_pd.describe()))
-
         self.analysis_results['char_length_stats'] = char_lengths_pd.describe()
         self.analysis_results['word_length_stats'] = word_lengths_pd.describe()
 
@@ -318,17 +285,14 @@ class TextDatasetExplorer:
                 logger.error(f"Failed to save plot {filepath}: {e}")
             plt.close(fig)
 
-    def _get_tokens(self, 
-        series: Union[pd.Series, dd.Series], 
+    def _get_tokens(self,
+        series: pd.Series,
         remove_stopwords: bool = True
     ) -> List[str]:
         """Helper function to tokenize a series of text and flatten the list"""
         all_tokens = []
-
-        # Compute the series to ensure we can iterate (memory intensive for large datasets)
-        computed_series = self._compute_if_dask(series)
+        computed_series = series
         logger.info(f"Tokenizing {len(computed_series)} text entries...")
-
         try:
             tokenized_series = computed_series.astype(str).apply(word_tokenize)
         except LookupError:
@@ -405,7 +369,7 @@ class TextDatasetExplorer:
         stopword_status = "stopwords_removed" if remove_stopwords else "stopwords_included"
         logger.info(f"--- N-gram Analysis (n={n}, {stopword_status.replace('_', ' ')}) ---")
 
-        computed_series = self._compute_if_dask(self.df[self.text_column])
+        computed_series = self.df[self.text_column]
         all_ngrams = []
         num_processed = 0
         try:
@@ -457,15 +421,16 @@ class TextDatasetExplorer:
     def analyze_length_by_class(self, plot: bool = True):
         """Analyzes text length per class and saves plots if enabled."""
         logger.info("--- Text Length Analysis by Class ---")
-        computed_df = self._compute_df_if_dask(self.df.copy())
+        computed_df = self.df.copy()
 
         if 'char_length' not in computed_df.columns: 
             computed_df['char_length'] = computed_df[self.text_column].astype(str).str.len()
         if 'word_length' not in computed_df.columns:
-             try: 
+            try: 
                 computed_df['word_length'] = computed_df[self.text_column].astype(str).apply(lambda x: len(word_tokenize(x)) if pd.notna(x) and isinstance(x, str) else 0)
-             except LookupError: 
-                logger.error("NLTK 'punkt' not found."); computed_df['word_length'] = np.nan
+            except LookupError: 
+                logger.error("NLTK 'punkt' not found.")
+                computed_df['word_length'] = np.nan
         computed_df['word_length'] = pd.to_numeric(computed_df['word_length'], errors='coerce')
         avg_word_len_class = computed_df.groupby(self.label_column)['word_length'].mean().sort_values(ascending=False)
 
@@ -584,27 +549,45 @@ class TextDatasetExplorer:
         if run_deep_analysis:
             self.analyze_length_by_class(plot=True)
             self.analyze_zipf_distribution(remove_stopwords=False, plot=True)
+            self.analyze_zipf_distribution(remove_stopwords=True, plot=True)
             # TODO: add more deeper analysis funcs like TF-IDF analysis per class, 
             # topic modeling, word embeddings clusters, tsne, etc.
 
         logger.info("=== EDA Finished ===")
 
+
         # Save the analysis results to a file
         if self.plot_output_dir:
-            results_file = os.path.join(self.plot_output_dir, "eda_analysis_results.txt")
-            with open(results_file, 'w') as f:
-                for key, value in self.analysis_results.items():
-                    f.write(f"{key}:\n{value}\n\n")
-            logger.info(f"Saved analysis results to {results_file}")
+            # Include split name in results filename
+            results_file = os.path.join(self.plot_output_dir, f"eda_analysis_results_{self.split}.txt")
+            try:
+                with open(results_file, 'w') as f:
+                    for key, value in self.analysis_results.items():
+                        # Handle potential complex objects in results (like Series/DF dtypes)
+                        f.write(f"{key}:\n")
+                        if isinstance(value, (pd.Series, pd.DataFrame)):
+                             f.write(f"{value.to_string()}\n\n")
+                        else:
+                             f.write(f"{value}\n\n")
+                logger.info(f"Saved analysis results to {results_file}")
+            except Exception as e:
+                 logger.error(f"Failed to save analysis results to {results_file}: {e}")
         return self.analysis_results
 
 
 if __name__ == "__main__":
     FILE_PATH = "/workspaces/zendesk-mle/coding_task/data/atis/test.tsv"
+    SPLIT_NAME = 'test'
 
     TEXT_COLUMN = 'atis_text'
     LABEL_COLUMN = 'atis_labels'
     COLUMN_NAMES = [TEXT_COLUMN, LABEL_COLUMN]
+
+    USE_DASK_LOADING = True # use Dask for initial load - will be computed to PD
+    UNPACK_LABELS = False # set to True to run EDA on unpacked data
+    APPLY_CLEANUP = True
+
+    logger.info(f"Running EDA for {SPLIT_NAME} split. Unpack labels: {UNPACK_LABELS}")
 
     try:
         explorer = TextDatasetExplorer(
@@ -612,9 +595,11 @@ if __name__ == "__main__":
             text_column=TEXT_COLUMN,
             label_column=LABEL_COLUMN,
             column_names=COLUMN_NAMES,
-            use_dask=True,
-            apply_basic_cleanup=True,
-            split='test',
+            use_dask=USE_DASK_LOADING,
+            apply_basic_cleanup=APPLY_CLEANUP,
+            split=SPLIT_NAME,
+            unpack_multi_labels=UNPACK_LABELS,
+            label_delimiter='+'
         )
         explorer.run_eda(run_deep_analysis=True)
 
