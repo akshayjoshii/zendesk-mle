@@ -12,9 +12,9 @@ python -m coding_task.train.main \
     --per_device_train_batch_size 8 \
     --learning_rate 5e-5 \
     --freeze_base_model True \
-    --peft_config.method lora \
-    --peft_config.lora_r 16 \
-    --peft_config.lora_alpha 32 \
+    --method lora \
+    --lora_r 16 \
+    --lora_alpha 32 \
     --report_to tensorboard \
     --logging_steps 50 \
     --evaluation_strategy epoch \
