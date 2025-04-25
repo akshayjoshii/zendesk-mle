@@ -1,6 +1,8 @@
 import os
 import json
 import sys
+
+import torch
 from transformers import set_seed, HfArgumentParser, AutoTokenizer
 
 from coding_task.train.config import DataConfig, ModelConfig, PeftConfig, TrainingConfig
@@ -31,6 +33,11 @@ def main():
         # parse args from command line
         logger.info("Parsing configuration from command line arguments.")
         data_args, model_args, peft_args, training_args = parser.parse_args_into_dataclasses()
+    
+    # Check device
+    device = "cuda" if torch.cuda.is_available() else "cpu"
+    if device == "cpu":
+        training_args.fp16 = False  # Disable FP16 if running on CPU
 
     logger.info("--- Data Configuration ---")
     logger.info(data_args)
