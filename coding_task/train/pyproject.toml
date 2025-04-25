@@ -10,6 +10,16 @@ package-mode = false
 python = ">=3.9, <=3.12.1"
 dask = "^2025.4.0"
 datasets = "^3.5.0"
+peft = "^0.15.2"
+evaluate = "^0.4.3"
+torch = "^2.6.0"
+transformers = "^4.51.3"
+accelerate = "^1.6.0"
+pandas = "^2.2.3"
+wandb = "^0.19.10"
+tensorboard = "^2.19.0"
+scikit-learn = "^1.6.1"
+pyarrow = "^19.0.1"
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
