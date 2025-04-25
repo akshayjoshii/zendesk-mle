@@ -1,0 +1,148 @@
+import os
+import json
+import sys
+from transformers import set_seed, HfArgumentParser, AutoTokenizer
+
+from coding_task.train.config import DataConfig, ModelConfig, PeftConfig, TrainingConfig
+from coding_task.train.data_processor import DataProcessor
+from coding_task.train.model_loader import load_model_for_training
+from coding_task.train.metrics import compute_metrics_fn
+from coding_task.train.trainer import create_trainer
+
+from coding_task.logging_utils import get_logger
+from coding_task.constants import LOG_DIR
+
+logger = get_logger(
+    logger_name="TrainMain",
+    log_file_path=os.path.join(LOG_DIR, "train_main.log"),
+    stream=True
+)
+
+def main():
+    # HfArgumentParser allows parsing dataclasses directly from CLI args
+    parser = HfArgumentParser((DataConfig, ModelConfig, PeftConfig, TrainingConfig))
+
+    # Check if args are provided via CLI, otherwise use defaults
+    if len(sys.argv) == 2 and sys.argv[1].endswith(".json"):
+        # If a single JSON file path is provided, load args from it
+        logger.info(f"Loading configuration from JSON file: {sys.argv[1]}")
+        data_args, model_args, peft_args, training_args = parser.parse_json_file(json_file=os.path.abspath(sys.argv[1]))
+    else:
+        # parse args from command line
+        logger.info("Parsing configuration from command line arguments.")
+        data_args, model_args, peft_args, training_args = parser.parse_args_into_dataclasses()
+
+    logger.info("--- Data Configuration ---")
+    logger.info(data_args)
+    logger.info("--- Model Configuration ---")
+    logger.info(model_args)
+    logger.info("--- PEFT Configuration ---")
+    logger.info(peft_args)
+    logger.info("--- Training Configuration ---")
+    logger.info(training_args)
+
+    # for exp reproducibility
+    set_seed(training_args.seed)
+    logger.info(f"Set random seed to: {training_args.seed}")
+    os.makedirs(training_args.output_dir, exist_ok=True)
+    logger.info(f"Output directory: {training_args.output_dir}")
+
+    # Load tokenizer for data processing
+    logger.info(f"Loading tokenizer: {model_args.model_name_or_path}")
+    tokenizer = AutoTokenizer.from_pretrained(
+        model_args.model_name_or_path,
+        cache_dir=model_args.cache_dir,
+        use_fast=True
+    )
+    # add pad token if missing - common for models like Llama, GPT
+    if tokenizer.pad_token is None:
+        logger.warning("Tokenizer does not have a pad token. Setting pad_token = eos_token.")
+        tokenizer.pad_token = tokenizer.eos_token
+
+    logger.info("Starting data processing...")
+    data_processor = DataProcessor(data_config=data_args, tokenizer=tokenizer)
+    tokenized_datasets, id2label, label2id, num_labels = data_processor.load_and_prepare_datasets()
+    logger.info(f"Data processing complete. Number of labels: {num_labels}")
+    logger.info(f"Label mapping (id2label): {id2label}")
+
+    # save label mappings for later inference
+    try:
+        with open(os.path.join(training_args.output_dir, "label2id.json"), "w") as f:
+            json.dump(label2id, f, indent=2)
+        with open(os.path.join(training_args.output_dir, "id2label.json"), "w") as f:
+            json.dump(id2label, f, indent=2)
+        logger.info(f"Label mappings saved to {training_args.output_dir}")
+    except Exception as e:
+        logger.error(f"Failed to save label mappings: {e}")
+
+    logger.info("Loading model for training...")
+    model = load_model_for_training(
+        model_config=model_args,
+        peft_config=peft_args,
+        data_config=data_args,
+        num_labels=num_labels,
+        id2label=id2label,
+        label2id=label2id
+    )
+    # If pad token was added to tokenizer, ensure model's config reflects this
+    if tokenizer.pad_token_id is not None and model.config.pad_token_id is None:
+         logger.info(f"Setting model config pad_token_id to: {tokenizer.pad_token_id}")
+         model.config.pad_token_id = tokenizer.pad_token_id
+
+    logger.info("Model loading complete.")
+    logger.info("Setting up Trainer...")
+
+    # Get the compute_metrics function tailored to the task type
+    compute_metrics = compute_metrics_fn(data_args.task_type, id2label)
+
+    trainer = create_trainer(
+        model=model,
+        tokenizer=tokenizer,
+        train_config=training_args,
+        train_dataset=tokenized_datasets["train"],
+        eval_dataset=tokenized_datasets.get("validation"),
+        compute_metrics=compute_metrics,
+    )
+    logger.info("Trainer setup complete.")
+    logger.info("*** Starting Training ***")
+    train_result = trainer.train()
+    logger.info("*** Training Finished ***")
+
+    metrics = train_result.metrics
+    trainer.log_metrics("train", metrics)
+    trainer.save_metrics("train", metrics)
+    trainer.save_state() # saves optimizer, scheduler, RNG state etc.
+    logger.info(f"Training metrics: {metrics}")
+
+    # Evaluation is automatically done during training if evaluation_strategy is 'steps' or 'epoch'
+    # we can run a final evaluation explicitly if needed, especially if load_best_model_at_end=True
+    if training_args.evaluation_strategy != "no" and tokenized_datasets.get("validation"):
+        logger.info("*** Starting Final Evaluation on Validation Set ***")
+        eval_metrics = trainer.evaluate(eval_dataset=tokenized_datasets["validation"])
+        trainer.log_metrics("eval", eval_metrics)
+        trainer.save_metrics("eval", eval_metrics)
+        logger.info(f"Final evaluation metrics: {eval_metrics}")
+
+    # if load_best_model_at_end=True, the best model checkpoint is loaded.
+    # We save the final model state explicitly.
+    logger.info(f"Saving final model/adapter to {training_args.output_dir}")
+    trainer.save_model(training_args.output_dir) # Saves adapter & config (if PEFT) or full model
+
+    # also Save the tokenizer alongside the model
+    tokenizer.save_pretrained(training_args.output_dir)
+    logger.info(f"Tokenizer saved to {training_args.output_dir}")
+
+    # Save training arguments for reference
+    try:
+        training_args_dict = training_args.to_dict()
+        with open(os.path.join(training_args.output_dir, "training_args.json"), "w") as f:
+            json.dump(training_args_dict, f, indent=2)
+        logger.info(f"Training arguments saved to {training_args.output_dir}")
+    except Exception as e:
+        logger.error(f"Failed to save training arguments: {e}")
+
+    logger.info("Script finished successfully.")
+
+
+if __name__ == "__main__":
+    main()
