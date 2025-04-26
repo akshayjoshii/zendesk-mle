@@ -5,7 +5,7 @@ from transformers import HfArgumentParser
 
 from coding_task.inference.config import InferenceConfig
 from coding_task.inference.predictor import TextClassifierPredictor
-from logging_utils import get_logger
+from coding_task.logging_utils import get_logger
 
 
 def main():

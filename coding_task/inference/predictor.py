@@ -112,9 +112,6 @@ class TextClassifierPredictor:
             self.logger.info(f"Loading base model: {base_model_name_or_path}")
             base_model = AutoModelForSequenceClassification.from_pretrained(
                 base_model_name_or_path,
-                num_labels=self.num_labels,
-                id2label=self.id2label,
-                label2id=self.label2id,
                 config=config # pass the loaded config
             )
         except Exception as e:

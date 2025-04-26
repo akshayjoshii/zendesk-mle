@@ -1,0 +1,291 @@
+2025-04-26 16:18:54,960 - INFO - InferenceMain - --- Inference Configuration ---
+2025-04-26 16:18:54,960 - INFO - InferenceMain - InferenceConfig(model_path='./results/BEST_atis_multilabel_xlmr_lora', input_text='show me flights from boston to new york tomorrow', input_file=None, text_column='text', output_file=None, device='cuda', batch_size=8, max_seq_length=None, multilabel_threshold=0.5, include_probabilities=False, log_file='/workspaces/zendesk-mle/coding_task/logs/inference_logs/inference.log')
+2025-04-26 16:18:54,961 - INFO - InferencePredictor - Using device: cuda
+2025-04-26 16:18:54,961 - INFO - InferencePredictor - Loading resources from: ./results/BEST_atis_multilabel_xlmr_lora
+2025-04-26 16:18:55,690 - INFO - InferencePredictor - Tokenizer loaded successfully.
+2025-04-26 16:18:55,690 - INFO - InferencePredictor - Using tokenizer's max_seq_length: 512
+2025-04-26 16:18:55,691 - INFO - InferencePredictor - Inferred base model from PEFT config: xlm-roberta-base
+2025-04-26 16:18:55,691 - ERROR - InferencePredictor - Failed to load model config from ./results/BEST_atis_multilabel_xlmr_lora: ./results/BEST_atis_multilabel_xlmr_lora does not appear to have a file named config.json. Checkout 'https://huggingface.co/./results/BEST_atis_multilabel_xlmr_lora/tree/None' for available files.
+2025-04-26 16:18:55,693 - WARNING - InferencePredictor - Could not load AutoConfig. Loaded label maps directly. Task type inference might be inaccurate.
+2025-04-26 16:18:55,693 - WARNING - InferencePredictor - Assuming task type: multiclass. Verify this is correct.
+2025-04-26 16:18:55,693 - INFO - InferencePredictor - Loading base model: xlm-roberta-base
+2025-04-26 16:18:55,693 - ERROR - InferencePredictor - Failed to load base model 'xlm-roberta-base': cannot access local variable 'config' where it is not associated with a value
+2025-04-26 16:18:55,693 - ERROR - InferenceMain - Failed to initialize predictor: cannot access local variable 'config' where it is not associated with a value
+Traceback (most recent call last):
+  File "/workspaces/zendesk-mle/coding_task/inference/main.py", line 39, in main
+    predictor = TextClassifierPredictor(inference_args)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/zendesk-mle/coding_task/inference/predictor.py", line 39, in __init__
+    self._load_resources()
+  File "/workspaces/zendesk-mle/coding_task/inference/predictor.py", line 118, in _load_resources
+    config=config # pass the loaded config
+           ^^^^^^
+UnboundLocalError: cannot access local variable 'config' where it is not associated with a value
+2025-04-26 16:18:59,829 - INFO - InferenceMain - --- Inference Configuration ---
+2025-04-26 16:18:59,829 - INFO - InferenceMain - InferenceConfig(model_path='./results/BEST_atis_multilabel_xlmr_lora', input_text='find flights and fares from denver to pittsburgh', input_file=None, text_column='text', output_file='./inference_outputs/single_pred.csv', device='cuda', batch_size=8, max_seq_length=None, multilabel_threshold=0.5, include_probabilities=True, log_file='/workspaces/zendesk-mle/coding_task/logs/inference_logs/inference.log')
+2025-04-26 16:18:59,829 - INFO - InferencePredictor - Using device: cuda
+2025-04-26 16:18:59,829 - INFO - InferencePredictor - Loading resources from: ./results/BEST_atis_multilabel_xlmr_lora
+2025-04-26 16:19:00,367 - INFO - InferencePredictor - Tokenizer loaded successfully.
+2025-04-26 16:19:00,367 - INFO - InferencePredictor - Using tokenizer's max_seq_length: 512
+2025-04-26 16:19:00,367 - INFO - InferencePredictor - Inferred base model from PEFT config: xlm-roberta-base
+2025-04-26 16:19:00,367 - ERROR - InferencePredictor - Failed to load model config from ./results/BEST_atis_multilabel_xlmr_lora: ./results/BEST_atis_multilabel_xlmr_lora does not appear to have a file named config.json. Checkout 'https://huggingface.co/./results/BEST_atis_multilabel_xlmr_lora/tree/None' for available files.
+2025-04-26 16:19:00,368 - WARNING - InferencePredictor - Could not load AutoConfig. Loaded label maps directly. Task type inference might be inaccurate.
+2025-04-26 16:19:00,368 - WARNING - InferencePredictor - Assuming task type: multiclass. Verify this is correct.
+2025-04-26 16:19:00,368 - INFO - InferencePredictor - Loading base model: xlm-roberta-base
+2025-04-26 16:19:00,368 - ERROR - InferencePredictor - Failed to load base model 'xlm-roberta-base': cannot access local variable 'config' where it is not associated with a value
+2025-04-26 16:19:00,368 - ERROR - InferenceMain - Failed to initialize predictor: cannot access local variable 'config' where it is not associated with a value
+Traceback (most recent call last):
+  File "/workspaces/zendesk-mle/coding_task/inference/main.py", line 39, in main
+    predictor = TextClassifierPredictor(inference_args)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/zendesk-mle/coding_task/inference/predictor.py", line 39, in __init__
+    self._load_resources()
+  File "/workspaces/zendesk-mle/coding_task/inference/predictor.py", line 118, in _load_resources
+    config=config # pass the loaded config
+           ^^^^^^
+UnboundLocalError: cannot access local variable 'config' where it is not associated with a value
+2025-04-26 16:19:04,363 - INFO - InferenceMain - --- Inference Configuration ---
+2025-04-26 16:19:04,363 - INFO - InferenceMain - InferenceConfig(model_path='./results/BEST_atis_multilabel_xlmr_lora', input_text=None, input_file='./data/new_queries.csv', text_column='query', output_file=None, device='cuda', batch_size=16, max_seq_length=None, multilabel_threshold=0.5, include_probabilities=False, log_file='/workspaces/zendesk-mle/coding_task/logs/inference_logs/inference.log')
+2025-04-26 16:19:04,363 - INFO - InferencePredictor - Using device: cuda
+2025-04-26 16:19:04,363 - INFO - InferencePredictor - Loading resources from: ./results/BEST_atis_multilabel_xlmr_lora
+2025-04-26 16:19:04,877 - INFO - InferencePredictor - Tokenizer loaded successfully.
+2025-04-26 16:19:04,877 - INFO - InferencePredictor - Using tokenizer's max_seq_length: 512
+2025-04-26 16:19:04,877 - INFO - InferencePredictor - Inferred base model from PEFT config: xlm-roberta-base
+2025-04-26 16:19:04,877 - ERROR - InferencePredictor - Failed to load model config from ./results/BEST_atis_multilabel_xlmr_lora: ./results/BEST_atis_multilabel_xlmr_lora does not appear to have a file named config.json. Checkout 'https://huggingface.co/./results/BEST_atis_multilabel_xlmr_lora/tree/None' for available files.
+2025-04-26 16:19:04,878 - WARNING - InferencePredictor - Could not load AutoConfig. Loaded label maps directly. Task type inference might be inaccurate.
+2025-04-26 16:19:04,878 - WARNING - InferencePredictor - Assuming task type: multiclass. Verify this is correct.
+2025-04-26 16:19:04,878 - INFO - InferencePredictor - Loading base model: xlm-roberta-base
+2025-04-26 16:19:04,878 - ERROR - InferencePredictor - Failed to load base model 'xlm-roberta-base': cannot access local variable 'config' where it is not associated with a value
+2025-04-26 16:19:04,878 - ERROR - InferenceMain - Failed to initialize predictor: cannot access local variable 'config' where it is not associated with a value
+Traceback (most recent call last):
+  File "/workspaces/zendesk-mle/coding_task/inference/main.py", line 39, in main
+    predictor = TextClassifierPredictor(inference_args)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/zendesk-mle/coding_task/inference/predictor.py", line 39, in __init__
+    self._load_resources()
+  File "/workspaces/zendesk-mle/coding_task/inference/predictor.py", line 118, in _load_resources
+    config=config # pass the loaded config
+           ^^^^^^
+UnboundLocalError: cannot access local variable 'config' where it is not associated with a value
+2025-04-26 16:19:09,098 - INFO - InferenceMain - --- Inference Configuration ---
+2025-04-26 16:19:09,098 - INFO - InferenceMain - InferenceConfig(model_path='./results/BEST_atis_multilabel_xlmr_lora', input_text=None, input_file='./data/unseen_atis.tsv', text_column='text', output_file='./inference_outputs/predictions.csv', device='cuda', batch_size=32, max_seq_length=None, multilabel_threshold=0.5, include_probabilities=True, log_file='/workspaces/zendesk-mle/coding_task/logs/inference_logs/inference.log')
+2025-04-26 16:19:09,098 - INFO - InferencePredictor - Using device: cuda
+2025-04-26 16:19:09,098 - INFO - InferencePredictor - Loading resources from: ./results/BEST_atis_multilabel_xlmr_lora
+2025-04-26 16:19:09,646 - INFO - InferencePredictor - Tokenizer loaded successfully.
+2025-04-26 16:19:09,646 - INFO - InferencePredictor - Using tokenizer's max_seq_length: 512
+2025-04-26 16:19:09,646 - INFO - InferencePredictor - Inferred base model from PEFT config: xlm-roberta-base
+2025-04-26 16:19:09,647 - ERROR - InferencePredictor - Failed to load model config from ./results/BEST_atis_multilabel_xlmr_lora: ./results/BEST_atis_multilabel_xlmr_lora does not appear to have a file named config.json. Checkout 'https://huggingface.co/./results/BEST_atis_multilabel_xlmr_lora/tree/None' for available files.
+2025-04-26 16:19:09,647 - WARNING - InferencePredictor - Could not load AutoConfig. Loaded label maps directly. Task type inference might be inaccurate.
+2025-04-26 16:19:09,647 - WARNING - InferencePredictor - Assuming task type: multiclass. Verify this is correct.
+2025-04-26 16:19:09,647 - INFO - InferencePredictor - Loading base model: xlm-roberta-base
+2025-04-26 16:19:09,647 - ERROR - InferencePredictor - Failed to load base model 'xlm-roberta-base': cannot access local variable 'config' where it is not associated with a value
+2025-04-26 16:19:09,647 - ERROR - InferenceMain - Failed to initialize predictor: cannot access local variable 'config' where it is not associated with a value
+Traceback (most recent call last):
+  File "/workspaces/zendesk-mle/coding_task/inference/main.py", line 39, in main
+    predictor = TextClassifierPredictor(inference_args)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/zendesk-mle/coding_task/inference/predictor.py", line 39, in __init__
+    self._load_resources()
+  File "/workspaces/zendesk-mle/coding_task/inference/predictor.py", line 118, in _load_resources
+    config=config # pass the loaded config
+           ^^^^^^
+UnboundLocalError: cannot access local variable 'config' where it is not associated with a value
+2025-04-26 16:19:32,853 - INFO - InferenceMain - --- Inference Configuration ---
+2025-04-26 16:19:32,853 - INFO - InferenceMain - InferenceConfig(model_path='./results/BEST_atis_multilabel_xlmr_lora', input_text='show me flights from boston to new york tomorrow', input_file=None, text_column='text', output_file=None, device='cuda', batch_size=8, max_seq_length=None, multilabel_threshold=0.5, include_probabilities=False, log_file='/workspaces/zendesk-mle/coding_task/logs/inference_logs/inference.log')
+2025-04-26 16:19:32,853 - INFO - InferencePredictor - Using device: cuda
+2025-04-26 16:19:32,853 - INFO - InferencePredictor - Loading resources from: ./results/BEST_atis_multilabel_xlmr_lora
+2025-04-26 16:19:33,334 - INFO - InferencePredictor - Tokenizer loaded successfully.
+2025-04-26 16:19:33,334 - INFO - InferencePredictor - Using tokenizer's max_seq_length: 512
+2025-04-26 16:19:33,335 - INFO - InferencePredictor - Inferred base model from PEFT config: xlm-roberta-base
+2025-04-26 16:19:33,335 - ERROR - InferencePredictor - Failed to load model config from ./results/BEST_atis_multilabel_xlmr_lora: ./results/BEST_atis_multilabel_xlmr_lora does not appear to have a file named config.json. Checkout 'https://huggingface.co/./results/BEST_atis_multilabel_xlmr_lora/tree/None' for available files.
+2025-04-26 16:19:33,335 - WARNING - InferencePredictor - Could not load AutoConfig. Loaded label maps directly. Task type inference might be inaccurate.
+2025-04-26 16:19:33,335 - WARNING - InferencePredictor - Assuming task type: multiclass. Verify this is correct.
+2025-04-26 16:19:33,336 - INFO - InferencePredictor - Loading base model: xlm-roberta-base
+2025-04-26 16:19:33,336 - ERROR - InferencePredictor - Failed to load base model 'xlm-roberta-base': cannot access local variable 'config' where it is not associated with a value
+2025-04-26 16:19:33,336 - ERROR - InferenceMain - Failed to initialize predictor: cannot access local variable 'config' where it is not associated with a value
+Traceback (most recent call last):
+  File "/workspaces/zendesk-mle/coding_task/inference/main.py", line 39, in main
+    predictor = TextClassifierPredictor(inference_args)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/zendesk-mle/coding_task/inference/predictor.py", line 39, in __init__
+    self._load_resources()
+  File "/workspaces/zendesk-mle/coding_task/inference/predictor.py", line 118, in _load_resources
+    config=config # pass the loaded config
+           ^^^^^^
+UnboundLocalError: cannot access local variable 'config' where it is not associated with a value
+2025-04-26 16:30:49,864 - INFO - InferenceMain - --- Inference Configuration ---
+2025-04-26 16:30:49,864 - INFO - InferenceMain - InferenceConfig(model_path='./results/BEST_atis_multilabel_xlmr_lora', input_text='show me flights from boston to new york tomorrow', input_file=None, text_column='text', output_file=None, device='cuda', batch_size=8, max_seq_length=None, multilabel_threshold=0.5, include_probabilities=False, log_file='/workspaces/zendesk-mle/coding_task/logs/inference_logs/inference.log')
+2025-04-26 16:30:49,864 - INFO - InferencePredictor - Using device: cuda
+2025-04-26 16:30:49,864 - INFO - InferencePredictor - Loading resources from: ./results/BEST_atis_multilabel_xlmr_lora
+2025-04-26 16:30:50,596 - INFO - InferencePredictor - Tokenizer loaded successfully.
+2025-04-26 16:30:50,596 - INFO - InferencePredictor - Using tokenizer's max_seq_length: 512
+2025-04-26 16:30:50,597 - INFO - InferencePredictor - Inferred base model from PEFT config: xlm-roberta-base
+2025-04-26 16:30:50,597 - ERROR - InferencePredictor - Failed to load model config from ./results/BEST_atis_multilabel_xlmr_lora: ./results/BEST_atis_multilabel_xlmr_lora does not appear to have a file named config.json. Checkout 'https://huggingface.co/./results/BEST_atis_multilabel_xlmr_lora/tree/None' for available files.
+2025-04-26 16:30:50,917 - INFO - InferencePredictor - Loaded base model config for xlm-roberta-base
+2025-04-26 16:30:50,919 - WARNING - InferencePredictor - Could not load AutoConfig from adapter path. Loaded label maps directly. Task type inference might be inaccurate.
+2025-04-26 16:30:50,919 - WARNING - InferencePredictor - Unknown problem_type 'None' in base model config. Assuming 'multiclass'.
+2025-04-26 16:30:50,919 - WARNING - InferencePredictor - Assuming task type: multiclass. Verify this is correct.
+2025-04-26 16:30:50,919 - INFO - InferencePredictor - Loading base model: xlm-roberta-base
+2025-04-26 16:30:51,483 - ERROR - InferencePredictor - Failed to load base model 'xlm-roberta-base': XLMRobertaForSequenceClassification.__init__() got an unexpected keyword argument 'num_labels'
+2025-04-26 16:30:51,483 - ERROR - InferenceMain - Failed to initialize predictor: XLMRobertaForSequenceClassification.__init__() got an unexpected keyword argument 'num_labels'
+Traceback (most recent call last):
+  File "/workspaces/zendesk-mle/coding_task/inference/main.py", line 39, in main
+    predictor = TextClassifierPredictor(inference_args)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/zendesk-mle/coding_task/inference/predictor.py", line 39, in __init__
+    self._load_resources()
+  File "/workspaces/zendesk-mle/coding_task/inference/predictor.py", line 127, in _load_resources
+    base_model = AutoModelForSequenceClassification.from_pretrained(
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python/3.12.1/lib/python3.12/site-packages/transformers/models/auto/auto_factory.py", line 563, in from_pretrained
+    return model_class.from_pretrained(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python/3.12.1/lib/python3.12/site-packages/transformers/modeling_utils.py", line 3550, in from_pretrained
+    model = cls(config, *model_args, **model_kwargs)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: XLMRobertaForSequenceClassification.__init__() got an unexpected keyword argument 'num_labels'
+2025-04-26 16:31:34,241 - INFO - InferenceMain - --- Inference Configuration ---
+2025-04-26 16:31:34,241 - INFO - InferenceMain - InferenceConfig(model_path='./results/BEST_atis_multilabel_xlmr_lora', input_text='show me flights from boston to new york tomorrow', input_file=None, text_column='text', output_file=None, device='cuda', batch_size=8, max_seq_length=None, multilabel_threshold=0.5, include_probabilities=False, log_file='/workspaces/zendesk-mle/coding_task/logs/inference_logs/inference.log')
+2025-04-26 16:31:34,241 - INFO - InferencePredictor - Using device: cuda
+2025-04-26 16:31:34,242 - INFO - InferencePredictor - Loading resources from: ./results/BEST_atis_multilabel_xlmr_lora
+2025-04-26 16:31:34,849 - INFO - InferencePredictor - Tokenizer loaded successfully.
+2025-04-26 16:31:34,849 - INFO - InferencePredictor - Using tokenizer's max_seq_length: 512
+2025-04-26 16:31:34,850 - INFO - InferencePredictor - Inferred base model from PEFT config: xlm-roberta-base
+2025-04-26 16:31:34,850 - ERROR - InferencePredictor - Failed to load model config from ./results/BEST_atis_multilabel_xlmr_lora: ./results/BEST_atis_multilabel_xlmr_lora does not appear to have a file named config.json. Checkout 'https://huggingface.co/./results/BEST_atis_multilabel_xlmr_lora/tree/None' for available files.
+2025-04-26 16:31:34,850 - WARNING - InferencePredictor - Could not load AutoConfig. Loaded label maps directly. Task type inference might be inaccurate.
+2025-04-26 16:31:34,850 - WARNING - InferencePredictor - Assuming task type: multiclass. Verify this is correct.
+2025-04-26 16:31:34,850 - INFO - InferencePredictor - Loading base model: xlm-roberta-base
+2025-04-26 16:31:34,850 - ERROR - InferencePredictor - Failed to load base model 'xlm-roberta-base': cannot access local variable 'config' where it is not associated with a value
+2025-04-26 16:31:34,851 - ERROR - InferenceMain - Failed to initialize predictor: cannot access local variable 'config' where it is not associated with a value
+Traceback (most recent call last):
+  File "/workspaces/zendesk-mle/coding_task/inference/main.py", line 39, in main
+    predictor = TextClassifierPredictor(inference_args)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/zendesk-mle/coding_task/inference/predictor.py", line 39, in __init__
+    self._load_resources()
+  File "/workspaces/zendesk-mle/coding_task/inference/predictor.py", line 118, in _load_resources
+    config=config # pass the loaded config
+           ^^^^^^
+UnboundLocalError: cannot access local variable 'config' where it is not associated with a value
+2025-04-26 17:02:17,557 - INFO - InferenceMain - --- Inference Configuration ---
+2025-04-26 17:02:17,558 - INFO - InferenceMain - InferenceConfig(model_path='./results/BEST_atis_multilabel_xlmr_lora', input_text='show me flights from boston to new york tomorrow', input_file=None, text_column='text', output_file=None, device='cuda', batch_size=8, max_seq_length=None, multilabel_threshold=0.5, include_probabilities=False, log_file='/workspaces/zendesk-mle/coding_task/logs/inference_logs/inference.log')
+2025-04-26 17:02:17,558 - INFO - InferencePredictor - Using device: cuda
+2025-04-26 17:02:17,558 - INFO - InferencePredictor - Loading resources from: ./results/BEST_atis_multilabel_xlmr_lora
+2025-04-26 17:02:18,158 - INFO - InferencePredictor - Tokenizer loaded successfully.
+2025-04-26 17:02:18,158 - INFO - InferencePredictor - Using tokenizer's max_seq_length: 512
+2025-04-26 17:02:18,158 - INFO - InferencePredictor - Inferred base model from PEFT config: xlm-roberta-base
+2025-04-26 17:02:18,163 - INFO - InferencePredictor - Loaded model config. Task type: multilabel, Num Labels: 17
+2025-04-26 17:02:18,163 - INFO - InferencePredictor - Loading base model: xlm-roberta-base
+2025-04-26 17:02:19,055 - ERROR - InferencePredictor - Failed to load base model 'xlm-roberta-base': XLMRobertaForSequenceClassification.__init__() got an unexpected keyword argument 'num_labels'
+2025-04-26 17:02:19,055 - ERROR - InferenceMain - Failed to initialize predictor: XLMRobertaForSequenceClassification.__init__() got an unexpected keyword argument 'num_labels'
+Traceback (most recent call last):
+  File "/workspaces/zendesk-mle/coding_task/inference/main.py", line 39, in main
+    predictor = TextClassifierPredictor(inference_args)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/zendesk-mle/coding_task/inference/predictor.py", line 39, in __init__
+    self._load_resources()
+  File "/workspaces/zendesk-mle/coding_task/inference/predictor.py", line 113, in _load_resources
+    base_model = AutoModelForSequenceClassification.from_pretrained(
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python/3.12.1/lib/python3.12/site-packages/transformers/models/auto/auto_factory.py", line 563, in from_pretrained
+    return model_class.from_pretrained(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python/3.12.1/lib/python3.12/site-packages/transformers/modeling_utils.py", line 3550, in from_pretrained
+    model = cls(config, *model_args, **model_kwargs)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: XLMRobertaForSequenceClassification.__init__() got an unexpected keyword argument 'num_labels'
+2025-04-26 17:09:16,403 - INFO - InferenceMain - --- Inference Configuration ---
+2025-04-26 17:09:16,403 - INFO - InferenceMain - InferenceConfig(model_path='./results/BEST_atis_multilabel_xlmr_lora', input_text='show me flights from boston to new york tomorrow', input_file=None, text_column='text', output_file=None, device='cuda', batch_size=8, max_seq_length=None, multilabel_threshold=0.5, include_probabilities=False, log_file='/workspaces/zendesk-mle/coding_task/logs/inference_logs/inference.log')
+2025-04-26 17:09:16,403 - INFO - InferencePredictor - Using device: cuda
+2025-04-26 17:09:16,403 - INFO - InferencePredictor - Loading resources from: ./results/BEST_atis_multilabel_xlmr_lora
+2025-04-26 17:09:17,105 - INFO - InferencePredictor - Tokenizer loaded successfully.
+2025-04-26 17:09:17,105 - INFO - InferencePredictor - Using tokenizer's max_seq_length: 512
+2025-04-26 17:09:17,105 - INFO - InferencePredictor - Inferred base model from PEFT config: xlm-roberta-base
+2025-04-26 17:09:17,108 - INFO - InferencePredictor - Loaded model config. Task type: multilabel, Num Labels: 17
+2025-04-26 17:09:17,109 - INFO - InferencePredictor - Loading base model: xlm-roberta-base
+2025-04-26 17:09:26,427 - INFO - InferencePredictor - Loading PEFT adapter weights from: ./results/BEST_atis_multilabel_xlmr_lora
+2025-04-26 17:09:27,881 - INFO - InferencePredictor - PEFT adapter loaded and merged successfully.
+2025-04-26 17:09:28,332 - ERROR - InferenceMain - Failed to initialize predictor: Torch not compiled with CUDA enabled
+Traceback (most recent call last):
+  File "/workspaces/zendesk-mle/coding_task/inference/main.py", line 39, in main
+    predictor = TextClassifierPredictor(inference_args)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/zendesk-mle/coding_task/inference/predictor.py", line 39, in __init__
+    self._load_resources()
+  File "/workspaces/zendesk-mle/coding_task/inference/predictor.py", line 133, in _load_resources
+    self.model.to(self.device)
+  File "/usr/local/python/3.12.1/lib/python3.12/site-packages/transformers/modeling_utils.py", line 2692, in to
+    return super().to(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/codespace/.local/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1343, in to
+    return self._apply(convert)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/home/codespace/.local/lib/python3.12/site-packages/torch/nn/modules/module.py", line 903, in _apply
+    module._apply(fn)
+  File "/home/codespace/.local/lib/python3.12/site-packages/torch/nn/modules/module.py", line 903, in _apply
+    module._apply(fn)
+  File "/home/codespace/.local/lib/python3.12/site-packages/torch/nn/modules/module.py", line 903, in _apply
+    module._apply(fn)
+  File "/home/codespace/.local/lib/python3.12/site-packages/torch/nn/modules/module.py", line 930, in _apply
+    param_applied = fn(param)
+                    ^^^^^^^^^
+  File "/home/codespace/.local/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1329, in convert
+    return t.to(
+           ^^^^^
+  File "/home/codespace/.local/lib/python3.12/site-packages/torch/cuda/__init__.py", line 310, in _lazy_init
+    raise AssertionError("Torch not compiled with CUDA enabled")
+AssertionError: Torch not compiled with CUDA enabled
+2025-04-26 17:09:57,142 - INFO - InferenceMain - --- Inference Configuration ---
+2025-04-26 17:09:57,143 - INFO - InferenceMain - InferenceConfig(model_path='./results/BEST_atis_multilabel_xlmr_lora', input_text='show me flights from boston to new york tomorrow', input_file=None, text_column='text', output_file=None, device='cpu', batch_size=8, max_seq_length=None, multilabel_threshold=0.5, include_probabilities=False, log_file='/workspaces/zendesk-mle/coding_task/logs/inference_logs/inference.log')
+2025-04-26 17:09:57,144 - INFO - InferencePredictor - Using device: cpu
+2025-04-26 17:09:57,144 - INFO - InferencePredictor - Loading resources from: ./results/BEST_atis_multilabel_xlmr_lora
+2025-04-26 17:09:58,077 - INFO - InferencePredictor - Tokenizer loaded successfully.
+2025-04-26 17:09:58,078 - INFO - InferencePredictor - Using tokenizer's max_seq_length: 512
+2025-04-26 17:09:58,078 - INFO - InferencePredictor - Inferred base model from PEFT config: xlm-roberta-base
+2025-04-26 17:09:58,082 - INFO - InferencePredictor - Loaded model config. Task type: multilabel, Num Labels: 17
+2025-04-26 17:09:58,082 - INFO - InferencePredictor - Loading base model: xlm-roberta-base
+2025-04-26 17:10:05,961 - INFO - InferencePredictor - Loading PEFT adapter weights from: ./results/BEST_atis_multilabel_xlmr_lora
+2025-04-26 17:10:06,821 - INFO - InferencePredictor - PEFT adapter loaded and merged successfully.
+2025-04-26 17:10:06,824 - INFO - InferencePredictor - Model moved to cpu and set to evaluation mode.
+2025-04-26 17:10:06,824 - INFO - InferenceMain - Predicting for single input text...
+2025-04-26 17:10:06,824 - INFO - InferencePredictor - Starting prediction for 1 text(s)...
+2025-04-26 17:10:08,743 - INFO - InferencePredictor - Prediction finished.
+2025-04-26 17:10:08,743 - INFO - InferenceMain - Input Text: 'show me flights from boston to new york tomorrow'
+2025-04-26 17:10:08,743 - INFO - InferenceMain - Prediction: {'labels': ['flight']}
+2025-04-26 17:10:08,744 - INFO - InferenceMain - Inference script finished.
+2025-04-26 17:10:46,894 - INFO - InferenceMain - --- Inference Configuration ---
+2025-04-26 17:10:46,895 - INFO - InferenceMain - InferenceConfig(model_path='./results/BEST_atis_multilabel_xlmr_lora', input_text='which flights are leaving from kansas city to atlanta early monday morning', input_file=None, text_column='text', output_file=None, device='cpu', batch_size=8, max_seq_length=None, multilabel_threshold=0.5, include_probabilities=False, log_file='/workspaces/zendesk-mle/coding_task/logs/inference_logs/inference.log')
+2025-04-26 17:10:46,895 - INFO - InferencePredictor - Using device: cpu
+2025-04-26 17:10:46,895 - INFO - InferencePredictor - Loading resources from: ./results/BEST_atis_multilabel_xlmr_lora
+2025-04-26 17:10:47,545 - INFO - InferencePredictor - Tokenizer loaded successfully.
+2025-04-26 17:10:47,545 - INFO - InferencePredictor - Using tokenizer's max_seq_length: 512
+2025-04-26 17:10:47,546 - INFO - InferencePredictor - Inferred base model from PEFT config: xlm-roberta-base
+2025-04-26 17:10:47,549 - INFO - InferencePredictor - Loaded model config. Task type: multilabel, Num Labels: 17
+2025-04-26 17:10:47,549 - INFO - InferencePredictor - Loading base model: xlm-roberta-base
+2025-04-26 17:10:54,520 - INFO - InferencePredictor - Loading PEFT adapter weights from: ./results/BEST_atis_multilabel_xlmr_lora
+2025-04-26 17:10:55,496 - INFO - InferencePredictor - PEFT adapter loaded and merged successfully.
+2025-04-26 17:10:55,501 - INFO - InferencePredictor - Model moved to cpu and set to evaluation mode.
+2025-04-26 17:10:55,501 - INFO - InferenceMain - Predicting for single input text...
+2025-04-26 17:10:55,501 - INFO - InferencePredictor - Starting prediction for 1 text(s)...
+2025-04-26 17:10:57,427 - INFO - InferencePredictor - Prediction finished.
+2025-04-26 17:10:57,428 - INFO - InferenceMain - Input Text: 'which flights are leaving from kansas city to atlanta early monday morning'
+2025-04-26 17:10:57,428 - INFO - InferenceMain - Prediction: {'labels': ['flight']}
+2025-04-26 17:10:57,428 - INFO - InferenceMain - Inference script finished.
+2025-04-26 18:54:28,961 - INFO - InferenceMain - --- Inference Configuration ---
+2025-04-26 18:54:28,963 - INFO - InferenceMain - InferenceConfig(model_path='./results/BEST_atis_multilabel_xlmr_lora', input_text='which flights are leaving from kansas city to atlanta early monday morning', input_file=None, text_column='text', output_file=None, device='cpu', batch_size=8, max_seq_length=None, multilabel_threshold=0.5, include_probabilities=False, log_file='/workspaces/zendesk-mle/coding_task/logs/inference_logs/inference.log')
+2025-04-26 18:54:28,964 - INFO - InferencePredictor - Using device: cpu
+2025-04-26 18:54:28,964 - INFO - InferencePredictor - Loading resources from: ./results/BEST_atis_multilabel_xlmr_lora
+2025-04-26 18:54:29,559 - INFO - InferencePredictor - Tokenizer loaded successfully.
+2025-04-26 18:54:29,560 - INFO - InferencePredictor - Using tokenizer's max_seq_length: 512
+2025-04-26 18:54:29,561 - INFO - InferencePredictor - Inferred base model from PEFT config: xlm-roberta-base
+2025-04-26 18:54:29,563 - INFO - InferencePredictor - Loaded model config. Task type: multilabel, Num Labels: 17
+2025-04-26 18:54:29,563 - INFO - InferencePredictor - Loading base model: xlm-roberta-base
+2025-04-26 18:54:37,181 - INFO - InferencePredictor - Loading PEFT adapter weights from: ./results/BEST_atis_multilabel_xlmr_lora
+2025-04-26 18:54:37,780 - INFO - InferencePredictor - PEFT adapter loaded and merged successfully.
+2025-04-26 18:54:37,783 - INFO - InferencePredictor - Model moved to cpu and set to evaluation mode.
+2025-04-26 18:54:37,783 - INFO - InferenceMain - Predicting for single input text...
+2025-04-26 18:54:37,783 - INFO - InferencePredictor - Starting prediction for 1 text(s)...
+2025-04-26 18:54:38,868 - INFO - InferencePredictor - Prediction finished.
+2025-04-26 18:54:38,868 - INFO - InferenceMain - Input Text: 'which flights are leaving from kansas city to atlanta early monday morning'
+2025-04-26 18:54:38,868 - INFO - InferenceMain - Prediction: {'labels': ['flight']}
+2025-04-26 18:54:38,868 - INFO - InferenceMain - Inference script finished.

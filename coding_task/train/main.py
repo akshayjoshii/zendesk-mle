@@ -191,6 +191,7 @@ def main():
     # We save the final model state explicitly.
     logger.info(f"Saving final model/adapter to {training_args.output_dir}")
     trainer.save_model(training_args.output_dir) # Saves adapter & config (if PEFT) or full model
+    model.config.save_pretrained(training_args.output_dir)
 
     # also Save the tokenizer alongside the model
     tokenizer.save_pretrained(training_args.output_dir)
