@@ -1,7 +1,7 @@
 import numpy as np
 import evaluate
-from sklearn.metrics import hamming_loss
-from sklearn.metrics import jaccard_score, matthews_corrcoef, balanced_accuracy_score
+from sklearn.metrics import precision_score, recall_score, f1_score
+from sklearn.metrics import hamming_loss, jaccard_score, matthews_corrcoef, balanced_accuracy_score
 from sklearn.metrics import roc_auc_score, average_precision_score, cohen_kappa_score
 import torch # sigmoid activation in multilabel type
 from typing import Dict, Tuple, Callable
@@ -109,9 +109,10 @@ def compute_metrics_fn(task_type: str,
             # 'weighted': Calculates metrics for each label, weighted by support. Accounts for imbalance.
             # 'samples': Calculates metrics for each instance, then finds average. Good for instance-level performance.
             for average in ["micro", "macro", "weighted", "samples"]:
-                results[f"precision_{average}"] = precision_metric.compute(predictions=predictions, references=labels, average=average)["precision"]
-                results[f"recall_{average}"] = recall_metric.compute(predictions=predictions, references=labels, average=average)["recall"]
-                results[f"f1_{average}"] = f1_metric.compute(predictions=predictions, references=labels, average=average)["f1"]
+                # Use zero_division=0 or 1 to avoid warnings/errors if a class has no predictions/labels
+                results[f"precision_{average}"] = precision_score(y_true=labels, y_pred=predictions, average=average, zero_division=0)
+                results[f"recall_{average}"] = recall_score(y_true=labels, y_pred=predictions, average=average, zero_division=0)
+                results[f"f1_{average}"] = f1_score(y_true=labels, y_pred=predictions, average=average, zero_division=0)
 
             # Set the primary metric for comparison (e.g., micro F1 or weighted F1)
             results["f1"] = results["f1_micro"]
