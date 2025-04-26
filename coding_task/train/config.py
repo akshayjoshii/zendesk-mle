@@ -14,9 +14,9 @@ class DataConfig:
     unpack_multi_labels: bool = field(default=False, metadata={"help": "Use CustomTextDataset's unpack feature for multilabel tasks. MUST be True if task_type='multilabel' and labels are delimiter-separated."})
     label_delimiter: str = field(default="+", metadata={"help": "Delimiter used in the label column if unpack_multi_labels is True."})
     use_dask: bool = field(default=False, metadata={"help": "Use Dask via CustomTextDataset for loading large datasets."})
-    validation_split_ratio: float = field(default=0.1, metadata={"help": "Fraction of data to use for validation. Set to 0 for no validation split."})
+    validation_split_ratio: float = field(default=0.2, metadata={"help": "Fraction of data to use for validation. Set to 0 for no validation split."})
     max_seq_length: int = field(default=128, metadata={"help": "Maximum sequence length for tokenizer."})
-    # test_dataset_path: Optional[str] = field(default=None, metadata={"help": "Path to the test dataset file."})
+    test_dataset_path: Optional[str] = field(default=None, metadata={"help": "Path to the test dataset file (e.g., test.tsv). If provided, evaluation will be run on this set after training."})
 
 @dataclass
 class ModelConfig:

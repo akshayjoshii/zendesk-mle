@@ -126,9 +126,37 @@ def main():
     if training_args.evaluation_strategy != "no" and tokenized_datasets.get("validation"):
         logger.info("*** Starting Final Evaluation on Validation Set ***")
         eval_metrics = trainer.evaluate(eval_dataset=tokenized_datasets["validation"])
-        trainer.log_metrics("eval", eval_metrics)
-        trainer.save_metrics("eval", eval_metrics)
-        logger.info(f"Final evaluation metrics: {eval_metrics}")
+        trainer.log_metrics("Validation", eval_metrics)
+        trainer.save_metrics("Validation", eval_metrics)
+        logger.info(f"Final evaluation metrics on Val set: {eval_metrics}")
+
+
+    logger.info("*** Starting Test Set Evaluation ***")
+    if data_args.test_dataset_path:
+        logger.info(f"Loading test dataset from: {data_args.test_dataset_path}")
+        test_data_args = DataConfig(
+            dataset_path=data_args.test_dataset_path,
+            text_column=data_args.text_column,
+            label_column=data_args.label_column,
+            task_type=data_args.task_type,
+            unpack_multi_labels=data_args.unpack_multi_labels,
+            label_delimiter=data_args.label_delimiter,
+            use_dask=data_args.use_dask,
+            max_seq_length=data_args.max_seq_length
+        )
+        test_processor = DataProcessor(data_config=test_data_args, tokenizer=tokenizer)
+        tokenized_test_dataset, _, _, _ = test_processor.load_and_prepare_datasets()
+
+        # Test set is loaded as "train" in DatasetDict
+        # because the DataProcessor class is designed to handle datasets for training and validation
+        # TODO: Refactor this to avoid confusion, with more time I would fix this at highest priority!!
+        test_metrics = trainer.evaluate(eval_dataset=tokenized_test_dataset["train"])
+        trainer.log_metrics("Test", test_metrics)
+        trainer.save_metrics("Test", test_metrics)
+        logger.info(f"Final evaluation metrics on Test set: {test_metrics}")
+    else:
+        logger.warning("No test dataset provided. Skipping test evaluation.")
+    logger.info("*** Evaluation Finished ***")
 
     # if load_best_model_at_end=True, the best model checkpoint is loaded.
     # We save the final model state explicitly.

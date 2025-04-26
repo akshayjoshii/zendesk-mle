@@ -167,7 +167,13 @@ class DataProcessor:
         return df
 
     def _tokenize_function(self, examples: Dict[str, List]) -> Dict[str, Any]:
-        """Tokenizes text data using the instance's tokenizer."""
+        """
+        Tokenizes text data using the instance's tokenizer.
+        Args:
+            examples (Dict[str, List]): Dictionary of examples with text and labels.
+            Returns:
+                Dict[str, Any]: Tokenized examples with input IDs and attention masks.
+        """
         tokenized_batch = self.tokenizer(
             examples[self.config.text_column],
             padding=False, # pad dynamically per batch using DataCollator (better than static padding)
@@ -183,8 +189,14 @@ class DataProcessor:
 
     def load_and_prepare_datasets(self) -> Tuple[DatasetDict, Dict[int, str], Dict[str, int], int]:
         """
-        Main method to load, process, tokenize data, and return a DatasetDict
-        along with label mappings.
+        Main method to load, process, tokenize data, and return a DatasetDict along with label mappings.
+
+        Returns:
+            Tuple[DatasetDict, Dict[int, str], Dict[str, int], int]: A tuple containing:
+                - tokenized_datasets (DatasetDict): Hugging Face DatasetDict with train/validation splits.
+                - id2label (Dict[int, str]): Mapping from label ID to label name.
+                - label_map (Dict[str, int]): Mapping from label name to label ID.
+                - num_labels (int): Number of unique labels.
         """
         df_full = self._load_and_preprocess_df()
         df_processed = self._prepare_labels(df_full)
