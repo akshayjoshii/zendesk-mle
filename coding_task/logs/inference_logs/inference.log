@@ -289,3 +289,21 @@ AssertionError: Torch not compiled with CUDA enabled
 2025-04-26 18:54:38,868 - INFO - InferenceMain - Input Text: 'which flights are leaving from kansas city to atlanta early monday morning'
 2025-04-26 18:54:38,868 - INFO - InferenceMain - Prediction: {'labels': ['flight']}
 2025-04-26 18:54:38,868 - INFO - InferenceMain - Inference script finished.
+2025-04-26 19:27:18,031 - INFO - InferenceMain - --- Inference Configuration ---
+2025-04-26 19:27:18,035 - INFO - InferenceMain - InferenceConfig(model_path='./results/BEST_atis_multilabel_xlmr_lora', input_text='which flights are leaving from kansas city to atlanta early monday morning', input_file=None, text_column='text', output_file=None, device='cpu', batch_size=8, max_seq_length=None, multilabel_threshold=0.5, include_probabilities=False, log_file='/workspaces/zendesk-mle/coding_task/logs/inference_logs/inference.log')
+2025-04-26 19:27:18,035 - INFO - InferencePredictor - Using device: cpu
+2025-04-26 19:27:18,035 - INFO - InferencePredictor - Loading resources from: ./results/BEST_atis_multilabel_xlmr_lora
+2025-04-26 19:27:18,774 - INFO - InferencePredictor - Tokenizer loaded successfully.
+2025-04-26 19:27:18,774 - INFO - InferencePredictor - Using tokenizer's max_seq_length: 512
+2025-04-26 19:27:18,775 - INFO - InferencePredictor - Inferred base model from PEFT config: xlm-roberta-base
+2025-04-26 19:27:18,778 - INFO - InferencePredictor - Loaded model config. Task type: multilabel, Num Labels: 17
+2025-04-26 19:27:18,778 - INFO - InferencePredictor - Loading base model: xlm-roberta-base
+2025-04-26 19:27:26,328 - INFO - InferencePredictor - Loading PEFT adapter weights from: ./results/BEST_atis_multilabel_xlmr_lora
+2025-04-26 19:27:27,158 - INFO - InferencePredictor - PEFT adapter loaded and merged successfully.
+2025-04-26 19:27:27,161 - INFO - InferencePredictor - Model moved to cpu and set to evaluation mode.
+2025-04-26 19:27:27,161 - INFO - InferenceMain - Predicting for single input text...
+2025-04-26 19:27:27,161 - INFO - InferencePredictor - Starting prediction for 1 text(s)...
+2025-04-26 19:27:28,529 - INFO - InferencePredictor - Prediction finished.
+2025-04-26 19:27:28,530 - INFO - InferenceMain - Input Text: 'which flights are leaving from kansas city to atlanta early monday morning'
+2025-04-26 19:27:28,530 - INFO - InferenceMain - Prediction: [('flight', 0.9995439648628235), ('airfare', 0.0006477271672338247), ('airline', 0.0003700624220073223), ('aircraft', 0.00028059244505129755), ('flight_time', 0.00027037705876864493), ('airport', 0.0002585762704256922), ('quantity', 0.00021505293261725456), ('ground_service', 0.00020211460650898516), ('meal', 0.00019897775200661272), ('distance', 0.00019487073586788028), ('flight_no', 0.00017858893261291087), ('city', 0.00016623061674181372), ('restriction', 0.00016027707897592336), ('abbreviation', 0.00013047896209172904), ('cheapest', 7.809173985151574e-05), ('capacity', 4.820100002689287e-05), ('ground_fare', 4.292541416361928e-05)]
+2025-04-26 19:27:28,530 - INFO - InferenceMain - Inference script finished.

@@ -18,3 +18,5 @@ pandas==2.2.3
 wandb==0.19.10
 tensorboard==2.19.0
 tensorboardX==2.6.2.2
+uvicorn==0.34.2
+pydantic-settings==2.9.1
