@@ -3,7 +3,9 @@ base_model: xlm-roberta-base
 library_name: peft
 ---
 
-# Model Card for Model ID
+# Model Card for Model ID [DOC INCOMPLETE!]
+
+**Need to fill in the model card with relevant information.**
 
 <!-- Provide a quick summary of what the model is/does. -->
 
@@ -17,7 +19,7 @@ library_name: peft
 
 
 
-- **Developed by:** [More Information Needed]
+- **Developed by:** Akshay Joshi
 - **Funded by [optional]:** [More Information Needed]
 - **Shared by [optional]:** [More Information Needed]
 - **Model type:** [More Information Needed]

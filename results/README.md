@@ -4,10 +4,10 @@ This document summarizes the key insights and performance metrics from the best 
 
 ## Key Configuration Insights:
 
-* **Model:** `xlm-roberta-base` was used as the base model.
+* **Model:** Multilingual `xlm-roberta-base` was used as the base model. This model knows 100+ languages and is suitable for multilingual intent classification tasks.
 * **Task:** Multi-label classification (`multilabel`).
 * **Data:** Training data from `atis/train.tsv`, test data from `atis/test.tsv`. Labels are delimited by `+`.
-* **Training Method:** LoRA (method `lora`) was used for parameter-efficient fine-tuning with `r=256` and `alpha=32`. The base model weights were frozen (`freeze_base_model True`).
+* **Training Method:** LoRA (method `lora`) was used for parameter-efficient fine-tuning with rank `r=256` and `alpha=32`. The base model weights were frozen (`freeze_base_model True`).
 * **Hyperparameters:**
     * Epochs requested: 50 (but logs show it finished at epoch 22 - potentially due to `early_stopping` mechanism cutting the training short to prevent the model from overfitting on the training set).
     * Batch Size: 32
