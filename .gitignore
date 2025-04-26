@@ -176,3 +176,7 @@ cython_debug/
 
 # Ignore __MACOSX
 __MACOSX/
+
+# Ignore tensorboard results & HF training binaries
+results/
+coding_task/logs/training_logs/
