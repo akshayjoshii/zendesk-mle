@@ -23,21 +23,36 @@ class DataProcessor:
     tokenizes text, and creates Hugging Face Dataset objects ready for training.
     """
 
-    def __init__(self, data_config: DataConfig, tokenizer: Any):
+    def __init__(self,
+                data_config: DataConfig,
+                tokenizer: Any,
+                # add optional args for precomputed mappings during training
+                # very important to prevent output label shape mismatch between train/test
+                label_map: Optional[Dict[str, int]] = None,
+                id2label: Optional[Dict[int, str]] = None,
+                num_labels: Optional[int] = None
+                ):
         """
         Initializes the DataProcessor.
 
         Args:
             data_config (DataConfig): Configuration for data loading & processing.
             tokenizer (PreTrainedTokenizerBase): Initialized tokenizer instance.
+            label_map (Optional[Dict[str, int]]): Precomputed label_map.
+            id2label (Optional[Dict[int, str]]): Precomputed id2label map.
+            num_labels (Optional[int]): Precomputed number of labels.
         """
         self.config = data_config
         self.tokenizer = tokenizer
-        self.label_map: Dict[str, int] = {}
-        self.id2label: Dict[int, str] = {}
-        self.num_labels: int = 0
-        self.mlb: Optional[MultiLabelBinarizer] = None # for multilabel binarization
 
+        # Use provided mappings if available, otherwise initialize empty
+        self.label_map: Dict[str, int] = label_map if label_map is not None else {}
+        self.id2label: Dict[int, str] = id2label if id2label is not None else {}
+        self.num_labels: int = num_labels if num_labels is not None else 0
+        self.mlb: Optional[MultiLabelBinarizer] = None # for multilabel binarization
+        self._using_precomputed_maps = bool(label_map and id2label and num_labels is not None)
+        if self._using_precomputed_maps:
+            logger.info("DataProcessor initialized with precomputed label mappings.")
         self._validate_config()
 
     def _validate_config(self):
@@ -107,17 +122,26 @@ class DataProcessor:
         logger.info(f"Preparing labels for task type: {self.config.task_type}")
 
         if self.config.task_type == "multiclass":
-            # treat each unique string in the label column as a distinct class
-            # This handles both single labels and un-unpacked combined labels like "A+B" as one class
-            unique_labels = sorted(df[self.config.label_column].unique())
-            self.label_map = {label: i for i, label in enumerate(unique_labels)}
-            self.id2label = {i: label for label, i in self.label_map.items()}
-            self.num_labels = len(unique_labels)
-            logger.info(f"Found {self.num_labels} unique labels for multiclass task.")
-            logger.debug(f"Label map: {self.label_map}")
+            if not self._using_precomputed_maps:
+                # calculate maps only if not provided
+                unique_labels = sorted(df[self.config.label_column].unique())
+                self.label_map = {label: i for i, label in enumerate(unique_labels)}
+                self.id2label = {i: label for label, i in self.label_map.items()}
+                self.num_labels = len(unique_labels)
+                logger.info(f"Calculated {self.num_labels} unique labels for multiclass task.")
+                logger.debug(f"Label map: {self.label_map}")
+            else:
+                logger.info(f"Using precomputed {self.num_labels} labels for multiclass task.")
 
-            # appy mapping to create integer labels
+            # Apply mapping to create integer labels
+            # handle labels potentially missing from the precomputed map (e.g., in test set)
             df['labels'] = df[self.config.label_column].map(self.label_map)
+            # Optional: Log or handle rows where mapping resulted in NaN
+            if df['labels'].isnull().any():
+                missing_labels = df[df['labels'].isnull()][self.config.label_column].unique()
+                logger.warning(f"Labels found in data but not in precomputed label_map: {missing_labels}. These rows will have NaN labels.")
+                # Decide how to handle: dropna, fill with a default, etc.
+                # df = df.dropna(subset=['labels']) # Example: drop rows with unknown labels
 
         elif self.config.task_type == "multilabel":
             # asumes unpack_multi_labels=True was used in CustomTextDataset.
@@ -128,16 +152,18 @@ class DataProcessor:
             label_groups = df.groupby(self.config.text_column)[self.config.label_column].apply(list).reset_index()
             # label_groups now has columns: [text_column, label_column] where label_column contains lists of strings
 
-            # get all unique individual labels across all samples
-            all_individual_labels = set(label for sublist in label_groups[self.config.label_column] for label in sublist)
-            unique_labels = sorted(list(all_individual_labels))
-
-            # create label mapping for multi-hot encoding
-            self.label_map = {label: i for i, label in enumerate(unique_labels)}
-            self.id2label = {i: label for label, i in self.label_map.items()}
-            self.num_labels = len(unique_labels)
-            logger.info(f"Found {self.num_labels} unique individual labels for multilabel task.")
-            logger.debug(f"Label map: {self.label_map}")
+            if not self._using_precomputed_maps:
+                # Calculate maps only if not provided
+                all_individual_labels = set(label for sublist in label_groups[self.config.label_column] for label in sublist)
+                unique_labels = sorted(list(all_individual_labels))
+                self.label_map = {label: i for i, label in enumerate(unique_labels)}
+                self.id2label = {i: label for label, i in self.label_map.items()}
+                self.num_labels = len(unique_labels)
+                logger.info(f"Calculated {self.num_labels} unique individual labels for multilabel task.")
+                logger.debug(f"Label map: {self.label_map}")
+            else:
+                logger.info(f"Using precomputed {self.num_labels} labels for multilabel task.")
+                unique_labels = sorted(list(self.label_map.keys())) # get classes from precomputed map
 
             # Use MultiLabelBinarizer to create multi-hot vectors
             self.mlb = MultiLabelBinarizer(classes=unique_labels)
@@ -201,6 +227,11 @@ class DataProcessor:
         df_full = self._load_and_preprocess_df()
         df_processed = self._prepare_labels(df_full)
 
+        # If we are processing the test set (indicated by validation_split_ratio 
+        # being None or invalid for splitting) AND we used precomputed maps, 
+        # we should NOT split. The logic below already handles validation_split_ratio == 0 correctly.
+        # We just need to ensure the test set processor is initialized with validation_split_ratio=0 or similar.
+
         # Split data - using the processed pandas DF
         if self.config.validation_split_ratio > 0 and self.config.validation_split_ratio < 1.0:
             logger.info(f"Splitting data into train/validation ({1.0 - self.config.validation_split_ratio:.1f}/{self.config.validation_split_ratio:.1f})")
@@ -237,7 +268,13 @@ class DataProcessor:
         # Convert to HF DatasetDict
         logger.info("Converting DataFrame(s) to Hugging Face DatasetDict...")
         dataset_dict = DatasetDict()
-        dataset_dict['train'] = Dataset.from_pandas(train_df, features=hf_features, preserve_index=False)
+
+        # If val_df is None, it means we didn't split, so the whole df goes into 'train' key.
+        # This is correct for processing the test set where we want the whole set under one key.
+        dataset_dict['train'] = Dataset.from_pandas(train_df, 
+                                                features=hf_features, 
+                                                preserve_index=False
+                                            )
         if val_df is not None:
             dataset_dict['validation'] = Dataset.from_pandas(val_df, features=hf_features, preserve_index=False)
 

@@ -66,7 +66,7 @@ def main():
         logger.warning("Tokenizer does not have a pad token. Setting pad_token = eos_token.")
         tokenizer.pad_token = tokenizer.eos_token
 
-    logger.info("Starting data processing...")
+    logger.info("Starting data processing for Train/Validation...")
     data_processor = DataProcessor(data_config=data_args, tokenizer=tokenizer)
     tokenized_datasets, id2label, label2id, num_labels = data_processor.load_and_prepare_datasets()
     logger.info(f"Data processing complete. Number of labels: {num_labels}")
@@ -77,7 +77,9 @@ def main():
         with open(os.path.join(training_args.output_dir, "label2id.json"), "w") as f:
             json.dump(label2id, f, indent=2)
         with open(os.path.join(training_args.output_dir, "id2label.json"), "w") as f:
-            json.dump(id2label, f, indent=2)
+            # Convert int keys to str for JSON compatibility if necessary
+            id2label_save = {str(k): v for k, v in id2label.items()}
+            json.dump(id2label_save, f, indent=2)
         logger.info(f"Label mappings saved to {training_args.output_dir}")
     except Exception as e:
         logger.error(f"Failed to save label mappings: {e}")
@@ -126,14 +128,21 @@ def main():
     if training_args.evaluation_strategy != "no" and tokenized_datasets.get("validation"):
         logger.info("*** Starting Final Evaluation on Validation Set ***")
         eval_metrics = trainer.evaluate(eval_dataset=tokenized_datasets["validation"])
-        trainer.log_metrics("Validation", eval_metrics)
-        trainer.save_metrics("Validation", eval_metrics)
-        logger.info(f"Final evaluation metrics on Val set: {eval_metrics}")
+        # Ensure metrics are prefixed correctly for saving/logging
+        eval_metrics_log = {f"eval_{k}": v for k, v in eval_metrics.items()}
+        trainer.log_metrics("eval", eval_metrics_log)
+        trainer.save_metrics("eval", eval_metrics_log)
+        logger.info(f"Final validation metrics: {eval_metrics_log}")
 
 
     logger.info("*** Starting Test Set Evaluation ***")
     if data_args.test_dataset_path:
         logger.info(f"Loading test dataset from: {data_args.test_dataset_path}")
+
+        if not os.path.exists(data_args.test_dataset_path):
+             logger.error(f"Test dataset path not found: {data_args.test_dataset_path}")
+             raise FileNotFoundError(f"Test dataset path not found: {data_args.test_dataset_path}")
+
         test_data_args = DataConfig(
             dataset_path=data_args.test_dataset_path,
             text_column=data_args.text_column,
@@ -142,18 +151,38 @@ def main():
             unpack_multi_labels=data_args.unpack_multi_labels,
             label_delimiter=data_args.label_delimiter,
             use_dask=data_args.use_dask,
-            max_seq_length=data_args.max_seq_length
+            max_seq_length=data_args.max_seq_length,
+            validation_split_ratio=0 # ensure test set is not split
         )
-        test_processor = DataProcessor(data_config=test_data_args, tokenizer=tokenizer)
-        tokenized_test_dataset, _, _, _ = test_processor.load_and_prepare_datasets()
+
+        # Initialize test processor PASSING the maps from training data
+        # This ensures the label dimension is consistent with the model output layer
+        test_processor = DataProcessor(
+            data_config=test_data_args,
+            tokenizer=tokenizer,
+            label_map=label2id, # map from training
+            id2label=id2label,   # map from training
+            num_labels=num_labels  # num_labels from training
+        )
+
+        # Process the test dataset using the consistent label mapping
+        # The result is a DatasetDict, test data is under the 'train' key because validation_split_ratio=0
+        tokenized_test_dataset_dict, _, _, _ = test_processor.load_and_prepare_datasets()
+        test_dataset = tokenized_test_dataset_dict.get("train") # Use .get() for safety
 
         # Test set is loaded as "train" in DatasetDict
         # because the DataProcessor class is designed to handle datasets for training and validation
         # TODO: Refactor this to avoid confusion, with more time I would fix this at highest priority!!
-        test_metrics = trainer.evaluate(eval_dataset=tokenized_test_dataset["train"])
-        trainer.log_metrics("Test", test_metrics)
-        trainer.save_metrics("Test", test_metrics)
-        logger.info(f"Final evaluation metrics on Test set: {test_metrics}")
+        if test_dataset:
+                logger.info("*** Starting Test Set Evaluation ***")
+                test_metrics = trainer.evaluate(eval_dataset=test_dataset) # Evaluate the test dataset
+                # Ensure metrics are prefixed correctly for saving/logging
+                test_metrics_log = {f"test_{k}": v for k, v in test_metrics.items()}
+                trainer.log_metrics("test", test_metrics_log)
+                trainer.save_metrics("test", test_metrics_log)
+                logger.info(f"Test set evaluation metrics: {test_metrics_log}")
+        else:
+            logger.warning("Test dataset processing resulted in an empty dataset. Skipping test evaluation.")
     else:
         logger.warning("No test dataset provided. Skipping test evaluation.")
     logger.info("*** Evaluation Finished ***")
