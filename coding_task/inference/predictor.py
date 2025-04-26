@@ -4,7 +4,7 @@ import torch
 import pandas as pd
 from transformers import AutoTokenizer, AutoModelForSequenceClassification, AutoConfig, PreTrainedTokenizerBase
 from peft import PeftModel, PeftConfig
-from typing import List, Union, Dict, Any
+from typing import List, Union, Dict, Any, Tuple
 
 from coding_task.data.utils import basic_text_cleanup
 from coding_task.logging_utils import get_logger
@@ -151,42 +151,52 @@ class TextClassifierPredictor:
         )
         return inputs
 
-    def _postprocess(self, logits: torch.Tensor) -> List[Dict[str, Any]]:
-        """Processes model logits into predictions based on task type."""
-        predictions = []
+    def _postprocess(self, logits: torch.Tensor) -> List[List[Tuple[str, float]]]:
+        """
+        Processes model logits into a list of sorted (label, confidence) tuples for each input.
+
+        Args:
+            logits (torch.Tensor): Raw output logits from the model (batch_size, num_labels).
+
+        Returns:
+            List[List[Tuple[str, float]]]: A list where each inner list contains
+                                           (label, confidence) tuples for one input sample,
+                                           sorted by confidence descending.
+        """
+        all_results = []
+        batch_size = logits.shape[0]
+
         if self.task_type == "multiclass":
+            # Apply softmax to get probabilities
             probs = torch.softmax(logits, dim=-1)
-            scores, predicted_indices = torch.max(probs, dim=-1)
-            for i in range(logits.shape[0]):
-                idx = predicted_indices[i].item()
-                label = self.id2label.get(idx, f"UNKNOWN_LABEL_{idx}")
-                score = scores[i].item()
-                result = {"label": label}
-                if self.config.include_probabilities:
-                    result["score"] = score
-                    # Optionally add all probabilities
-                    # result["all_scores"] = {self.id2label.get(j, f"UNKNOWN_{j}"): p.item() for j, p in enumerate(probs[i])}
-                predictions.append(result)
+            for i in range(batch_size):
+                # Create (label, score) tuples for all classes
+                scores_for_sample = []
+                for label_idx, score in enumerate(probs[i]):
+                    label = self.id2label.get(label_idx, f"UNKNOWN_{label_idx}")
+                    scores_for_sample.append((label, score.item()))
+                # Sort by score descending
+                scores_for_sample.sort(key=lambda x: x[1], reverse=True)
+                all_results.append(scores_for_sample)
 
         elif self.task_type == "multilabel":
+            # Apply sigmoid to get independent probabilities
             probs = torch.sigmoid(logits)
-            predicted_indices = (probs > self.config.multilabel_threshold).int()
-            for i in range(logits.shape[0]):
-                indices = torch.where(predicted_indices[i] == 1)[0]
-                labels = [self.id2label.get(idx.item(), f"UNKNOWN_LABEL_{idx.item()}") for idx in indices]
-                scores = {self.id2label.get(idx.item(), f"UNKNOWN_{idx.item()}"): probs[i, idx].item() for idx in indices}
-                result = {"labels": labels} # return list of labels
-                if self.config.include_probabilities:
-                    result["scores"] = scores
-                    # Optionally add all probabilities
-                    # result["all_scores"] = {self.id2label.get(j, f"UNKNOWN_{j}"): p.item() for j, p in enumerate(probs[i])}
-                predictions.append(result)
+            for i in range(batch_size):
+                # Create (label, score) tuples for all classes
+                scores_for_sample = []
+                for label_idx, score in enumerate(probs[i]):
+                    label = self.id2label.get(label_idx, f"UNKNOWN_{label_idx}")
+                    scores_for_sample.append((label, score.item()))
+                # Sort by score descending
+                scores_for_sample.sort(key=lambda x: x[1], reverse=True)
+                all_results.append(scores_for_sample)
         else:
             self.logger.error(f"Unsupported task type '{self.task_type}' during postprocessing.")
-            # return raw logits or raise error
-            predictions = [{"error": f"Unsupported task type: {self.task_type}"} for _ in range(logits.shape[0])]
+            # Return empty lists or raise error
+            all_results = [[] for _ in range(batch_size)]
 
-        return predictions
+        return all_results
 
 
     @torch.no_grad() # disable grad calculations for inference
