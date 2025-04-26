@@ -1,0 +1,93 @@
+2025-04-26 11:19:25,372 - INFO - ModelLoader - Loading base model: xlm-roberta-base
+2025-04-26 11:19:25,372 - INFO - ModelLoader - Configuring model for 'multi_label_classification' (num_labels=17).
+2025-04-26 11:19:28,042 - INFO - ModelLoader - Freezing base model parameters.
+2025-04-26 11:19:28,043 - INFO - ModelLoader - Applying PEFT method: lora
+2025-04-26 11:19:28,043 - INFO - ModelLoader - lora_target_modules not specified, attempting auto-detection by PEFT library.
+2025-04-26 11:19:28,043 - INFO - ModelLoader - LoRA Config: r=64, alpha=32, dropout=0.1, target_modules=auto
+2025-04-26 11:19:28,327 - INFO - ModelLoader - PEFT model created successfully.
+2025-04-26 11:26:51,770 - INFO - ModelLoader - Loading base model: xlm-roberta-base
+2025-04-26 11:26:51,770 - INFO - ModelLoader - Configuring model for 'single_label_classification' (num_labels=22).
+2025-04-26 11:26:54,401 - INFO - ModelLoader - Freezing base model parameters.
+2025-04-26 11:26:54,402 - INFO - ModelLoader - Applying PEFT method: lora
+2025-04-26 11:26:54,402 - INFO - ModelLoader - lora_target_modules not specified, attempting auto-detection by PEFT library.
+2025-04-26 11:26:54,402 - INFO - ModelLoader - LoRA Config: r=2, alpha=16, dropout=0.1, target_modules=auto
+2025-04-26 11:26:54,655 - INFO - ModelLoader - PEFT model created successfully.
+2025-04-26 11:28:09,625 - INFO - ModelLoader - Loading base model: xlm-roberta-base
+2025-04-26 11:28:09,625 - INFO - ModelLoader - Configuring model for 'multi_label_classification' (num_labels=17).
+2025-04-26 11:28:12,363 - INFO - ModelLoader - Freezing base model parameters.
+2025-04-26 11:28:12,364 - INFO - ModelLoader - Applying PEFT method: lora
+2025-04-26 11:28:12,364 - INFO - ModelLoader - lora_target_modules not specified, attempting auto-detection by PEFT library.
+2025-04-26 11:28:12,364 - INFO - ModelLoader - LoRA Config: r=2, alpha=32, dropout=0.1, target_modules=auto
+2025-04-26 11:28:12,622 - INFO - ModelLoader - PEFT model created successfully.
+2025-04-26 11:32:43,655 - INFO - ModelLoader - Loading base model: xlm-roberta-base
+2025-04-26 11:32:43,655 - INFO - ModelLoader - Configuring model for 'single_label_classification' (num_labels=22).
+2025-04-26 11:34:32,550 - INFO - ModelLoader - Loading base model: xlm-roberta-base
+2025-04-26 11:34:32,551 - INFO - ModelLoader - Configuring model for 'single_label_classification' (num_labels=22).
+2025-04-26 11:34:35,210 - INFO - ModelLoader - Freezing base model parameters.
+2025-04-26 11:34:35,212 - INFO - ModelLoader - Applying PEFT method: lora
+2025-04-26 11:34:35,212 - INFO - ModelLoader - lora_target_modules not specified, attempting auto-detection by PEFT library.
+2025-04-26 11:34:35,212 - INFO - ModelLoader - LoRA Config: r=64, alpha=16, dropout=0.1, target_modules=auto
+2025-04-26 11:34:35,498 - INFO - ModelLoader - PEFT model created successfully.
+2025-04-26 11:44:18,907 - INFO - ModelLoader - Loading base model: xlm-roberta-base
+2025-04-26 11:44:18,907 - INFO - ModelLoader - Configuring model for 'single_label_classification' (num_labels=22).
+2025-04-26 11:44:21,610 - INFO - ModelLoader - Freezing base model parameters.
+2025-04-26 11:44:21,611 - INFO - ModelLoader - Applying PEFT method: lora
+2025-04-26 11:44:21,611 - INFO - ModelLoader - lora_target_modules not specified, attempting auto-detection by PEFT library.
+2025-04-26 11:44:21,611 - INFO - ModelLoader - LoRA Config: r=128, alpha=16, dropout=0.1, target_modules=auto
+2025-04-26 11:44:21,918 - INFO - ModelLoader - PEFT model created successfully.
+2025-04-26 11:52:14,428 - INFO - ModelLoader - Loading base model: xlm-roberta-base
+2025-04-26 11:52:14,428 - INFO - ModelLoader - Configuring model for 'multi_label_classification' (num_labels=17).
+2025-04-26 11:52:17,036 - INFO - ModelLoader - Freezing base model parameters.
+2025-04-26 11:52:17,038 - INFO - ModelLoader - Applying PEFT method: lora
+2025-04-26 11:52:17,038 - INFO - ModelLoader - lora_target_modules not specified, attempting auto-detection by PEFT library.
+2025-04-26 11:52:17,038 - INFO - ModelLoader - LoRA Config: r=64, alpha=16, dropout=0.1, target_modules=auto
+2025-04-26 11:52:17,321 - INFO - ModelLoader - PEFT model created successfully.
+2025-04-26 11:58:03,700 - INFO - ModelLoader - Loading base model: xlm-roberta-base
+2025-04-26 11:58:03,700 - INFO - ModelLoader - Configuring model for 'multi_label_classification' (num_labels=17).
+2025-04-26 11:58:06,325 - INFO - ModelLoader - Freezing base model parameters.
+2025-04-26 11:58:06,326 - INFO - ModelLoader - Applying PEFT method: lora
+2025-04-26 11:58:06,326 - INFO - ModelLoader - lora_target_modules not specified, attempting auto-detection by PEFT library.
+2025-04-26 11:58:06,326 - INFO - ModelLoader - LoRA Config: r=128, alpha=16, dropout=0.1, target_modules=auto
+2025-04-26 11:58:06,638 - INFO - ModelLoader - PEFT model created successfully.
+2025-04-26 13:39:44,097 - INFO - ModelLoader - Loading base model: xlm-roberta-base
+2025-04-26 13:39:44,097 - INFO - ModelLoader - Configuring model for 'multi_label_classification' (num_labels=17).
+2025-04-26 13:39:46,783 - INFO - ModelLoader - Freezing base model parameters.
+2025-04-26 13:39:46,784 - INFO - ModelLoader - Applying PEFT method: lora
+2025-04-26 13:39:46,784 - INFO - ModelLoader - lora_target_modules not specified, attempting auto-detection by PEFT library.
+2025-04-26 13:39:46,784 - INFO - ModelLoader - LoRA Config: r=256, alpha=16, dropout=0.1, target_modules=auto
+2025-04-26 13:39:47,140 - INFO - ModelLoader - PEFT model created successfully.
+2025-04-26 13:40:19,424 - INFO - ModelLoader - Loading base model: xlm-roberta-base
+2025-04-26 13:40:19,424 - INFO - ModelLoader - Configuring model for 'multi_label_classification' (num_labels=17).
+2025-04-26 13:40:22,058 - INFO - ModelLoader - Freezing base model parameters.
+2025-04-26 13:40:22,059 - INFO - ModelLoader - Applying PEFT method: lora
+2025-04-26 13:40:22,059 - INFO - ModelLoader - lora_target_modules not specified, attempting auto-detection by PEFT library.
+2025-04-26 13:40:22,059 - INFO - ModelLoader - LoRA Config: r=256, alpha=16, dropout=0.1, target_modules=auto
+2025-04-26 13:40:22,416 - INFO - ModelLoader - PEFT model created successfully.
+2025-04-26 13:41:16,668 - INFO - ModelLoader - Loading base model: xlm-roberta-base
+2025-04-26 13:41:16,668 - INFO - ModelLoader - Configuring model for 'multi_label_classification' (num_labels=17).
+2025-04-26 13:41:19,342 - INFO - ModelLoader - Freezing base model parameters.
+2025-04-26 13:41:19,343 - INFO - ModelLoader - Applying PEFT method: lora
+2025-04-26 13:41:19,343 - INFO - ModelLoader - lora_target_modules not specified, attempting auto-detection by PEFT library.
+2025-04-26 13:41:19,343 - INFO - ModelLoader - LoRA Config: r=256, alpha=16, dropout=0.1, target_modules=auto
+2025-04-26 13:41:19,697 - INFO - ModelLoader - PEFT model created successfully.
+2025-04-26 13:43:23,940 - INFO - ModelLoader - Loading base model: xlm-roberta-base
+2025-04-26 13:43:23,940 - INFO - ModelLoader - Configuring model for 'multi_label_classification' (num_labels=17).
+2025-04-26 13:43:26,807 - INFO - ModelLoader - Freezing base model parameters.
+2025-04-26 13:43:26,808 - INFO - ModelLoader - Applying PEFT method: lora
+2025-04-26 13:43:26,808 - INFO - ModelLoader - lora_target_modules not specified, attempting auto-detection by PEFT library.
+2025-04-26 13:43:26,808 - INFO - ModelLoader - LoRA Config: r=256, alpha=16, dropout=0.1, target_modules=auto
+2025-04-26 13:43:27,168 - INFO - ModelLoader - PEFT model created successfully.
+2025-04-26 13:50:43,109 - INFO - ModelLoader - Loading base model: xlm-roberta-base
+2025-04-26 13:50:43,110 - INFO - ModelLoader - Configuring model for 'multi_label_classification' (num_labels=17).
+2025-04-26 13:50:45,785 - INFO - ModelLoader - Freezing base model parameters.
+2025-04-26 13:50:45,787 - INFO - ModelLoader - Applying PEFT method: lora
+2025-04-26 13:50:45,787 - INFO - ModelLoader - lora_target_modules not specified, attempting auto-detection by PEFT library.
+2025-04-26 13:50:45,787 - INFO - ModelLoader - LoRA Config: r=256, alpha=16, dropout=0.1, target_modules=auto
+2025-04-26 13:50:46,142 - INFO - ModelLoader - PEFT model created successfully.
+2025-04-26 13:52:29,783 - INFO - ModelLoader - Loading base model: xlm-roberta-base
+2025-04-26 13:52:29,784 - INFO - ModelLoader - Configuring model for 'multi_label_classification' (num_labels=17).
+2025-04-26 13:52:32,407 - INFO - ModelLoader - Freezing base model parameters.
+2025-04-26 13:52:32,409 - INFO - ModelLoader - Applying PEFT method: lora
+2025-04-26 13:52:32,409 - INFO - ModelLoader - lora_target_modules not specified, attempting auto-detection by PEFT library.
+2025-04-26 13:52:32,409 - INFO - ModelLoader - LoRA Config: r=256, alpha=16, dropout=0.1, target_modules=auto
+2025-04-26 13:52:32,767 - INFO - ModelLoader - PEFT model created successfully.

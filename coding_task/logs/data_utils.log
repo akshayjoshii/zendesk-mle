@@ -1,0 +1,372 @@
+2025-04-26 11:19:24,832 - INFO - Data Utils - File extension: .tsv
+2025-04-26 11:19:24,832 - INFO - Data Utils - CustomTextDataset initialized:
+2025-04-26 11:19:24,832 - INFO - Data Utils -   file_path: ./coding_task/data/atis/train.tsv
+2025-04-26 11:19:24,832 - INFO - Data Utils -   file_type: tsv
+2025-04-26 11:19:24,832 - INFO - Data Utils -   column_names: ['atis_text', 'atis_labels']
+2025-04-26 11:19:24,832 - INFO - Data Utils -   use_dask: False
+2025-04-26 11:19:24,832 - INFO - Data Utils -   unpack_multi_labels: True
+2025-04-26 11:19:24,832 - INFO - Data Utils -   label_column_name: atis_labels
+2025-04-26 11:19:24,832 - INFO - Data Utils -   label_delimiter: +
+2025-04-26 11:19:24,832 - INFO - Data Utils - Loading data using Pandas (chunksize: None)...
+2025-04-26 11:19:24,839 - INFO - Data Utils - Loaded initial Pandas df with 4634 rows and 2 columns.
+2025-04-26 11:19:24,839 - INFO - Data Utils - Unpacking multi-labels in column 'atis_labels' using delimiter '+'.
+2025-04-26 11:19:24,846 - INFO - Data Utils - Unpacking complete. Initial rows: 4634, Final rows: 4657.
+2025-04-26 11:19:24,851 - INFO - Data Utils - Applying cleanup function 'basic_text_cleanup' to columns: ['atis_text']
+2025-04-26 11:19:24,856 - INFO - Data Utils - Dropping rows with any NaN values.
+2025-04-26 11:19:24,858 - INFO - Data Utils - Resetting index after cleanup. New shape: (4657, 2)
+2025-04-26 11:24:03,019 - INFO - Data Utils - File extension: .tsv
+2025-04-26 11:24:03,019 - INFO - Data Utils - CustomTextDataset initialized:
+2025-04-26 11:24:03,019 - INFO - Data Utils -   file_path: ./coding_task/data/atis/test.tsv
+2025-04-26 11:24:03,019 - INFO - Data Utils -   file_type: tsv
+2025-04-26 11:24:03,019 - INFO - Data Utils -   column_names: ['atis_text', 'atis_labels']
+2025-04-26 11:24:03,019 - INFO - Data Utils -   use_dask: False
+2025-04-26 11:24:03,019 - INFO - Data Utils -   unpack_multi_labels: True
+2025-04-26 11:24:03,019 - INFO - Data Utils -   label_column_name: atis_labels
+2025-04-26 11:24:03,020 - INFO - Data Utils -   label_delimiter: +
+2025-04-26 11:24:03,020 - INFO - Data Utils - Loading data using Pandas (chunksize: None)...
+2025-04-26 11:24:03,025 - INFO - Data Utils - Loaded initial Pandas df with 850 rows and 2 columns.
+2025-04-26 11:24:03,025 - INFO - Data Utils - Unpacking multi-labels in column 'atis_labels' using delimiter '+'.
+2025-04-26 11:24:03,032 - INFO - Data Utils - Unpacking complete. Initial rows: 850, Final rows: 865.
+2025-04-26 11:24:03,038 - INFO - Data Utils - Applying cleanup function 'basic_text_cleanup' to columns: ['atis_text']
+2025-04-26 11:24:03,040 - INFO - Data Utils - Dropping rows with any NaN values.
+2025-04-26 11:24:03,041 - INFO - Data Utils - Resetting index after cleanup. New shape: (865, 2)
+2025-04-26 11:26:51,472 - INFO - Data Utils - File extension: .tsv
+2025-04-26 11:26:51,472 - INFO - Data Utils - CustomTextDataset initialized:
+2025-04-26 11:26:51,472 - INFO - Data Utils -   file_path: ./coding_task/data/atis/train.tsv
+2025-04-26 11:26:51,472 - INFO - Data Utils -   file_type: tsv
+2025-04-26 11:26:51,472 - INFO - Data Utils -   column_names: ['atis_text', 'atis_labels']
+2025-04-26 11:26:51,472 - INFO - Data Utils -   use_dask: False
+2025-04-26 11:26:51,472 - INFO - Data Utils -   unpack_multi_labels: False
+2025-04-26 11:26:51,472 - INFO - Data Utils - Loading data using Pandas (chunksize: None)...
+2025-04-26 11:26:51,479 - INFO - Data Utils - Loaded initial Pandas df with 4634 rows and 2 columns.
+2025-04-26 11:26:51,480 - INFO - Data Utils - Applying cleanup function 'basic_text_cleanup' to columns: ['atis_text']
+2025-04-26 11:26:51,484 - INFO - Data Utils - Dropping rows with any NaN values.
+2025-04-26 11:26:51,487 - INFO - Data Utils - Resetting index after cleanup. New shape: (4634, 2)
+2025-04-26 11:27:27,467 - INFO - Data Utils - File extension: .tsv
+2025-04-26 11:27:27,467 - INFO - Data Utils - CustomTextDataset initialized:
+2025-04-26 11:27:27,467 - INFO - Data Utils -   file_path: ./coding_task/data/atis/test.tsv
+2025-04-26 11:27:27,467 - INFO - Data Utils -   file_type: tsv
+2025-04-26 11:27:27,468 - INFO - Data Utils -   column_names: ['atis_text', 'atis_labels']
+2025-04-26 11:27:27,468 - INFO - Data Utils -   use_dask: False
+2025-04-26 11:27:27,468 - INFO - Data Utils -   unpack_multi_labels: False
+2025-04-26 11:27:27,468 - INFO - Data Utils - Loading data using Pandas (chunksize: None)...
+2025-04-26 11:27:27,472 - INFO - Data Utils - Loaded initial Pandas df with 850 rows and 2 columns.
+2025-04-26 11:27:27,472 - INFO - Data Utils - Applying cleanup function 'basic_text_cleanup' to columns: ['atis_text']
+2025-04-26 11:27:27,474 - INFO - Data Utils - Dropping rows with any NaN values.
+2025-04-26 11:27:27,475 - INFO - Data Utils - Resetting index after cleanup. New shape: (850, 2)
+2025-04-26 11:28:09,017 - INFO - Data Utils - File extension: .tsv
+2025-04-26 11:28:09,017 - INFO - Data Utils - CustomTextDataset initialized:
+2025-04-26 11:28:09,017 - INFO - Data Utils -   file_path: ./coding_task/data/atis/train.tsv
+2025-04-26 11:28:09,017 - INFO - Data Utils -   file_type: tsv
+2025-04-26 11:28:09,017 - INFO - Data Utils -   column_names: ['atis_text', 'atis_labels']
+2025-04-26 11:28:09,017 - INFO - Data Utils -   use_dask: False
+2025-04-26 11:28:09,017 - INFO - Data Utils -   unpack_multi_labels: True
+2025-04-26 11:28:09,017 - INFO - Data Utils -   label_column_name: atis_labels
+2025-04-26 11:28:09,017 - INFO - Data Utils -   label_delimiter: +
+2025-04-26 11:28:09,017 - INFO - Data Utils - Loading data using Pandas (chunksize: None)...
+2025-04-26 11:28:09,024 - INFO - Data Utils - Loaded initial Pandas df with 4634 rows and 2 columns.
+2025-04-26 11:28:09,024 - INFO - Data Utils - Unpacking multi-labels in column 'atis_labels' using delimiter '+'.
+2025-04-26 11:28:09,031 - INFO - Data Utils - Unpacking complete. Initial rows: 4634, Final rows: 4657.
+2025-04-26 11:28:09,035 - INFO - Data Utils - Applying cleanup function 'basic_text_cleanup' to columns: ['atis_text']
+2025-04-26 11:28:09,040 - INFO - Data Utils - Dropping rows with any NaN values.
+2025-04-26 11:28:09,042 - INFO - Data Utils - Resetting index after cleanup. New shape: (4657, 2)
+2025-04-26 11:28:44,722 - INFO - Data Utils - File extension: .tsv
+2025-04-26 11:28:44,722 - INFO - Data Utils - CustomTextDataset initialized:
+2025-04-26 11:28:44,722 - INFO - Data Utils -   file_path: ./coding_task/data/atis/test.tsv
+2025-04-26 11:28:44,722 - INFO - Data Utils -   file_type: tsv
+2025-04-26 11:28:44,723 - INFO - Data Utils -   column_names: ['atis_text', 'atis_labels']
+2025-04-26 11:28:44,723 - INFO - Data Utils -   use_dask: False
+2025-04-26 11:28:44,723 - INFO - Data Utils -   unpack_multi_labels: True
+2025-04-26 11:28:44,723 - INFO - Data Utils -   label_column_name: atis_labels
+2025-04-26 11:28:44,723 - INFO - Data Utils -   label_delimiter: +
+2025-04-26 11:28:44,723 - INFO - Data Utils - Loading data using Pandas (chunksize: None)...
+2025-04-26 11:28:44,728 - INFO - Data Utils - Loaded initial Pandas df with 850 rows and 2 columns.
+2025-04-26 11:28:44,728 - INFO - Data Utils - Unpacking multi-labels in column 'atis_labels' using delimiter '+'.
+2025-04-26 11:28:44,735 - INFO - Data Utils - Unpacking complete. Initial rows: 850, Final rows: 865.
+2025-04-26 11:28:44,740 - INFO - Data Utils - Applying cleanup function 'basic_text_cleanup' to columns: ['atis_text']
+2025-04-26 11:28:44,743 - INFO - Data Utils - Dropping rows with any NaN values.
+2025-04-26 11:28:44,744 - INFO - Data Utils - Resetting index after cleanup. New shape: (865, 2)
+2025-04-26 11:32:43,321 - INFO - Data Utils - File extension: .tsv
+2025-04-26 11:32:43,321 - INFO - Data Utils - CustomTextDataset initialized:
+2025-04-26 11:32:43,321 - INFO - Data Utils -   file_path: ./coding_task/data/atis/train.tsv
+2025-04-26 11:32:43,321 - INFO - Data Utils -   file_type: tsv
+2025-04-26 11:32:43,321 - INFO - Data Utils -   column_names: ['atis_text', 'atis_labels']
+2025-04-26 11:32:43,322 - INFO - Data Utils -   use_dask: False
+2025-04-26 11:32:43,322 - INFO - Data Utils -   unpack_multi_labels: False
+2025-04-26 11:32:43,322 - INFO - Data Utils - Loading data using Pandas (chunksize: None)...
+2025-04-26 11:32:43,329 - INFO - Data Utils - Loaded initial Pandas df with 4634 rows and 2 columns.
+2025-04-26 11:32:43,329 - INFO - Data Utils - Applying cleanup function 'basic_text_cleanup' to columns: ['atis_text']
+2025-04-26 11:32:43,334 - INFO - Data Utils - Dropping rows with any NaN values.
+2025-04-26 11:32:43,336 - INFO - Data Utils - Resetting index after cleanup. New shape: (4634, 2)
+2025-04-26 11:34:32,248 - INFO - Data Utils - File extension: .tsv
+2025-04-26 11:34:32,248 - INFO - Data Utils - CustomTextDataset initialized:
+2025-04-26 11:34:32,248 - INFO - Data Utils -   file_path: ./coding_task/data/atis/train.tsv
+2025-04-26 11:34:32,248 - INFO - Data Utils -   file_type: tsv
+2025-04-26 11:34:32,248 - INFO - Data Utils -   column_names: ['atis_text', 'atis_labels']
+2025-04-26 11:34:32,249 - INFO - Data Utils -   use_dask: False
+2025-04-26 11:34:32,249 - INFO - Data Utils -   unpack_multi_labels: False
+2025-04-26 11:34:32,249 - INFO - Data Utils - Loading data using Pandas (chunksize: None)...
+2025-04-26 11:34:32,255 - INFO - Data Utils - Loaded initial Pandas df with 4634 rows and 2 columns.
+2025-04-26 11:34:32,256 - INFO - Data Utils - Applying cleanup function 'basic_text_cleanup' to columns: ['atis_text']
+2025-04-26 11:34:32,260 - INFO - Data Utils - Dropping rows with any NaN values.
+2025-04-26 11:34:32,263 - INFO - Data Utils - Resetting index after cleanup. New shape: (4634, 2)
+2025-04-26 11:37:45,742 - INFO - Data Utils - File extension: .tsv
+2025-04-26 11:37:45,742 - INFO - Data Utils - CustomTextDataset initialized:
+2025-04-26 11:37:45,742 - INFO - Data Utils -   file_path: ./coding_task/data/atis/test.tsv
+2025-04-26 11:37:45,742 - INFO - Data Utils -   file_type: tsv
+2025-04-26 11:37:45,742 - INFO - Data Utils -   column_names: ['atis_text', 'atis_labels']
+2025-04-26 11:37:45,742 - INFO - Data Utils -   use_dask: False
+2025-04-26 11:37:45,742 - INFO - Data Utils -   unpack_multi_labels: False
+2025-04-26 11:37:45,742 - INFO - Data Utils - Loading data using Pandas (chunksize: None)...
+2025-04-26 11:37:45,745 - INFO - Data Utils - Loaded initial Pandas df with 850 rows and 2 columns.
+2025-04-26 11:37:45,745 - INFO - Data Utils - Applying cleanup function 'basic_text_cleanup' to columns: ['atis_text']
+2025-04-26 11:37:45,747 - INFO - Data Utils - Dropping rows with any NaN values.
+2025-04-26 11:37:45,748 - INFO - Data Utils - Resetting index after cleanup. New shape: (850, 2)
+2025-04-26 11:44:18,520 - INFO - Data Utils - File extension: .tsv
+2025-04-26 11:44:18,520 - INFO - Data Utils - CustomTextDataset initialized:
+2025-04-26 11:44:18,520 - INFO - Data Utils -   file_path: ./coding_task/data/atis/train.tsv
+2025-04-26 11:44:18,520 - INFO - Data Utils -   file_type: tsv
+2025-04-26 11:44:18,520 - INFO - Data Utils -   column_names: ['atis_text', 'atis_labels']
+2025-04-26 11:44:18,520 - INFO - Data Utils -   use_dask: False
+2025-04-26 11:44:18,520 - INFO - Data Utils -   unpack_multi_labels: False
+2025-04-26 11:44:18,520 - INFO - Data Utils - Loading data using Pandas (chunksize: None)...
+2025-04-26 11:44:18,527 - INFO - Data Utils - Loaded initial Pandas df with 4634 rows and 2 columns.
+2025-04-26 11:44:18,527 - INFO - Data Utils - Applying cleanup function 'basic_text_cleanup' to columns: ['atis_text']
+2025-04-26 11:44:18,532 - INFO - Data Utils - Dropping rows with any NaN values.
+2025-04-26 11:44:18,534 - INFO - Data Utils - Resetting index after cleanup. New shape: (4634, 2)
+2025-04-26 11:48:52,289 - INFO - Data Utils - File extension: .tsv
+2025-04-26 11:48:52,289 - INFO - Data Utils - CustomTextDataset initialized:
+2025-04-26 11:48:52,290 - INFO - Data Utils -   file_path: ./coding_task/data/atis/test.tsv
+2025-04-26 11:48:52,290 - INFO - Data Utils -   file_type: tsv
+2025-04-26 11:48:52,290 - INFO - Data Utils -   column_names: ['atis_text', 'atis_labels']
+2025-04-26 11:48:52,290 - INFO - Data Utils -   use_dask: False
+2025-04-26 11:48:52,290 - INFO - Data Utils -   unpack_multi_labels: False
+2025-04-26 11:48:52,290 - INFO - Data Utils - Loading data using Pandas (chunksize: None)...
+2025-04-26 11:48:52,293 - INFO - Data Utils - Loaded initial Pandas df with 850 rows and 2 columns.
+2025-04-26 11:48:52,293 - INFO - Data Utils - Applying cleanup function 'basic_text_cleanup' to columns: ['atis_text']
+2025-04-26 11:48:52,294 - INFO - Data Utils - Dropping rows with any NaN values.
+2025-04-26 11:48:52,295 - INFO - Data Utils - Resetting index after cleanup. New shape: (850, 2)
+2025-04-26 11:52:13,901 - INFO - Data Utils - File extension: .tsv
+2025-04-26 11:52:13,901 - INFO - Data Utils - CustomTextDataset initialized:
+2025-04-26 11:52:13,901 - INFO - Data Utils -   file_path: ./coding_task/data/atis/train.tsv
+2025-04-26 11:52:13,901 - INFO - Data Utils -   file_type: tsv
+2025-04-26 11:52:13,901 - INFO - Data Utils -   column_names: ['atis_text', 'atis_labels']
+2025-04-26 11:52:13,902 - INFO - Data Utils -   use_dask: False
+2025-04-26 11:52:13,902 - INFO - Data Utils -   unpack_multi_labels: True
+2025-04-26 11:52:13,902 - INFO - Data Utils -   label_column_name: atis_labels
+2025-04-26 11:52:13,902 - INFO - Data Utils -   label_delimiter: +
+2025-04-26 11:52:13,902 - INFO - Data Utils - Loading data using Pandas (chunksize: None)...
+2025-04-26 11:52:13,908 - INFO - Data Utils - Loaded initial Pandas df with 4634 rows and 2 columns.
+2025-04-26 11:52:13,909 - INFO - Data Utils - Unpacking multi-labels in column 'atis_labels' using delimiter '+'.
+2025-04-26 11:52:13,915 - INFO - Data Utils - Unpacking complete. Initial rows: 4634, Final rows: 4657.
+2025-04-26 11:52:13,920 - INFO - Data Utils - Applying cleanup function 'basic_text_cleanup' to columns: ['atis_text']
+2025-04-26 11:52:13,924 - INFO - Data Utils - Dropping rows with any NaN values.
+2025-04-26 11:52:13,926 - INFO - Data Utils - Resetting index after cleanup. New shape: (4657, 2)
+2025-04-26 11:56:54,614 - INFO - Data Utils - File extension: .tsv
+2025-04-26 11:56:54,614 - INFO - Data Utils - CustomTextDataset initialized:
+2025-04-26 11:56:54,614 - INFO - Data Utils -   file_path: ./coding_task/data/atis/test.tsv
+2025-04-26 11:56:54,615 - INFO - Data Utils -   file_type: tsv
+2025-04-26 11:56:54,615 - INFO - Data Utils -   column_names: ['atis_text', 'atis_labels']
+2025-04-26 11:56:54,615 - INFO - Data Utils -   use_dask: False
+2025-04-26 11:56:54,615 - INFO - Data Utils -   unpack_multi_labels: True
+2025-04-26 11:56:54,615 - INFO - Data Utils -   label_column_name: atis_labels
+2025-04-26 11:56:54,615 - INFO - Data Utils -   label_delimiter: +
+2025-04-26 11:56:54,615 - INFO - Data Utils - Loading data using Pandas (chunksize: None)...
+2025-04-26 11:56:54,620 - INFO - Data Utils - Loaded initial Pandas df with 850 rows and 2 columns.
+2025-04-26 11:56:54,621 - INFO - Data Utils - Unpacking multi-labels in column 'atis_labels' using delimiter '+'.
+2025-04-26 11:56:54,627 - INFO - Data Utils - Unpacking complete. Initial rows: 850, Final rows: 865.
+2025-04-26 11:56:54,633 - INFO - Data Utils - Applying cleanup function 'basic_text_cleanup' to columns: ['atis_text']
+2025-04-26 11:56:54,635 - INFO - Data Utils - Dropping rows with any NaN values.
+2025-04-26 11:56:54,636 - INFO - Data Utils - Resetting index after cleanup. New shape: (865, 2)
+2025-04-26 11:58:03,180 - INFO - Data Utils - File extension: .tsv
+2025-04-26 11:58:03,181 - INFO - Data Utils - CustomTextDataset initialized:
+2025-04-26 11:58:03,181 - INFO - Data Utils -   file_path: ./coding_task/data/atis/train.tsv
+2025-04-26 11:58:03,181 - INFO - Data Utils -   file_type: tsv
+2025-04-26 11:58:03,181 - INFO - Data Utils -   column_names: ['atis_text', 'atis_labels']
+2025-04-26 11:58:03,181 - INFO - Data Utils -   use_dask: False
+2025-04-26 11:58:03,181 - INFO - Data Utils -   unpack_multi_labels: True
+2025-04-26 11:58:03,181 - INFO - Data Utils -   label_column_name: atis_labels
+2025-04-26 11:58:03,181 - INFO - Data Utils -   label_delimiter: +
+2025-04-26 11:58:03,181 - INFO - Data Utils - Loading data using Pandas (chunksize: None)...
+2025-04-26 11:58:03,188 - INFO - Data Utils - Loaded initial Pandas df with 4634 rows and 2 columns.
+2025-04-26 11:58:03,188 - INFO - Data Utils - Unpacking multi-labels in column 'atis_labels' using delimiter '+'.
+2025-04-26 11:58:03,195 - INFO - Data Utils - Unpacking complete. Initial rows: 4634, Final rows: 4657.
+2025-04-26 11:58:03,200 - INFO - Data Utils - Applying cleanup function 'basic_text_cleanup' to columns: ['atis_text']
+2025-04-26 11:58:03,204 - INFO - Data Utils - Dropping rows with any NaN values.
+2025-04-26 11:58:03,207 - INFO - Data Utils - Resetting index after cleanup. New shape: (4657, 2)
+2025-04-26 12:01:58,242 - INFO - Data Utils - File extension: .tsv
+2025-04-26 12:01:58,242 - INFO - Data Utils - CustomTextDataset initialized:
+2025-04-26 12:01:58,243 - INFO - Data Utils -   file_path: ./coding_task/data/atis/test.tsv
+2025-04-26 12:01:58,243 - INFO - Data Utils -   file_type: tsv
+2025-04-26 12:01:58,243 - INFO - Data Utils -   column_names: ['atis_text', 'atis_labels']
+2025-04-26 12:01:58,243 - INFO - Data Utils -   use_dask: False
+2025-04-26 12:01:58,243 - INFO - Data Utils -   unpack_multi_labels: True
+2025-04-26 12:01:58,243 - INFO - Data Utils -   label_column_name: atis_labels
+2025-04-26 12:01:58,243 - INFO - Data Utils -   label_delimiter: +
+2025-04-26 12:01:58,243 - INFO - Data Utils - Loading data using Pandas (chunksize: None)...
+2025-04-26 12:01:58,248 - INFO - Data Utils - Loaded initial Pandas df with 850 rows and 2 columns.
+2025-04-26 12:01:58,248 - INFO - Data Utils - Unpacking multi-labels in column 'atis_labels' using delimiter '+'.
+2025-04-26 12:01:58,254 - INFO - Data Utils - Unpacking complete. Initial rows: 850, Final rows: 865.
+2025-04-26 12:01:58,260 - INFO - Data Utils - Applying cleanup function 'basic_text_cleanup' to columns: ['atis_text']
+2025-04-26 12:01:58,262 - INFO - Data Utils - Dropping rows with any NaN values.
+2025-04-26 12:01:58,263 - INFO - Data Utils - Resetting index after cleanup. New shape: (865, 2)
+2025-04-26 13:39:43,537 - INFO - Data Utils - File extension: .tsv
+2025-04-26 13:39:43,537 - INFO - Data Utils - CustomTextDataset initialized:
+2025-04-26 13:39:43,537 - INFO - Data Utils -   file_path: ./coding_task/data/atis/train.tsv
+2025-04-26 13:39:43,537 - INFO - Data Utils -   file_type: tsv
+2025-04-26 13:39:43,537 - INFO - Data Utils -   column_names: ['atis_text', 'atis_labels']
+2025-04-26 13:39:43,537 - INFO - Data Utils -   use_dask: False
+2025-04-26 13:39:43,538 - INFO - Data Utils -   unpack_multi_labels: True
+2025-04-26 13:39:43,538 - INFO - Data Utils -   label_column_name: atis_labels
+2025-04-26 13:39:43,538 - INFO - Data Utils -   label_delimiter: +
+2025-04-26 13:39:43,538 - INFO - Data Utils - Loading data using Pandas (chunksize: None)...
+2025-04-26 13:39:43,545 - INFO - Data Utils - Loaded initial Pandas df with 4634 rows and 2 columns.
+2025-04-26 13:39:43,545 - INFO - Data Utils - Unpacking multi-labels in column 'atis_labels' using delimiter '+'.
+2025-04-26 13:39:43,554 - INFO - Data Utils - Unpacking complete. Initial rows: 4634, Final rows: 4657.
+2025-04-26 13:39:43,558 - INFO - Data Utils - Applying cleanup function 'basic_text_cleanup' to columns: ['atis_text']
+2025-04-26 13:39:43,563 - INFO - Data Utils - Dropping rows with any NaN values.
+2025-04-26 13:39:43,565 - INFO - Data Utils - Resetting index after cleanup. New shape: (4657, 2)
+2025-04-26 13:40:18,876 - INFO - Data Utils - File extension: .tsv
+2025-04-26 13:40:18,876 - INFO - Data Utils - CustomTextDataset initialized:
+2025-04-26 13:40:18,876 - INFO - Data Utils -   file_path: ./coding_task/data/atis/train.tsv
+2025-04-26 13:40:18,876 - INFO - Data Utils -   file_type: tsv
+2025-04-26 13:40:18,876 - INFO - Data Utils -   column_names: ['atis_text', 'atis_labels']
+2025-04-26 13:40:18,876 - INFO - Data Utils -   use_dask: False
+2025-04-26 13:40:18,876 - INFO - Data Utils -   unpack_multi_labels: True
+2025-04-26 13:40:18,876 - INFO - Data Utils -   label_column_name: atis_labels
+2025-04-26 13:40:18,876 - INFO - Data Utils -   label_delimiter: +
+2025-04-26 13:40:18,876 - INFO - Data Utils - Loading data using Pandas (chunksize: None)...
+2025-04-26 13:40:18,883 - INFO - Data Utils - Loaded initial Pandas df with 4634 rows and 2 columns.
+2025-04-26 13:40:18,883 - INFO - Data Utils - Unpacking multi-labels in column 'atis_labels' using delimiter '+'.
+2025-04-26 13:40:18,890 - INFO - Data Utils - Unpacking complete. Initial rows: 4634, Final rows: 4657.
+2025-04-26 13:40:18,894 - INFO - Data Utils - Applying cleanup function 'basic_text_cleanup' to columns: ['atis_text']
+2025-04-26 13:40:18,899 - INFO - Data Utils - Dropping rows with any NaN values.
+2025-04-26 13:40:18,901 - INFO - Data Utils - Resetting index after cleanup. New shape: (4657, 2)
+2025-04-26 13:41:16,111 - INFO - Data Utils - File extension: .tsv
+2025-04-26 13:41:16,112 - INFO - Data Utils - CustomTextDataset initialized:
+2025-04-26 13:41:16,112 - INFO - Data Utils -   file_path: ./coding_task/data/atis/train.tsv
+2025-04-26 13:41:16,112 - INFO - Data Utils -   file_type: tsv
+2025-04-26 13:41:16,112 - INFO - Data Utils -   column_names: ['atis_text', 'atis_labels']
+2025-04-26 13:41:16,112 - INFO - Data Utils -   use_dask: False
+2025-04-26 13:41:16,112 - INFO - Data Utils -   unpack_multi_labels: True
+2025-04-26 13:41:16,112 - INFO - Data Utils -   label_column_name: atis_labels
+2025-04-26 13:41:16,112 - INFO - Data Utils -   label_delimiter: +
+2025-04-26 13:41:16,112 - INFO - Data Utils - Loading data using Pandas (chunksize: None)...
+2025-04-26 13:41:16,119 - INFO - Data Utils - Loaded initial Pandas df with 4634 rows and 2 columns.
+2025-04-26 13:41:16,119 - INFO - Data Utils - Unpacking multi-labels in column 'atis_labels' using delimiter '+'.
+2025-04-26 13:41:16,126 - INFO - Data Utils - Unpacking complete. Initial rows: 4634, Final rows: 4657.
+2025-04-26 13:41:16,130 - INFO - Data Utils - Applying cleanup function 'basic_text_cleanup' to columns: ['atis_text']
+2025-04-26 13:41:16,135 - INFO - Data Utils - Dropping rows with any NaN values.
+2025-04-26 13:41:16,137 - INFO - Data Utils - Resetting index after cleanup. New shape: (4657, 2)
+2025-04-26 13:41:59,135 - INFO - Data Utils - File extension: .tsv
+2025-04-26 13:41:59,135 - INFO - Data Utils - CustomTextDataset initialized:
+2025-04-26 13:41:59,135 - INFO - Data Utils -   file_path: ./coding_task/data/atis/test.tsv
+2025-04-26 13:41:59,135 - INFO - Data Utils -   file_type: tsv
+2025-04-26 13:41:59,135 - INFO - Data Utils -   column_names: ['atis_text', 'atis_labels']
+2025-04-26 13:41:59,135 - INFO - Data Utils -   use_dask: False
+2025-04-26 13:41:59,135 - INFO - Data Utils -   unpack_multi_labels: True
+2025-04-26 13:41:59,135 - INFO - Data Utils -   label_column_name: atis_labels
+2025-04-26 13:41:59,135 - INFO - Data Utils -   label_delimiter: +
+2025-04-26 13:41:59,135 - INFO - Data Utils - Loading data using Pandas (chunksize: None)...
+2025-04-26 13:41:59,140 - INFO - Data Utils - Loaded initial Pandas df with 850 rows and 2 columns.
+2025-04-26 13:41:59,140 - INFO - Data Utils - Unpacking multi-labels in column 'atis_labels' using delimiter '+'.
+2025-04-26 13:41:59,146 - INFO - Data Utils - Unpacking complete. Initial rows: 850, Final rows: 865.
+2025-04-26 13:41:59,151 - INFO - Data Utils - Applying cleanup function 'basic_text_cleanup' to columns: ['atis_text']
+2025-04-26 13:41:59,153 - INFO - Data Utils - Dropping rows with any NaN values.
+2025-04-26 13:41:59,154 - INFO - Data Utils - Resetting index after cleanup. New shape: (865, 2)
+2025-04-26 13:43:23,438 - INFO - Data Utils - File extension: .tsv
+2025-04-26 13:43:23,438 - INFO - Data Utils - CustomTextDataset initialized:
+2025-04-26 13:43:23,438 - INFO - Data Utils -   file_path: ./coding_task/data/atis/train.tsv
+2025-04-26 13:43:23,438 - INFO - Data Utils -   file_type: tsv
+2025-04-26 13:43:23,438 - INFO - Data Utils -   column_names: ['atis_text', 'atis_labels']
+2025-04-26 13:43:23,438 - INFO - Data Utils -   use_dask: False
+2025-04-26 13:43:23,438 - INFO - Data Utils -   unpack_multi_labels: True
+2025-04-26 13:43:23,438 - INFO - Data Utils -   label_column_name: atis_labels
+2025-04-26 13:43:23,438 - INFO - Data Utils -   label_delimiter: +
+2025-04-26 13:43:23,438 - INFO - Data Utils - Loading data using Pandas (chunksize: None)...
+2025-04-26 13:43:23,445 - INFO - Data Utils - Loaded initial Pandas df with 4634 rows and 2 columns.
+2025-04-26 13:43:23,445 - INFO - Data Utils - Unpacking multi-labels in column 'atis_labels' using delimiter '+'.
+2025-04-26 13:43:23,452 - INFO - Data Utils - Unpacking complete. Initial rows: 4634, Final rows: 4657.
+2025-04-26 13:43:23,456 - INFO - Data Utils - Applying cleanup function 'basic_text_cleanup' to columns: ['atis_text']
+2025-04-26 13:43:23,461 - INFO - Data Utils - Dropping rows with any NaN values.
+2025-04-26 13:43:23,463 - INFO - Data Utils - Resetting index after cleanup. New shape: (4657, 2)
+2025-04-26 13:48:56,205 - INFO - Data Utils - File extension: .tsv
+2025-04-26 13:48:56,205 - INFO - Data Utils - CustomTextDataset initialized:
+2025-04-26 13:48:56,205 - INFO - Data Utils -   file_path: ./coding_task/data/atis/test.tsv
+2025-04-26 13:48:56,205 - INFO - Data Utils -   file_type: tsv
+2025-04-26 13:48:56,205 - INFO - Data Utils -   column_names: ['atis_text', 'atis_labels']
+2025-04-26 13:48:56,205 - INFO - Data Utils -   use_dask: False
+2025-04-26 13:48:56,205 - INFO - Data Utils -   unpack_multi_labels: True
+2025-04-26 13:48:56,205 - INFO - Data Utils -   label_column_name: atis_labels
+2025-04-26 13:48:56,205 - INFO - Data Utils -   label_delimiter: +
+2025-04-26 13:48:56,205 - INFO - Data Utils - Loading data using Pandas (chunksize: None)...
+2025-04-26 13:48:56,211 - INFO - Data Utils - Loaded initial Pandas df with 850 rows and 2 columns.
+2025-04-26 13:48:56,211 - INFO - Data Utils - Unpacking multi-labels in column 'atis_labels' using delimiter '+'.
+2025-04-26 13:48:56,218 - INFO - Data Utils - Unpacking complete. Initial rows: 850, Final rows: 865.
+2025-04-26 13:48:56,224 - INFO - Data Utils - Applying cleanup function 'basic_text_cleanup' to columns: ['atis_text']
+2025-04-26 13:48:56,226 - INFO - Data Utils - Dropping rows with any NaN values.
+2025-04-26 13:48:56,227 - INFO - Data Utils - Resetting index after cleanup. New shape: (865, 2)
+2025-04-26 13:50:42,523 - INFO - Data Utils - File extension: .tsv
+2025-04-26 13:50:42,523 - INFO - Data Utils - CustomTextDataset initialized:
+2025-04-26 13:50:42,523 - INFO - Data Utils -   file_path: ./coding_task/data/atis/train.tsv
+2025-04-26 13:50:42,523 - INFO - Data Utils -   file_type: tsv
+2025-04-26 13:50:42,523 - INFO - Data Utils -   column_names: ['atis_text', 'atis_labels']
+2025-04-26 13:50:42,523 - INFO - Data Utils -   use_dask: False
+2025-04-26 13:50:42,523 - INFO - Data Utils -   unpack_multi_labels: True
+2025-04-26 13:50:42,523 - INFO - Data Utils -   label_column_name: atis_labels
+2025-04-26 13:50:42,523 - INFO - Data Utils -   label_delimiter: +
+2025-04-26 13:50:42,523 - INFO - Data Utils - Loading data using Pandas (chunksize: None)...
+2025-04-26 13:50:42,530 - INFO - Data Utils - Loaded initial Pandas df with 4634 rows and 2 columns.
+2025-04-26 13:50:42,530 - INFO - Data Utils - Unpacking multi-labels in column 'atis_labels' using delimiter '+'.
+2025-04-26 13:50:42,537 - INFO - Data Utils - Unpacking complete. Initial rows: 4634, Final rows: 4657.
+2025-04-26 13:50:42,542 - INFO - Data Utils - Applying cleanup function 'basic_text_cleanup' to columns: ['atis_text']
+2025-04-26 13:50:42,547 - INFO - Data Utils - Dropping rows with any NaN values.
+2025-04-26 13:50:42,549 - INFO - Data Utils - Resetting index after cleanup. New shape: (4657, 2)
+2025-04-26 13:51:24,879 - INFO - Data Utils - File extension: .tsv
+2025-04-26 13:51:24,879 - INFO - Data Utils - CustomTextDataset initialized:
+2025-04-26 13:51:24,879 - INFO - Data Utils -   file_path: ./coding_task/data/atis/test.tsv
+2025-04-26 13:51:24,879 - INFO - Data Utils -   file_type: tsv
+2025-04-26 13:51:24,879 - INFO - Data Utils -   column_names: ['atis_text', 'atis_labels']
+2025-04-26 13:51:24,879 - INFO - Data Utils -   use_dask: False
+2025-04-26 13:51:24,879 - INFO - Data Utils -   unpack_multi_labels: True
+2025-04-26 13:51:24,879 - INFO - Data Utils -   label_column_name: atis_labels
+2025-04-26 13:51:24,880 - INFO - Data Utils -   label_delimiter: +
+2025-04-26 13:51:24,880 - INFO - Data Utils - Loading data using Pandas (chunksize: None)...
+2025-04-26 13:51:24,886 - INFO - Data Utils - Loaded initial Pandas df with 850 rows and 2 columns.
+2025-04-26 13:51:24,887 - INFO - Data Utils - Unpacking multi-labels in column 'atis_labels' using delimiter '+'.
+2025-04-26 13:51:24,892 - INFO - Data Utils - Unpacking complete. Initial rows: 850, Final rows: 865.
+2025-04-26 13:51:24,897 - INFO - Data Utils - Applying cleanup function 'basic_text_cleanup' to columns: ['atis_text']
+2025-04-26 13:51:24,900 - INFO - Data Utils - Dropping rows with any NaN values.
+2025-04-26 13:51:24,901 - INFO - Data Utils - Resetting index after cleanup. New shape: (865, 2)
+2025-04-26 13:52:29,288 - INFO - Data Utils - File extension: .tsv
+2025-04-26 13:52:29,288 - INFO - Data Utils - CustomTextDataset initialized:
+2025-04-26 13:52:29,288 - INFO - Data Utils -   file_path: ./coding_task/data/atis/train.tsv
+2025-04-26 13:52:29,288 - INFO - Data Utils -   file_type: tsv
+2025-04-26 13:52:29,288 - INFO - Data Utils -   column_names: ['atis_text', 'atis_labels']
+2025-04-26 13:52:29,288 - INFO - Data Utils -   use_dask: False
+2025-04-26 13:52:29,288 - INFO - Data Utils -   unpack_multi_labels: True
+2025-04-26 13:52:29,288 - INFO - Data Utils -   label_column_name: atis_labels
+2025-04-26 13:52:29,288 - INFO - Data Utils -   label_delimiter: +
+2025-04-26 13:52:29,288 - INFO - Data Utils - Loading data using Pandas (chunksize: None)...
+2025-04-26 13:52:29,295 - INFO - Data Utils - Loaded initial Pandas df with 4634 rows and 2 columns.
+2025-04-26 13:52:29,295 - INFO - Data Utils - Unpacking multi-labels in column 'atis_labels' using delimiter '+'.
+2025-04-26 13:52:29,302 - INFO - Data Utils - Unpacking complete. Initial rows: 4634, Final rows: 4657.
+2025-04-26 13:52:29,307 - INFO - Data Utils - Applying cleanup function 'basic_text_cleanup' to columns: ['atis_text']
+2025-04-26 13:52:29,311 - INFO - Data Utils - Dropping rows with any NaN values.
+2025-04-26 13:52:29,313 - INFO - Data Utils - Resetting index after cleanup. New shape: (4657, 2)
+2025-04-26 13:57:56,542 - INFO - Data Utils - File extension: .tsv
+2025-04-26 13:57:56,542 - INFO - Data Utils - CustomTextDataset initialized:
+2025-04-26 13:57:56,543 - INFO - Data Utils -   file_path: ./coding_task/data/atis/test.tsv
+2025-04-26 13:57:56,543 - INFO - Data Utils -   file_type: tsv
+2025-04-26 13:57:56,543 - INFO - Data Utils -   column_names: ['atis_text', 'atis_labels']
+2025-04-26 13:57:56,543 - INFO - Data Utils -   use_dask: False
+2025-04-26 13:57:56,543 - INFO - Data Utils -   unpack_multi_labels: True
+2025-04-26 13:57:56,543 - INFO - Data Utils -   label_column_name: atis_labels
+2025-04-26 13:57:56,543 - INFO - Data Utils -   label_delimiter: +
+2025-04-26 13:57:56,543 - INFO - Data Utils - Loading data using Pandas (chunksize: None)...
+2025-04-26 13:57:56,547 - INFO - Data Utils - Loaded initial Pandas df with 850 rows and 2 columns.
+2025-04-26 13:57:56,547 - INFO - Data Utils - Unpacking multi-labels in column 'atis_labels' using delimiter '+'.
+2025-04-26 13:57:56,554 - INFO - Data Utils - Unpacking complete. Initial rows: 850, Final rows: 865.
+2025-04-26 13:57:56,560 - INFO - Data Utils - Applying cleanup function 'basic_text_cleanup' to columns: ['atis_text']
+2025-04-26 13:57:56,562 - INFO - Data Utils - Dropping rows with any NaN values.
+2025-04-26 13:57:56,563 - INFO - Data Utils - Resetting index after cleanup. New shape: (865, 2)

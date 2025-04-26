@@ -1,0 +1,433 @@
+2025-04-26 11:19:23,031 - INFO - TrainMain - Parsing configuration from command line arguments.
+2025-04-26 11:19:23,175 - INFO - TrainMain - --- Data Configuration ---
+2025-04-26 11:19:23,175 - INFO - TrainMain - DataConfig(dataset_path='./coding_task/data/atis/train.tsv', text_column='atis_text', label_column='atis_labels', task_type='multilabel', unpack_multi_labels=True, label_delimiter='+', use_dask=False, validation_split_ratio=0.2, max_seq_length=128, test_dataset_path='./coding_task/data/atis/test.tsv')
+2025-04-26 11:19:23,175 - INFO - TrainMain - --- Model Configuration ---
+2025-04-26 11:19:23,175 - INFO - TrainMain - ModelConfig(model_name_or_path='xlm-roberta-base', cache_dir=None, freeze_base_model=True)
+2025-04-26 11:19:23,175 - INFO - TrainMain - --- PEFT Configuration ---
+2025-04-26 11:19:23,175 - INFO - TrainMain - PeftConfig(method='lora', lora_r=64, lora_alpha=32, lora_dropout=0.1, lora_target_modules=None)
+2025-04-26 11:19:23,176 - INFO - TrainMain - --- Training Configuration ---
+2025-04-26 11:19:23,176 - INFO - TrainMain - TrainingConfig(output_dir='./results/atis_multilabel_xlmr_lora', num_train_epochs=10.0, per_device_train_batch_size=16, per_device_eval_batch_size=32, learning_rate=0.0001, weight_decay=0.01, lr_scheduler_type='linear', warmup_ratio=0.06, logging_dir='/home/fe/gururaj/LRP_Experiment/zendesk-mle-master/coding_task/logs/training_logs', logging_steps=25, evaluation_strategy='epoch', eval_steps=None, save_strategy='epoch', save_steps=None, save_total_limit=2, load_best_model_at_end=True, metric_for_best_model='eval_f1_micro', greater_is_better=True, fp16=True, gradient_accumulation_steps=1, gradient_checkpointing=False, seed=42, report_to=['tensorboard'])
+2025-04-26 11:19:23,178 - INFO - TrainMain - Set random seed to: 42
+2025-04-26 11:19:23,178 - INFO - TrainMain - Output directory: ./results/atis_multilabel_xlmr_lora
+2025-04-26 11:19:23,178 - INFO - TrainMain - Loading tokenizer: xlm-roberta-base
+2025-04-26 11:19:24,831 - INFO - TrainMain - Starting data processing for Train/Validation...
+2025-04-26 11:19:25,371 - INFO - TrainMain - Data processing complete. Number of labels: 17
+2025-04-26 11:19:25,371 - INFO - TrainMain - Label mapping (id2label): {0: 'abbreviation', 1: 'aircraft', 2: 'airfare', 3: 'airline', 4: 'airport', 5: 'capacity', 6: 'cheapest', 7: 'city', 8: 'distance', 9: 'flight', 10: 'flight_no', 11: 'flight_time', 12: 'ground_fare', 13: 'ground_service', 14: 'meal', 15: 'quantity', 16: 'restriction'}
+2025-04-26 11:19:25,372 - INFO - TrainMain - Label mappings saved to ./results/atis_multilabel_xlmr_lora
+2025-04-26 11:19:25,372 - INFO - TrainMain - Loading model for training...
+2025-04-26 11:19:28,328 - INFO - TrainMain - Model loading complete.
+2025-04-26 11:19:28,328 - INFO - TrainMain - Setting up Trainer...
+2025-04-26 11:19:32,045 - INFO - TrainMain - Trainer setup complete.
+2025-04-26 11:19:32,045 - INFO - TrainMain - *** Starting Training ***
+2025-04-26 11:24:02,138 - INFO - TrainMain - *** Training Finished ***
+2025-04-26 11:24:02,144 - INFO - TrainMain - Training metrics: {'train_runtime': 269.836, 'train_samples_per_second': 137.38, 'train_steps_per_second': 8.598, 'train_loss': 0.05443834630322868, 'epoch': 10.0}
+2025-04-26 11:24:02,144 - INFO - TrainMain - *** Starting Final Evaluation on Validation Set ***
+2025-04-26 11:24:03,018 - INFO - TrainMain - Final validation metrics: {'eval_eval_loss': 0.013695930130779743, 'eval_eval_precision_micro': 0.9791894852135816, 'eval_eval_recall_micro': 0.9581993569131833, 'eval_eval_f1_micro': 0.9685807150595883, 'eval_eval_precision_macro': 0.44473320541044714, 'eval_eval_recall_macro': 0.4339223595231204, 'eval_eval_f1_macro': 0.43828443891631264, 'eval_eval_precision_weighted': 0.9554922561738161, 'eval_eval_recall_weighted': 0.9581993569131833, 'eval_eval_f1_weighted': 0.9565255866521382, 'eval_eval_precision_samples': 0.9617044228694714, 'eval_eval_recall_samples': 0.9604458827759798, 'eval_eval_f1_samples': 0.9606256742179072, 'eval_eval_f1': 0.9685807150595883, 'eval_eval_subset_accuracy': 0.9579288025889967, 'eval_eval_hamming_loss': 0.003680436575924868, 'eval_eval_jaccard_micro': 0.9390756302521008, 'eval_eval_jaccard_macro': 0.411863158640429, 'eval_eval_jaccard_weighted': 0.9395448263722309, 'eval_eval_jaccard_samples': 0.9599065084501976, 'eval_eval_roc_auc_micro': nan, 'eval_eval_roc_auc_macro': nan, 'eval_eval_roc_auc_weighted': nan, 'eval_eval_roc_auc': nan, 'eval_eval_avg_precision_micro': 0.9913512425665248, 'eval_eval_avg_precision_macro': nan, 'eval_eval_avg_precision_weighted': 0.9879916522488892, 'eval_eval_avg_precision': 0.9913512425665248, 'eval_eval_runtime': 0.8627, 'eval_eval_samples_per_second': 1074.513, 'eval_eval_steps_per_second': 33.615, 'eval_epoch': 10.0}
+2025-04-26 11:24:03,018 - INFO - TrainMain - *** Starting Test Set Evaluation ***
+2025-04-26 11:24:03,019 - INFO - TrainMain - Loading test dataset from: ./coding_task/data/atis/test.tsv
+2025-04-26 11:24:03,168 - INFO - TrainMain - *** Starting Test Set Evaluation ***
+2025-04-26 11:24:03,815 - INFO - TrainMain - Test set evaluation metrics: {'test_eval_loss': 0.019878068938851357, 'test_eval_precision_micro': 0.9724655819774718, 'test_eval_recall_micro': 0.9003476245654692, 'test_eval_f1_micro': 0.9350180505415162, 'test_eval_precision_macro': 0.40911680141867396, 'test_eval_recall_macro': 0.4602240237219682, 'test_eval_f1_macro': 0.4244167775337491, 'test_eval_precision_weighted': 0.8977822007319798, 'test_eval_recall_weighted': 0.9003476245654692, 'test_eval_f1_weighted': 0.8982671088534429, 'test_eval_precision_samples': 0.908235294117647, 'test_eval_recall_samples': 0.9029411764705882, 'test_eval_f1_samples': 0.9047058823529411, 'test_eval_f1': 0.9350180505415162, 'test_eval_subset_accuracy': 0.8976470588235295, 'test_eval_hamming_loss': 0.007474048442906575, 'test_eval_jaccard_micro': 0.8779661016949153, 'test_eval_jaccard_macro': 0.40007714951298523, 'test_eval_jaccard_weighted': 0.8820393434601291, 'test_eval_jaccard_samples': 0.9029411764705882, 'test_eval_roc_auc_micro': nan, 'test_eval_roc_auc_macro': nan, 'test_eval_roc_auc_weighted': nan, 'test_eval_roc_auc': nan, 'test_eval_avg_precision_micro': 0.9850609783186376, 'test_eval_avg_precision_macro': nan, 'test_eval_avg_precision_weighted': 0.9892129577528573, 'test_eval_avg_precision': 0.9850609783186376, 'test_eval_runtime': 0.6363, 'test_eval_samples_per_second': 1335.901, 'test_eval_steps_per_second': 42.434, 'test_epoch': 10.0}
+2025-04-26 11:24:03,816 - INFO - TrainMain - *** Evaluation Finished ***
+2025-04-26 11:24:03,816 - INFO - TrainMain - Saving final model/adapter to ./results/atis_multilabel_xlmr_lora
+2025-04-26 11:24:04,280 - INFO - TrainMain - Tokenizer saved to ./results/atis_multilabel_xlmr_lora
+2025-04-26 11:24:04,280 - ERROR - TrainMain - Failed to save training arguments: 'TrainingConfig' object has no attribute 'to_dict'
+2025-04-26 11:24:04,280 - INFO - TrainMain - Script finished successfully.
+2025-04-26 11:26:49,691 - INFO - TrainMain - Parsing configuration from command line arguments.
+2025-04-26 11:26:49,836 - INFO - TrainMain - --- Data Configuration ---
+2025-04-26 11:26:49,836 - INFO - TrainMain - DataConfig(dataset_path='./coding_task/data/atis/train.tsv', text_column='atis_text', label_column='atis_labels', task_type='multiclass', unpack_multi_labels=False, label_delimiter='+', use_dask=False, validation_split_ratio=0.2, max_seq_length=128, test_dataset_path='./coding_task/data/atis/test.tsv')
+2025-04-26 11:26:49,836 - INFO - TrainMain - --- Model Configuration ---
+2025-04-26 11:26:49,836 - INFO - TrainMain - ModelConfig(model_name_or_path='xlm-roberta-base', cache_dir=None, freeze_base_model=True)
+2025-04-26 11:26:49,836 - INFO - TrainMain - --- PEFT Configuration ---
+2025-04-26 11:26:49,836 - INFO - TrainMain - PeftConfig(method='lora', lora_r=2, lora_alpha=16, lora_dropout=0.1, lora_target_modules=None)
+2025-04-26 11:26:49,836 - INFO - TrainMain - --- Training Configuration ---
+2025-04-26 11:26:49,836 - INFO - TrainMain - TrainingConfig(output_dir='./results/atis_multiclass_xlmr_lora', num_train_epochs=1.0, per_device_train_batch_size=16, per_device_eval_batch_size=32, learning_rate=0.0001, weight_decay=0.01, lr_scheduler_type='linear', warmup_ratio=0.06, logging_dir='/home/fe/gururaj/LRP_Experiment/zendesk-mle-master/coding_task/logs/training_logs', logging_steps=25, evaluation_strategy='epoch', eval_steps=None, save_strategy='epoch', save_steps=None, save_total_limit=2, load_best_model_at_end=True, metric_for_best_model='eval_f1_weighted', greater_is_better=True, fp16=True, gradient_accumulation_steps=1, gradient_checkpointing=False, seed=42, report_to=['tensorboard'])
+2025-04-26 11:26:49,839 - INFO - TrainMain - Set random seed to: 42
+2025-04-26 11:26:49,839 - INFO - TrainMain - Output directory: ./results/atis_multiclass_xlmr_lora
+2025-04-26 11:26:49,839 - INFO - TrainMain - Loading tokenizer: xlm-roberta-base
+2025-04-26 11:26:51,472 - INFO - TrainMain - Starting data processing for Train/Validation...
+2025-04-26 11:26:51,768 - INFO - TrainMain - Data processing complete. Number of labels: 22
+2025-04-26 11:26:51,769 - INFO - TrainMain - Label mapping (id2label): {0: 'abbreviation', 1: 'aircraft', 2: 'aircraft+flight+flight_no', 3: 'airfare', 4: 'airfare+flight_time', 5: 'airline', 6: 'airline+flight_no', 7: 'airport', 8: 'capacity', 9: 'cheapest', 10: 'city', 11: 'distance', 12: 'flight', 13: 'flight+airfare', 14: 'flight_no', 15: 'flight_time', 16: 'ground_fare', 17: 'ground_service', 18: 'ground_service+ground_fare', 19: 'meal', 20: 'quantity', 21: 'restriction'}
+2025-04-26 11:26:51,770 - INFO - TrainMain - Label mappings saved to ./results/atis_multiclass_xlmr_lora
+2025-04-26 11:26:51,770 - INFO - TrainMain - Loading model for training...
+2025-04-26 11:26:54,656 - INFO - TrainMain - Model loading complete.
+2025-04-26 11:26:54,656 - INFO - TrainMain - Setting up Trainer...
+2025-04-26 11:26:58,319 - INFO - TrainMain - Trainer setup complete.
+2025-04-26 11:26:58,319 - INFO - TrainMain - *** Starting Training ***
+2025-04-26 11:27:26,621 - INFO - TrainMain - *** Training Finished ***
+2025-04-26 11:27:26,622 - INFO - TrainMain - Training metrics: {'train_runtime': 28.0416, 'train_samples_per_second': 132.196, 'train_steps_per_second': 8.273, 'train_loss': 1.3209255563801732, 'epoch': 1.0}
+2025-04-26 11:27:26,623 - INFO - TrainMain - *** Starting Final Evaluation on Validation Set ***
+2025-04-26 11:27:27,467 - INFO - TrainMain - Final validation metrics: {'eval_eval_loss': 0.9044085144996643, 'eval_eval_accuracy': 0.7443365695792881, 'eval_eval_precision_micro': 0.7443365695792881, 'eval_eval_recall_micro': 0.7443365695792881, 'eval_eval_f1_micro': 0.7443365695792881, 'eval_eval_precision_macro': 0.046521035598705504, 'eval_eval_recall_macro': 0.0625, 'eval_eval_f1_macro': 0.05333951762523191, 'eval_eval_precision_weighted': 0.5540369288130623, 'eval_eval_recall_weighted': 0.7443365695792881, 'eval_eval_f1_weighted': 0.6352408571548654, 'eval_eval_f1': 0.6352408571548654, 'eval_eval_balanced_accuracy': 0.0625, 'eval_eval_cohen_kappa': 0.0, 'eval_eval_matthews_corrcoef': 0.0, 'eval_eval_roc_auc_ovr': nan, 'eval_eval_runtime': 0.8361, 'eval_eval_samples_per_second': 1108.662, 'eval_eval_steps_per_second': 34.683, 'eval_epoch': 1.0}
+2025-04-26 11:27:27,467 - INFO - TrainMain - *** Starting Test Set Evaluation ***
+2025-04-26 11:27:27,467 - INFO - TrainMain - Loading test dataset from: ./coding_task/data/atis/test.tsv
+2025-04-26 11:27:27,554 - INFO - TrainMain - *** Starting Test Set Evaluation ***
+2025-04-26 11:27:28,181 - INFO - TrainMain - Test set evaluation metrics: {'test_eval_loss': 1.1093082427978516, 'test_eval_accuracy': 0.7254437869822485, 'test_eval_precision_micro': 0.7254437869822485, 'test_eval_recall_micro': 0.7254437869822485, 'test_eval_f1_micro': 0.7254437869822485, 'test_eval_precision_macro': 0.045340236686390534, 'test_eval_recall_macro': 0.0625, 'test_eval_f1_macro': 0.052554869684499315, 'test_eval_precision_weighted': 0.526268688071146, 'test_eval_recall_weighted': 0.7254437869822485, 'test_eval_f1_weighted': 0.610009659012508, 'test_eval_f1': 0.610009659012508, 'test_eval_balanced_accuracy': 0.0625, 'test_eval_cohen_kappa': 0.0, 'test_eval_matthews_corrcoef': 0.0, 'test_eval_roc_auc_ovr': nan, 'test_eval_runtime': 0.6196, 'test_eval_samples_per_second': 1363.793, 'test_eval_steps_per_second': 43.577, 'test_epoch': 1.0}
+2025-04-26 11:27:28,181 - INFO - TrainMain - *** Evaluation Finished ***
+2025-04-26 11:27:28,181 - INFO - TrainMain - Saving final model/adapter to ./results/atis_multiclass_xlmr_lora
+2025-04-26 11:27:28,826 - INFO - TrainMain - Tokenizer saved to ./results/atis_multiclass_xlmr_lora
+2025-04-26 11:27:28,827 - ERROR - TrainMain - Failed to save training arguments: 'TrainingConfig' object has no attribute 'to_dict'
+2025-04-26 11:27:28,827 - INFO - TrainMain - Script finished successfully.
+2025-04-26 11:28:07,038 - INFO - TrainMain - Parsing configuration from command line arguments.
+2025-04-26 11:28:07,182 - INFO - TrainMain - --- Data Configuration ---
+2025-04-26 11:28:07,182 - INFO - TrainMain - DataConfig(dataset_path='./coding_task/data/atis/train.tsv', text_column='atis_text', label_column='atis_labels', task_type='multilabel', unpack_multi_labels=True, label_delimiter='+', use_dask=False, validation_split_ratio=0.2, max_seq_length=128, test_dataset_path='./coding_task/data/atis/test.tsv')
+2025-04-26 11:28:07,183 - INFO - TrainMain - --- Model Configuration ---
+2025-04-26 11:28:07,183 - INFO - TrainMain - ModelConfig(model_name_or_path='xlm-roberta-base', cache_dir=None, freeze_base_model=True)
+2025-04-26 11:28:07,183 - INFO - TrainMain - --- PEFT Configuration ---
+2025-04-26 11:28:07,183 - INFO - TrainMain - PeftConfig(method='lora', lora_r=2, lora_alpha=32, lora_dropout=0.1, lora_target_modules=None)
+2025-04-26 11:28:07,183 - INFO - TrainMain - --- Training Configuration ---
+2025-04-26 11:28:07,183 - INFO - TrainMain - TrainingConfig(output_dir='./results/atis_multilabel_xlmr_lora', num_train_epochs=1.0, per_device_train_batch_size=16, per_device_eval_batch_size=32, learning_rate=0.0001, weight_decay=0.01, lr_scheduler_type='linear', warmup_ratio=0.06, logging_dir='/home/fe/gururaj/LRP_Experiment/zendesk-mle-master/coding_task/logs/training_logs', logging_steps=25, evaluation_strategy='epoch', eval_steps=None, save_strategy='epoch', save_steps=None, save_total_limit=2, load_best_model_at_end=True, metric_for_best_model='eval_f1_micro', greater_is_better=True, fp16=True, gradient_accumulation_steps=1, gradient_checkpointing=False, seed=42, report_to=['tensorboard'])
+2025-04-26 11:28:07,185 - INFO - TrainMain - Set random seed to: 42
+2025-04-26 11:28:07,185 - INFO - TrainMain - Output directory: ./results/atis_multilabel_xlmr_lora
+2025-04-26 11:28:07,185 - INFO - TrainMain - Loading tokenizer: xlm-roberta-base
+2025-04-26 11:28:09,017 - INFO - TrainMain - Starting data processing for Train/Validation...
+2025-04-26 11:28:09,623 - INFO - TrainMain - Data processing complete. Number of labels: 17
+2025-04-26 11:28:09,623 - INFO - TrainMain - Label mapping (id2label): {0: 'abbreviation', 1: 'aircraft', 2: 'airfare', 3: 'airline', 4: 'airport', 5: 'capacity', 6: 'cheapest', 7: 'city', 8: 'distance', 9: 'flight', 10: 'flight_no', 11: 'flight_time', 12: 'ground_fare', 13: 'ground_service', 14: 'meal', 15: 'quantity', 16: 'restriction'}
+2025-04-26 11:28:09,624 - INFO - TrainMain - Label mappings saved to ./results/atis_multilabel_xlmr_lora
+2025-04-26 11:28:09,625 - INFO - TrainMain - Loading model for training...
+2025-04-26 11:28:12,623 - INFO - TrainMain - Model loading complete.
+2025-04-26 11:28:12,623 - INFO - TrainMain - Setting up Trainer...
+2025-04-26 11:28:16,231 - INFO - TrainMain - Trainer setup complete.
+2025-04-26 11:28:16,231 - INFO - TrainMain - *** Starting Training ***
+2025-04-26 11:28:43,862 - INFO - TrainMain - *** Training Finished ***
+2025-04-26 11:28:43,864 - INFO - TrainMain - Training metrics: {'train_runtime': 27.3669, 'train_samples_per_second': 135.455, 'train_steps_per_second': 8.477, 'train_loss': 0.16947522040071158, 'epoch': 1.0}
+2025-04-26 11:28:43,864 - INFO - TrainMain - *** Starting Final Evaluation on Validation Set ***
+2025-04-26 11:28:44,721 - INFO - TrainMain - Final validation metrics: {'eval_eval_loss': 0.10439546406269073, 'eval_eval_precision_micro': 0.7195253505933118, 'eval_eval_recall_micro': 0.714898177920686, 'eval_eval_f1_micro': 0.7172043010752689, 'eval_eval_precision_macro': 0.042325020623135985, 'eval_eval_recall_macro': 0.058823529411764705, 'eval_eval_f1_macro': 0.049228725367185776, 'eval_eval_precision_weighted': 0.5143873621069014, 'eval_eval_recall_weighted': 0.714898177920686, 'eval_eval_f1_weighted': 0.5982899431281024, 'eval_eval_precision_samples': 0.7195253505933118, 'eval_eval_recall_samples': 0.717727436174038, 'eval_eval_f1_samples': 0.7182668104998201, 'eval_eval_f1': 0.7172043010752689, 'eval_eval_subset_accuracy': 0.7162891046386192, 'eval_eval_hamming_loss': 0.03337775239545657, 'eval_eval_jaccard_micro': 0.559094719195306, 'eval_eval_jaccard_macro': 0.042325020623135985, 'eval_eval_jaccard_weighted': 0.5143873621069014, 'eval_eval_jaccard_samples': 0.717727436174038, 'eval_eval_roc_auc_micro': nan, 'eval_eval_roc_auc_macro': nan, 'eval_eval_roc_auc_weighted': nan, 'eval_eval_roc_auc': nan, 'eval_eval_avg_precision_micro': 0.7633265515061759, 'eval_eval_avg_precision_macro': nan, 'eval_eval_avg_precision_weighted': 0.6982775980188352, 'eval_eval_avg_precision': 0.7633265515061759, 'eval_eval_runtime': 0.8453, 'eval_eval_samples_per_second': 1096.669, 'eval_eval_steps_per_second': 34.308, 'eval_epoch': 1.0}
+2025-04-26 11:28:44,722 - INFO - TrainMain - *** Starting Test Set Evaluation ***
+2025-04-26 11:28:44,722 - INFO - TrainMain - Loading test dataset from: ./coding_task/data/atis/test.tsv
+2025-04-26 11:28:44,926 - INFO - TrainMain - *** Starting Test Set Evaluation ***
+2025-04-26 11:28:45,725 - INFO - TrainMain - Test set evaluation metrics: {'test_eval_loss': 0.10714130848646164, 'test_eval_precision_micro': 0.7376470588235294, 'test_eval_recall_micro': 0.7265353418308227, 'test_eval_f1_micro': 0.7320490367775832, 'test_eval_precision_macro': 0.04339100346020761, 'test_eval_recall_macro': 0.058823529411764705, 'test_eval_f1_macro': 0.04994225178222948, 'test_eval_precision_weighted': 0.5359266580328539, 'test_eval_recall_weighted': 0.7265353418308227, 'test_eval_f1_weighted': 0.6168417864968528, 'test_eval_precision_samples': 0.7376470588235294, 'test_eval_recall_samples': 0.7294117647058823, 'test_eval_f1_samples': 0.732156862745098, 'test_eval_f1': 0.7320490367775832, 'test_eval_subset_accuracy': 0.7211764705882353, 'test_eval_hamming_loss': 0.03176470588235294, 'test_eval_jaccard_micro': 0.5773480662983426, 'test_eval_jaccard_macro': 0.04339100346020761, 'test_eval_jaccard_weighted': 0.5359266580328539, 'test_eval_jaccard_samples': 0.7294117647058823, 'test_eval_roc_auc_micro': nan, 'test_eval_roc_auc_macro': nan, 'test_eval_roc_auc_weighted': nan, 'test_eval_roc_auc': nan, 'test_eval_avg_precision_micro': 0.7760058439497769, 'test_eval_avg_precision_macro': nan, 'test_eval_avg_precision_weighted': 0.7237112361996464, 'test_eval_avg_precision': 0.7760058439497769, 'test_eval_runtime': 0.7867, 'test_eval_samples_per_second': 1080.506, 'test_eval_steps_per_second': 34.322, 'test_epoch': 1.0}
+2025-04-26 11:28:45,725 - INFO - TrainMain - *** Evaluation Finished ***
+2025-04-26 11:28:45,725 - INFO - TrainMain - Saving final model/adapter to ./results/atis_multilabel_xlmr_lora
+2025-04-26 11:28:46,385 - INFO - TrainMain - Tokenizer saved to ./results/atis_multilabel_xlmr_lora
+2025-04-26 11:28:46,386 - ERROR - TrainMain - Failed to save training arguments: 'TrainingConfig' object has no attribute 'to_dict'
+2025-04-26 11:28:46,386 - INFO - TrainMain - Script finished successfully.
+2025-04-26 11:32:41,333 - INFO - TrainMain - Parsing configuration from command line arguments.
+2025-04-26 11:32:41,478 - INFO - TrainMain - --- Data Configuration ---
+2025-04-26 11:32:41,479 - INFO - TrainMain - DataConfig(dataset_path='./coding_task/data/atis/train.tsv', text_column='atis_text', label_column='atis_labels', task_type='multiclass', unpack_multi_labels=False, label_delimiter='+', use_dask=False, validation_split_ratio=0.2, max_seq_length=128, test_dataset_path='./coding_task/data/atis/test.tsv')
+2025-04-26 11:32:41,479 - INFO - TrainMain - --- Model Configuration ---
+2025-04-26 11:32:41,479 - INFO - TrainMain - ModelConfig(model_name_or_path='xlm-roberta-base', cache_dir=None, freeze_base_model=True)
+2025-04-26 11:32:41,479 - INFO - TrainMain - --- PEFT Configuration ---
+2025-04-26 11:32:41,479 - INFO - TrainMain - PeftConfig(method='lora', lora_r=64, lora_alpha=16, lora_dropout=0.1, lora_target_modules=None)
+2025-04-26 11:32:41,479 - INFO - TrainMain - --- Training Configuration ---
+2025-04-26 11:32:41,479 - INFO - TrainMain - TrainingConfig(output_dir='./results/atis_multiclass_xlmr_lora', num_train_epochs=10.0, per_device_train_batch_size=16, per_device_eval_batch_size=32, learning_rate=0.0001, weight_decay=0.01, lr_scheduler_type='linear', warmup_ratio=0.06, logging_dir='/home/fe/gururaj/LRP_Experiment/zendesk-mle-master/coding_task/logs/training_logs', logging_steps=25, evaluation_strategy='epoch', eval_steps=None, save_strategy='epoch', save_steps=None, save_total_limit=2, load_best_model_at_end=True, metric_for_best_model='eval_f1_weighted', greater_is_better=True, fp16=True, gradient_accumulation_steps=1, gradient_checkpointing=False, seed=42, report_to=['tensorboard'])
+2025-04-26 11:32:41,481 - INFO - TrainMain - Set random seed to: 42
+2025-04-26 11:32:41,481 - INFO - TrainMain - Output directory: ./results/atis_multiclass_xlmr_lora
+2025-04-26 11:32:41,481 - INFO - TrainMain - Loading tokenizer: xlm-roberta-base
+2025-04-26 11:32:43,321 - INFO - TrainMain - Starting data processing for Train/Validation...
+2025-04-26 11:32:43,653 - INFO - TrainMain - Data processing complete. Number of labels: 22
+2025-04-26 11:32:43,653 - INFO - TrainMain - Label mapping (id2label): {0: 'abbreviation', 1: 'aircraft', 2: 'aircraft+flight+flight_no', 3: 'airfare', 4: 'airfare+flight_time', 5: 'airline', 6: 'airline+flight_no', 7: 'airport', 8: 'capacity', 9: 'cheapest', 10: 'city', 11: 'distance', 12: 'flight', 13: 'flight+airfare', 14: 'flight_no', 15: 'flight_time', 16: 'ground_fare', 17: 'ground_service', 18: 'ground_service+ground_fare', 19: 'meal', 20: 'quantity', 21: 'restriction'}
+2025-04-26 11:32:43,654 - INFO - TrainMain - Label mappings saved to ./results/atis_multiclass_xlmr_lora
+2025-04-26 11:32:43,654 - INFO - TrainMain - Loading model for training...
+2025-04-26 11:34:30,255 - INFO - TrainMain - Parsing configuration from command line arguments.
+2025-04-26 11:34:30,396 - INFO - TrainMain - --- Data Configuration ---
+2025-04-26 11:34:30,396 - INFO - TrainMain - DataConfig(dataset_path='./coding_task/data/atis/train.tsv', text_column='atis_text', label_column='atis_labels', task_type='multiclass', unpack_multi_labels=False, label_delimiter='+', use_dask=False, validation_split_ratio=0.2, max_seq_length=128, test_dataset_path='./coding_task/data/atis/test.tsv')
+2025-04-26 11:34:30,396 - INFO - TrainMain - --- Model Configuration ---
+2025-04-26 11:34:30,396 - INFO - TrainMain - ModelConfig(model_name_or_path='xlm-roberta-base', cache_dir=None, freeze_base_model=True)
+2025-04-26 11:34:30,397 - INFO - TrainMain - --- PEFT Configuration ---
+2025-04-26 11:34:30,397 - INFO - TrainMain - PeftConfig(method='lora', lora_r=64, lora_alpha=16, lora_dropout=0.1, lora_target_modules=None)
+2025-04-26 11:34:30,397 - INFO - TrainMain - --- Training Configuration ---
+2025-04-26 11:34:30,397 - INFO - TrainMain - TrainingConfig(output_dir='./results/atis_multiclass_xlmr_lora', num_train_epochs=10.0, per_device_train_batch_size=16, per_device_eval_batch_size=32, learning_rate=0.0001, weight_decay=0.01, lr_scheduler_type='linear', warmup_ratio=0.06, logging_dir='/home/fe/gururaj/LRP_Experiment/zendesk-mle-master/coding_task/logs/training_logs', logging_steps=25, evaluation_strategy='epoch', eval_steps=None, save_strategy='epoch', save_steps=None, save_total_limit=2, load_best_model_at_end=True, metric_for_best_model='eval_f1_weighted', greater_is_better=True, fp16=True, gradient_accumulation_steps=1, gradient_checkpointing=False, seed=42, report_to=['tensorboard'])
+2025-04-26 11:34:30,399 - INFO - TrainMain - Set random seed to: 42
+2025-04-26 11:34:30,399 - INFO - TrainMain - Output directory: ./results/atis_multiclass_xlmr_lora
+2025-04-26 11:34:30,399 - INFO - TrainMain - Loading tokenizer: xlm-roberta-base
+2025-04-26 11:34:32,248 - INFO - TrainMain - Starting data processing for Train/Validation...
+2025-04-26 11:34:32,548 - INFO - TrainMain - Data processing complete. Number of labels: 22
+2025-04-26 11:34:32,549 - INFO - TrainMain - Label mapping (id2label): {0: 'abbreviation', 1: 'aircraft', 2: 'aircraft+flight+flight_no', 3: 'airfare', 4: 'airfare+flight_time', 5: 'airline', 6: 'airline+flight_no', 7: 'airport', 8: 'capacity', 9: 'cheapest', 10: 'city', 11: 'distance', 12: 'flight', 13: 'flight+airfare', 14: 'flight_no', 15: 'flight_time', 16: 'ground_fare', 17: 'ground_service', 18: 'ground_service+ground_fare', 19: 'meal', 20: 'quantity', 21: 'restriction'}
+2025-04-26 11:34:32,550 - INFO - TrainMain - Label mappings saved to ./results/atis_multiclass_xlmr_lora
+2025-04-26 11:34:32,550 - INFO - TrainMain - Loading model for training...
+2025-04-26 11:34:35,499 - INFO - TrainMain - Model loading complete.
+2025-04-26 11:34:35,500 - INFO - TrainMain - Setting up Trainer...
+2025-04-26 11:34:39,221 - INFO - TrainMain - Trainer setup complete.
+2025-04-26 11:34:39,221 - INFO - TrainMain - *** Starting Training ***
+2025-04-26 11:37:44,900 - INFO - TrainMain - *** Training Finished ***
+2025-04-26 11:37:44,905 - INFO - TrainMain - Training metrics: {'train_runtime': 185.4167, 'train_samples_per_second': 199.928, 'train_steps_per_second': 12.512, 'train_loss': 0.3453203541451487, 'epoch': 10.0}
+2025-04-26 11:37:44,905 - INFO - TrainMain - *** Starting Final Evaluation on Validation Set ***
+2025-04-26 11:37:45,741 - INFO - TrainMain - Final validation metrics: {'eval_eval_loss': 0.08002770692110062, 'eval_eval_accuracy': 0.9881337648327939, 'eval_eval_precision_micro': 0.9881337648327939, 'eval_eval_recall_micro': 0.9881337648327939, 'eval_eval_f1_micro': 0.9881337648327939, 'eval_eval_precision_macro': 0.920462891252292, 'eval_eval_recall_macro': 0.8999380168717364, 'eval_eval_f1_macro': 0.907765709222216, 'eval_eval_precision_weighted': 0.9873688068595561, 'eval_eval_recall_weighted': 0.9881337648327939, 'eval_eval_f1_weighted': 0.9875288670126504, 'eval_eval_f1': 0.9875288670126504, 'eval_eval_balanced_accuracy': 0.8999380168717364, 'eval_eval_cohen_kappa': 0.9726545005966827, 'eval_eval_matthews_corrcoef': 0.9726762321072991, 'eval_eval_roc_auc_ovr': nan, 'eval_eval_runtime': 0.8283, 'eval_eval_samples_per_second': 1119.198, 'eval_eval_steps_per_second': 35.013, 'eval_epoch': 10.0}
+2025-04-26 11:37:45,741 - INFO - TrainMain - *** Starting Test Set Evaluation ***
+2025-04-26 11:37:45,742 - INFO - TrainMain - Loading test dataset from: ./coding_task/data/atis/test.tsv
+2025-04-26 11:37:45,823 - INFO - TrainMain - *** Starting Test Set Evaluation ***
+2025-04-26 11:37:46,471 - INFO - TrainMain - Test set evaluation metrics: {'test_eval_loss': 0.09865611791610718, 'test_eval_accuracy': 0.9798816568047337, 'test_eval_precision_micro': 0.9798816568047337, 'test_eval_recall_micro': 0.9798816568047337, 'test_eval_f1_micro': 0.9798816568047337, 'test_eval_precision_macro': 0.9375893243235316, 'test_eval_recall_macro': 0.9365355297910355, 'test_eval_f1_macro': 0.9253472886144412, 'test_eval_precision_weighted': 0.9825867915628786, 'test_eval_recall_weighted': 0.9798816568047337, 'test_eval_f1_weighted': 0.979967124026431, 'test_eval_f1': 0.979967124026431, 'test_eval_balanced_accuracy': 0.9365355297910355, 'test_eval_cohen_kappa': 0.9569597042159416, 'test_eval_matthews_corrcoef': 0.9570657483418739, 'test_eval_roc_auc_ovr': nan, 'test_eval_runtime': 0.6406, 'test_eval_samples_per_second': 1319.081, 'test_eval_steps_per_second': 42.148, 'test_epoch': 10.0}
+2025-04-26 11:37:46,471 - INFO - TrainMain - *** Evaluation Finished ***
+2025-04-26 11:37:46,471 - INFO - TrainMain - Saving final model/adapter to ./results/atis_multiclass_xlmr_lora
+2025-04-26 11:37:46,902 - INFO - TrainMain - Tokenizer saved to ./results/atis_multiclass_xlmr_lora
+2025-04-26 11:37:46,902 - ERROR - TrainMain - Failed to save training arguments: 'TrainingConfig' object has no attribute 'to_dict'
+2025-04-26 11:37:46,902 - INFO - TrainMain - Script finished successfully.
+2025-04-26 11:44:16,743 - INFO - TrainMain - Parsing configuration from command line arguments.
+2025-04-26 11:44:16,890 - INFO - TrainMain - --- Data Configuration ---
+2025-04-26 11:44:16,891 - INFO - TrainMain - DataConfig(dataset_path='./coding_task/data/atis/train.tsv', text_column='atis_text', label_column='atis_labels', task_type='multiclass', unpack_multi_labels=False, label_delimiter='+', use_dask=False, validation_split_ratio=0.2, max_seq_length=128, test_dataset_path='./coding_task/data/atis/test.tsv')
+2025-04-26 11:44:16,891 - INFO - TrainMain - --- Model Configuration ---
+2025-04-26 11:44:16,891 - INFO - TrainMain - ModelConfig(model_name_or_path='xlm-roberta-base', cache_dir=None, freeze_base_model=True)
+2025-04-26 11:44:16,891 - INFO - TrainMain - --- PEFT Configuration ---
+2025-04-26 11:44:16,891 - INFO - TrainMain - PeftConfig(method='lora', lora_r=128, lora_alpha=16, lora_dropout=0.1, lora_target_modules=None)
+2025-04-26 11:44:16,891 - INFO - TrainMain - --- Training Configuration ---
+2025-04-26 11:44:16,891 - INFO - TrainMain - TrainingConfig(output_dir='./results/atis_multiclass_xlmr_lora', num_train_epochs=10.0, per_device_train_batch_size=16, per_device_eval_batch_size=32, learning_rate=0.0001, weight_decay=0.01, lr_scheduler_type='linear', warmup_ratio=0.06, logging_dir='/home/fe/gururaj/LRP_Experiment/zendesk-mle-master/coding_task/logs/training_logs', logging_steps=25, evaluation_strategy='epoch', eval_steps=None, save_strategy='epoch', save_steps=None, save_total_limit=2, load_best_model_at_end=True, metric_for_best_model='eval_f1_weighted', greater_is_better=True, fp16=True, gradient_accumulation_steps=1, gradient_checkpointing=False, seed=42, report_to=['tensorboard'])
+2025-04-26 11:44:16,894 - INFO - TrainMain - Set random seed to: 42
+2025-04-26 11:44:16,894 - INFO - TrainMain - Output directory: ./results/atis_multiclass_xlmr_lora
+2025-04-26 11:44:16,894 - INFO - TrainMain - Loading tokenizer: xlm-roberta-base
+2025-04-26 11:44:18,520 - INFO - TrainMain - Starting data processing for Train/Validation...
+2025-04-26 11:44:18,905 - INFO - TrainMain - Data processing complete. Number of labels: 22
+2025-04-26 11:44:18,905 - INFO - TrainMain - Label mapping (id2label): {0: 'abbreviation', 1: 'aircraft', 2: 'aircraft+flight+flight_no', 3: 'airfare', 4: 'airfare+flight_time', 5: 'airline', 6: 'airline+flight_no', 7: 'airport', 8: 'capacity', 9: 'cheapest', 10: 'city', 11: 'distance', 12: 'flight', 13: 'flight+airfare', 14: 'flight_no', 15: 'flight_time', 16: 'ground_fare', 17: 'ground_service', 18: 'ground_service+ground_fare', 19: 'meal', 20: 'quantity', 21: 'restriction'}
+2025-04-26 11:44:18,906 - INFO - TrainMain - Label mappings saved to ./results/atis_multiclass_xlmr_lora
+2025-04-26 11:44:18,906 - INFO - TrainMain - Loading model for training...
+2025-04-26 11:44:21,919 - INFO - TrainMain - Model loading complete.
+2025-04-26 11:44:21,919 - INFO - TrainMain - Setting up Trainer...
+2025-04-26 11:44:25,424 - INFO - TrainMain - Trainer setup complete.
+2025-04-26 11:44:25,424 - INFO - TrainMain - *** Starting Training ***
+2025-04-26 11:48:51,451 - INFO - TrainMain - *** Training Finished ***
+2025-04-26 11:48:51,457 - INFO - TrainMain - Training metrics: {'train_runtime': 265.7693, 'train_samples_per_second': 139.482, 'train_steps_per_second': 8.729, 'train_loss': 0.3465902406593849, 'epoch': 10.0}
+2025-04-26 11:48:51,457 - INFO - TrainMain - *** Starting Final Evaluation on Validation Set ***
+2025-04-26 11:48:52,289 - INFO - TrainMain - Final validation metrics: {'eval_eval_loss': 0.07599655538797379, 'eval_eval_accuracy': 0.9892125134843581, 'eval_eval_precision_micro': 0.9892125134843581, 'eval_eval_recall_micro': 0.9892125134843581, 'eval_eval_f1_micro': 0.9892125134843581, 'eval_eval_precision_macro': 0.9211979744421944, 'eval_eval_recall_macro': 0.9026554081760843, 'eval_eval_f1_macro': 0.9095243405539302, 'eval_eval_precision_weighted': 0.9884218710194164, 'eval_eval_recall_weighted': 0.9892125134843581, 'eval_eval_f1_weighted': 0.9886099124011972, 'eval_eval_f1': 0.9886099124011972, 'eval_eval_balanced_accuracy': 0.9026554081760843, 'eval_eval_cohen_kappa': 0.9751444544247966, 'eval_eval_matthews_corrcoef': 0.975163848764251, 'eval_eval_roc_auc_ovr': nan, 'eval_eval_runtime': 0.8246, 'eval_eval_samples_per_second': 1124.171, 'eval_eval_steps_per_second': 35.168, 'eval_epoch': 10.0}
+2025-04-26 11:48:52,289 - INFO - TrainMain - *** Starting Test Set Evaluation ***
+2025-04-26 11:48:52,289 - INFO - TrainMain - Loading test dataset from: ./coding_task/data/atis/test.tsv
+2025-04-26 11:48:52,366 - INFO - TrainMain - *** Starting Test Set Evaluation ***
+2025-04-26 11:48:53,024 - INFO - TrainMain - Test set evaluation metrics: {'test_eval_loss': 0.1058998629450798, 'test_eval_accuracy': 0.9727810650887574, 'test_eval_precision_micro': 0.9727810650887574, 'test_eval_recall_micro': 0.9727810650887574, 'test_eval_f1_micro': 0.9727810650887574, 'test_eval_precision_macro': 0.9239884922978774, 'test_eval_recall_macro': 0.9037974345529403, 'test_eval_f1_macro': 0.8921447382683866, 'test_eval_precision_weighted': 0.9751582119619254, 'test_eval_recall_weighted': 0.9727810650887574, 'test_eval_f1_weighted': 0.9708477858716882, 'test_eval_f1': 0.9708477858716882, 'test_eval_balanced_accuracy': 0.9037974345529403, 'test_eval_cohen_kappa': 0.9414423236264481, 'test_eval_matthews_corrcoef': 0.9416412346018491, 'test_eval_roc_auc_ovr': nan, 'test_eval_runtime': 0.6515, 'test_eval_samples_per_second': 1297.084, 'test_eval_steps_per_second': 41.445, 'test_epoch': 10.0}
+2025-04-26 11:48:53,025 - INFO - TrainMain - *** Evaluation Finished ***
+2025-04-26 11:48:53,025 - INFO - TrainMain - Saving final model/adapter to ./results/atis_multiclass_xlmr_lora
+2025-04-26 11:48:53,476 - INFO - TrainMain - Tokenizer saved to ./results/atis_multiclass_xlmr_lora
+2025-04-26 11:48:53,476 - ERROR - TrainMain - Failed to save training arguments: 'TrainingConfig' object has no attribute 'to_dict'
+2025-04-26 11:48:53,476 - INFO - TrainMain - Script finished successfully.
+2025-04-26 11:52:12,113 - INFO - TrainMain - Parsing configuration from command line arguments.
+2025-04-26 11:52:12,260 - INFO - TrainMain - --- Data Configuration ---
+2025-04-26 11:52:12,260 - INFO - TrainMain - DataConfig(dataset_path='./coding_task/data/atis/train.tsv', text_column='atis_text', label_column='atis_labels', task_type='multilabel', unpack_multi_labels=True, label_delimiter='+', use_dask=False, validation_split_ratio=0.2, max_seq_length=128, test_dataset_path='./coding_task/data/atis/test.tsv')
+2025-04-26 11:52:12,260 - INFO - TrainMain - --- Model Configuration ---
+2025-04-26 11:52:12,260 - INFO - TrainMain - ModelConfig(model_name_or_path='xlm-roberta-base', cache_dir=None, freeze_base_model=True)
+2025-04-26 11:52:12,260 - INFO - TrainMain - --- PEFT Configuration ---
+2025-04-26 11:52:12,260 - INFO - TrainMain - PeftConfig(method='lora', lora_r=64, lora_alpha=16, lora_dropout=0.1, lora_target_modules=None)
+2025-04-26 11:52:12,261 - INFO - TrainMain - --- Training Configuration ---
+2025-04-26 11:52:12,261 - INFO - TrainMain - TrainingConfig(output_dir='./results/atis_multilabel_xlmr_lora', num_train_epochs=10.0, per_device_train_batch_size=16, per_device_eval_batch_size=32, learning_rate=0.0001, weight_decay=0.01, lr_scheduler_type='linear', warmup_ratio=0.06, logging_dir='/home/fe/gururaj/LRP_Experiment/zendesk-mle-master/coding_task/logs/training_logs', logging_steps=25, evaluation_strategy='epoch', eval_steps=None, save_strategy='epoch', save_steps=None, save_total_limit=2, load_best_model_at_end=True, metric_for_best_model='eval_f1_micro', greater_is_better=True, fp16=True, gradient_accumulation_steps=1, gradient_checkpointing=False, seed=42, report_to=['tensorboard'])
+2025-04-26 11:52:12,263 - INFO - TrainMain - Set random seed to: 42
+2025-04-26 11:52:12,263 - INFO - TrainMain - Output directory: ./results/atis_multilabel_xlmr_lora
+2025-04-26 11:52:12,263 - INFO - TrainMain - Loading tokenizer: xlm-roberta-base
+2025-04-26 11:52:13,901 - INFO - TrainMain - Starting data processing for Train/Validation...
+2025-04-26 11:52:14,426 - INFO - TrainMain - Data processing complete. Number of labels: 17
+2025-04-26 11:52:14,427 - INFO - TrainMain - Label mapping (id2label): {0: 'abbreviation', 1: 'aircraft', 2: 'airfare', 3: 'airline', 4: 'airport', 5: 'capacity', 6: 'cheapest', 7: 'city', 8: 'distance', 9: 'flight', 10: 'flight_no', 11: 'flight_time', 12: 'ground_fare', 13: 'ground_service', 14: 'meal', 15: 'quantity', 16: 'restriction'}
+2025-04-26 11:52:14,427 - INFO - TrainMain - Label mappings saved to ./results/atis_multilabel_xlmr_lora
+2025-04-26 11:52:14,428 - INFO - TrainMain - Loading model for training...
+2025-04-26 11:52:17,323 - INFO - TrainMain - Model loading complete.
+2025-04-26 11:52:17,323 - INFO - TrainMain - Setting up Trainer...
+2025-04-26 11:52:21,142 - INFO - TrainMain - Trainer setup complete.
+2025-04-26 11:52:21,142 - INFO - TrainMain - *** Starting Training ***
+2025-04-26 11:56:53,751 - INFO - TrainMain - *** Training Finished ***
+2025-04-26 11:56:53,757 - INFO - TrainMain - Training metrics: {'train_runtime': 272.3483, 'train_samples_per_second': 136.112, 'train_steps_per_second': 8.519, 'train_loss': 0.06069241859789552, 'epoch': 10.0}
+2025-04-26 11:56:53,757 - INFO - TrainMain - *** Starting Final Evaluation on Validation Set ***
+2025-04-26 11:56:54,614 - INFO - TrainMain - Final validation metrics: {'eval_eval_loss': 0.015811562538146973, 'eval_eval_precision_micro': 0.9834437086092715, 'eval_eval_recall_micro': 0.954983922829582, 'eval_eval_f1_micro': 0.9690048939641109, 'eval_eval_precision_macro': 0.4486354850740117, 'eval_eval_recall_macro': 0.42423405023714195, 'eval_eval_f1_macro': 0.4325723017265284, 'eval_eval_precision_weighted': 0.959644267780793, 'eval_eval_recall_weighted': 0.954983922829582, 'eval_eval_f1_weighted': 0.9561830934596441, 'eval_eval_precision_samples': 0.9579288025889967, 'eval_eval_recall_samples': 0.9572096368212872, 'eval_eval_f1_samples': 0.9570298453793599, 'eval_eval_f1': 0.9690048939641109, 'eval_eval_subset_accuracy': 0.95361380798274, 'eval_eval_hamming_loss': 0.003616980772891681, 'eval_eval_jaccard_micro': 0.939873417721519, 'eval_eval_jaccard_macro': 0.40566409897292255, 'eval_eval_jaccard_weighted': 0.940239009680328, 'eval_eval_jaccard_samples': 0.956130888169723, 'eval_eval_roc_auc_micro': nan, 'eval_eval_roc_auc_macro': nan, 'eval_eval_roc_auc_weighted': nan, 'eval_eval_roc_auc': nan, 'eval_eval_avg_precision_micro': 0.9882894951570467, 'eval_eval_avg_precision_macro': nan, 'eval_eval_avg_precision_weighted': 0.9838124106347597, 'eval_eval_avg_precision': 0.9882894951570467, 'eval_eval_runtime': 0.8448, 'eval_eval_samples_per_second': 1097.365, 'eval_eval_steps_per_second': 34.33, 'eval_epoch': 10.0}
+2025-04-26 11:56:54,614 - INFO - TrainMain - *** Starting Test Set Evaluation ***
+2025-04-26 11:56:54,614 - INFO - TrainMain - Loading test dataset from: ./coding_task/data/atis/test.tsv
+2025-04-26 11:56:54,800 - INFO - TrainMain - *** Starting Test Set Evaluation ***
+2025-04-26 11:56:55,605 - INFO - TrainMain - Test set evaluation metrics: {'test_eval_loss': 0.025372443720698357, 'test_eval_precision_micro': 0.9519112207151664, 'test_eval_recall_micro': 0.8945538818076477, 'test_eval_f1_micro': 0.922341696535245, 'test_eval_precision_macro': 0.37516996707095407, 'test_eval_recall_macro': 0.45627292567352457, 'test_eval_f1_macro': 0.3982961190502567, 'test_eval_precision_weighted': 0.8862538466632066, 'test_eval_recall_weighted': 0.8945538818076477, 'test_eval_f1_weighted': 0.888234202794817, 'test_eval_precision_samples': 0.9058823529411765, 'test_eval_recall_samples': 0.8988235294117647, 'test_eval_f1_samples': 0.9011764705882352, 'test_eval_f1': 0.922341696535245, 'test_eval_subset_accuracy': 0.8917647058823529, 'test_eval_hamming_loss': 0.008996539792387544, 'test_eval_jaccard_micro': 0.8558758314855875, 'test_eval_jaccard_macro': 0.36339557491175933, 'test_eval_jaccard_weighted': 0.8660813690596818, 'test_eval_jaccard_samples': 0.8988235294117647, 'test_eval_roc_auc_micro': nan, 'test_eval_roc_auc_macro': nan, 'test_eval_roc_auc_weighted': nan, 'test_eval_roc_auc': nan, 'test_eval_avg_precision_micro': 0.974987867292457, 'test_eval_avg_precision_macro': nan, 'test_eval_avg_precision_weighted': 0.976728216209286, 'test_eval_avg_precision': 0.974987867292457, 'test_eval_runtime': 0.7941, 'test_eval_samples_per_second': 1070.352, 'test_eval_steps_per_second': 33.999, 'test_epoch': 10.0}
+2025-04-26 11:56:55,605 - INFO - TrainMain - *** Evaluation Finished ***
+2025-04-26 11:56:55,605 - INFO - TrainMain - Saving final model/adapter to ./results/atis_multilabel_xlmr_lora
+2025-04-26 11:56:56,050 - INFO - TrainMain - Tokenizer saved to ./results/atis_multilabel_xlmr_lora
+2025-04-26 11:56:56,050 - ERROR - TrainMain - Failed to save training arguments: 'TrainingConfig' object has no attribute 'to_dict'
+2025-04-26 11:56:56,050 - INFO - TrainMain - Script finished successfully.
+2025-04-26 11:58:01,050 - INFO - TrainMain - Parsing configuration from command line arguments.
+2025-04-26 11:58:01,196 - INFO - TrainMain - --- Data Configuration ---
+2025-04-26 11:58:01,196 - INFO - TrainMain - DataConfig(dataset_path='./coding_task/data/atis/train.tsv', text_column='atis_text', label_column='atis_labels', task_type='multilabel', unpack_multi_labels=True, label_delimiter='+', use_dask=False, validation_split_ratio=0.2, max_seq_length=128, test_dataset_path='./coding_task/data/atis/test.tsv')
+2025-04-26 11:58:01,196 - INFO - TrainMain - --- Model Configuration ---
+2025-04-26 11:58:01,196 - INFO - TrainMain - ModelConfig(model_name_or_path='xlm-roberta-base', cache_dir=None, freeze_base_model=True)
+2025-04-26 11:58:01,196 - INFO - TrainMain - --- PEFT Configuration ---
+2025-04-26 11:58:01,196 - INFO - TrainMain - PeftConfig(method='lora', lora_r=128, lora_alpha=16, lora_dropout=0.1, lora_target_modules=None)
+2025-04-26 11:58:01,196 - INFO - TrainMain - --- Training Configuration ---
+2025-04-26 11:58:01,196 - INFO - TrainMain - TrainingConfig(output_dir='./results/atis_multilabel_xlmr_lora', num_train_epochs=10.0, per_device_train_batch_size=16, per_device_eval_batch_size=32, learning_rate=0.0001, weight_decay=0.01, lr_scheduler_type='linear', warmup_ratio=0.06, logging_dir='/home/fe/gururaj/LRP_Experiment/zendesk-mle-master/coding_task/logs/training_logs', logging_steps=25, evaluation_strategy='epoch', eval_steps=None, save_strategy='epoch', save_steps=None, save_total_limit=2, load_best_model_at_end=True, metric_for_best_model='eval_f1_micro', greater_is_better=True, fp16=True, gradient_accumulation_steps=1, gradient_checkpointing=False, seed=42, report_to=['tensorboard'])
+2025-04-26 11:58:01,198 - INFO - TrainMain - Set random seed to: 42
+2025-04-26 11:58:01,198 - INFO - TrainMain - Output directory: ./results/atis_multilabel_xlmr_lora
+2025-04-26 11:58:01,199 - INFO - TrainMain - Loading tokenizer: xlm-roberta-base
+2025-04-26 11:58:03,180 - INFO - TrainMain - Starting data processing for Train/Validation...
+2025-04-26 11:58:03,698 - INFO - TrainMain - Data processing complete. Number of labels: 17
+2025-04-26 11:58:03,699 - INFO - TrainMain - Label mapping (id2label): {0: 'abbreviation', 1: 'aircraft', 2: 'airfare', 3: 'airline', 4: 'airport', 5: 'capacity', 6: 'cheapest', 7: 'city', 8: 'distance', 9: 'flight', 10: 'flight_no', 11: 'flight_time', 12: 'ground_fare', 13: 'ground_service', 14: 'meal', 15: 'quantity', 16: 'restriction'}
+2025-04-26 11:58:03,700 - INFO - TrainMain - Label mappings saved to ./results/atis_multilabel_xlmr_lora
+2025-04-26 11:58:03,700 - INFO - TrainMain - Loading model for training...
+2025-04-26 11:58:06,640 - INFO - TrainMain - Model loading complete.
+2025-04-26 11:58:06,640 - INFO - TrainMain - Setting up Trainer...
+2025-04-26 11:58:10,396 - INFO - TrainMain - Trainer setup complete.
+2025-04-26 11:58:10,396 - INFO - TrainMain - *** Starting Training ***
+2025-04-26 12:01:57,369 - INFO - TrainMain - *** Training Finished ***
+2025-04-26 12:01:57,375 - INFO - TrainMain - Training metrics: {'train_runtime': 226.7139, 'train_samples_per_second': 163.51, 'train_steps_per_second': 10.233, 'train_loss': 0.05811093810560374, 'epoch': 10.0}
+2025-04-26 12:01:57,376 - INFO - TrainMain - *** Starting Final Evaluation on Validation Set ***
+2025-04-26 12:01:58,242 - INFO - TrainMain - Final validation metrics: {'eval_eval_loss': 0.01420549862086773, 'eval_eval_precision_micro': 0.9812568908489526, 'eval_eval_recall_micro': 0.9539121114683816, 'eval_eval_f1_micro': 0.9673913043478262, 'eval_eval_precision_macro': 0.4475669420460037, 'eval_eval_recall_macro': 0.42830064307042237, 'eval_eval_f1_macro': 0.43717106120910587, 'eval_eval_precision_weighted': 0.9572467631088848, 'eval_eval_recall_weighted': 0.9539121114683816, 'eval_eval_f1_weighted': 0.9553168425290843, 'eval_eval_precision_samples': 0.9584681769147788, 'eval_eval_recall_samples': 0.9566702624955051, 'eval_eval_f1_samples': 0.95702984537936, 'eval_eval_f1': 0.9673913043478262, 'eval_eval_subset_accuracy': 0.95361380798274, 'eval_eval_hamming_loss': 0.003807348181991243, 'eval_eval_jaccard_micro': 0.9368421052631579, 'eval_eval_jaccard_macro': 0.41189941141176084, 'eval_eval_jaccard_weighted': 0.9374136178750652, 'eval_eval_jaccard_samples': 0.956130888169723, 'eval_eval_roc_auc_micro': nan, 'eval_eval_roc_auc_macro': nan, 'eval_eval_roc_auc_weighted': nan, 'eval_eval_roc_auc': nan, 'eval_eval_avg_precision_micro': 0.9914429712704356, 'eval_eval_avg_precision_macro': nan, 'eval_eval_avg_precision_weighted': 0.9864354827513206, 'eval_eval_avg_precision': 0.9914429712704356, 'eval_eval_runtime': 0.8548, 'eval_eval_samples_per_second': 1084.515, 'eval_eval_steps_per_second': 33.928, 'eval_epoch': 10.0}
+2025-04-26 12:01:58,242 - INFO - TrainMain - *** Starting Test Set Evaluation ***
+2025-04-26 12:01:58,242 - INFO - TrainMain - Loading test dataset from: ./coding_task/data/atis/test.tsv
+2025-04-26 12:01:58,400 - INFO - TrainMain - *** Starting Test Set Evaluation ***
+2025-04-26 12:01:59,182 - INFO - TrainMain - Test set evaluation metrics: {'test_eval_loss': 0.023558707907795906, 'test_eval_precision_micro': 0.9604449938195303, 'test_eval_recall_micro': 0.9003476245654692, 'test_eval_f1_micro': 0.929425837320574, 'test_eval_precision_macro': 0.44265302796923, 'test_eval_recall_macro': 0.46389762430974424, 'test_eval_f1_macro': 0.4154917451147581, 'test_eval_precision_weighted': 0.9161096026677366, 'test_eval_recall_weighted': 0.9003476245654692, 'test_eval_f1_weighted': 0.8973956667267579, 'test_eval_precision_samples': 0.9094117647058824, 'test_eval_recall_samples': 0.9035294117647059, 'test_eval_f1_samples': 0.9054901960784313, 'test_eval_f1': 0.929425837320574, 'test_eval_subset_accuracy': 0.8976470588235295, 'test_eval_hamming_loss': 0.008166089965397924, 'test_eval_jaccard_micro': 0.8681564245810056, 'test_eval_jaccard_macro': 0.37893404591162977, 'test_eval_jaccard_weighted': 0.8766217152385666, 'test_eval_jaccard_samples': 0.9035294117647059, 'test_eval_roc_auc_micro': nan, 'test_eval_roc_auc_macro': nan, 'test_eval_roc_auc_weighted': nan, 'test_eval_roc_auc': nan, 'test_eval_avg_precision_micro': 0.9794100854917647, 'test_eval_avg_precision_macro': nan, 'test_eval_avg_precision_weighted': 0.9887790907617204, 'test_eval_avg_precision': 0.9794100854917647, 'test_eval_runtime': 0.7709, 'test_eval_samples_per_second': 1102.585, 'test_eval_steps_per_second': 35.023, 'test_epoch': 10.0}
+2025-04-26 12:01:59,182 - INFO - TrainMain - *** Evaluation Finished ***
+2025-04-26 12:01:59,182 - INFO - TrainMain - Saving final model/adapter to ./results/atis_multilabel_xlmr_lora
+2025-04-26 12:01:59,643 - INFO - TrainMain - Tokenizer saved to ./results/atis_multilabel_xlmr_lora
+2025-04-26 12:01:59,643 - ERROR - TrainMain - Failed to save training arguments: 'TrainingConfig' object has no attribute 'to_dict'
+2025-04-26 12:01:59,643 - INFO - TrainMain - Script finished successfully.
+2025-04-26 13:39:41,772 - INFO - TrainMain - Parsing configuration from command line arguments.
+2025-04-26 13:39:41,919 - INFO - TrainMain - --- Data Configuration ---
+2025-04-26 13:39:41,919 - INFO - TrainMain - DataConfig(dataset_path='./coding_task/data/atis/train.tsv', text_column='atis_text', label_column='atis_labels', task_type='multilabel', unpack_multi_labels=True, label_delimiter='+', use_dask=False, validation_split_ratio=0.2, max_seq_length=128, test_dataset_path='./coding_task/data/atis/test.tsv')
+2025-04-26 13:39:41,919 - INFO - TrainMain - --- Model Configuration ---
+2025-04-26 13:39:41,919 - INFO - TrainMain - ModelConfig(model_name_or_path='xlm-roberta-base', cache_dir=None, freeze_base_model=True)
+2025-04-26 13:39:41,920 - INFO - TrainMain - --- PEFT Configuration ---
+2025-04-26 13:39:41,920 - INFO - TrainMain - PeftConfig(method='lora', lora_r=256, lora_alpha=16, lora_dropout=0.1, lora_target_modules=None)
+2025-04-26 13:39:41,920 - INFO - TrainMain - --- Training Configuration ---
+2025-04-26 13:39:41,920 - INFO - TrainMain - TrainingConfig(output_dir='./results/atis_multilabel_xlmr_lora', num_train_epochs=50.0, per_device_train_batch_size=32, per_device_eval_batch_size=32, learning_rate=0.0001, weight_decay=0.01, lr_scheduler_type='linear', warmup_ratio=0.06, logging_dir='/home/fe/gururaj/LRP_Experiment/zendesk-mle-master/coding_task/logs/training_logs', logging_steps=25, evaluation_strategy='epoch', eval_steps=None, save_strategy='epoch', save_steps=None, save_total_limit=2, load_best_model_at_end=True, metric_for_best_model='eval_f1_micro', greater_is_better=True, fp16=True, gradient_accumulation_steps=1, gradient_checkpointing=False, seed=42, report_to=['tensorboard'])
+2025-04-26 13:39:41,922 - INFO - TrainMain - Set random seed to: 42
+2025-04-26 13:39:41,922 - INFO - TrainMain - Output directory: ./results/atis_multilabel_xlmr_lora
+2025-04-26 13:39:41,922 - INFO - TrainMain - Loading tokenizer: xlm-roberta-base
+2025-04-26 13:39:43,537 - INFO - TrainMain - Starting data processing for Train/Validation...
+2025-04-26 13:39:44,096 - INFO - TrainMain - Data processing complete. Number of labels: 17
+2025-04-26 13:39:44,096 - INFO - TrainMain - Label mapping (id2label): {0: 'abbreviation', 1: 'aircraft', 2: 'airfare', 3: 'airline', 4: 'airport', 5: 'capacity', 6: 'cheapest', 7: 'city', 8: 'distance', 9: 'flight', 10: 'flight_no', 11: 'flight_time', 12: 'ground_fare', 13: 'ground_service', 14: 'meal', 15: 'quantity', 16: 'restriction'}
+2025-04-26 13:39:44,097 - INFO - TrainMain - Label mappings saved to ./results/atis_multilabel_xlmr_lora
+2025-04-26 13:39:44,097 - INFO - TrainMain - Loading model for training...
+2025-04-26 13:39:47,141 - INFO - TrainMain - Model loading complete.
+2025-04-26 13:39:47,141 - INFO - TrainMain - Setting up Trainer...
+2025-04-26 13:39:50,852 - INFO - TrainMain - Trainer setup complete.
+2025-04-26 13:39:50,852 - INFO - TrainMain - *** Starting Training ***
+2025-04-26 13:40:17,089 - INFO - TrainMain - Parsing configuration from command line arguments.
+2025-04-26 13:40:17,236 - INFO - TrainMain - --- Data Configuration ---
+2025-04-26 13:40:17,236 - INFO - TrainMain - DataConfig(dataset_path='./coding_task/data/atis/train.tsv', text_column='atis_text', label_column='atis_labels', task_type='multilabel', unpack_multi_labels=True, label_delimiter='+', use_dask=False, validation_split_ratio=0.2, max_seq_length=128, test_dataset_path='./coding_task/data/atis/test.tsv')
+2025-04-26 13:40:17,236 - INFO - TrainMain - --- Model Configuration ---
+2025-04-26 13:40:17,236 - INFO - TrainMain - ModelConfig(model_name_or_path='xlm-roberta-base', cache_dir=None, freeze_base_model=True)
+2025-04-26 13:40:17,236 - INFO - TrainMain - --- PEFT Configuration ---
+2025-04-26 13:40:17,236 - INFO - TrainMain - PeftConfig(method='lora', lora_r=256, lora_alpha=16, lora_dropout=0.1, lora_target_modules=None)
+2025-04-26 13:40:17,236 - INFO - TrainMain - --- Training Configuration ---
+2025-04-26 13:40:17,236 - INFO - TrainMain - TrainingConfig(output_dir='./results/atis_multilabel_xlmr_lora', num_train_epochs=50.0, per_device_train_batch_size=64, per_device_eval_batch_size=32, learning_rate=0.0001, weight_decay=0.01, lr_scheduler_type='linear', warmup_ratio=0.06, logging_dir='/home/fe/gururaj/LRP_Experiment/zendesk-mle-master/coding_task/logs/training_logs', logging_steps=25, evaluation_strategy='epoch', eval_steps=None, save_strategy='epoch', save_steps=None, save_total_limit=2, load_best_model_at_end=True, metric_for_best_model='eval_f1_micro', greater_is_better=True, fp16=True, gradient_accumulation_steps=1, gradient_checkpointing=False, seed=42, report_to=['tensorboard'])
+2025-04-26 13:40:17,238 - INFO - TrainMain - Set random seed to: 42
+2025-04-26 13:40:17,239 - INFO - TrainMain - Output directory: ./results/atis_multilabel_xlmr_lora
+2025-04-26 13:40:17,239 - INFO - TrainMain - Loading tokenizer: xlm-roberta-base
+2025-04-26 13:40:18,876 - INFO - TrainMain - Starting data processing for Train/Validation...
+2025-04-26 13:40:19,422 - INFO - TrainMain - Data processing complete. Number of labels: 17
+2025-04-26 13:40:19,422 - INFO - TrainMain - Label mapping (id2label): {0: 'abbreviation', 1: 'aircraft', 2: 'airfare', 3: 'airline', 4: 'airport', 5: 'capacity', 6: 'cheapest', 7: 'city', 8: 'distance', 9: 'flight', 10: 'flight_no', 11: 'flight_time', 12: 'ground_fare', 13: 'ground_service', 14: 'meal', 15: 'quantity', 16: 'restriction'}
+2025-04-26 13:40:19,423 - INFO - TrainMain - Label mappings saved to ./results/atis_multilabel_xlmr_lora
+2025-04-26 13:40:19,424 - INFO - TrainMain - Loading model for training...
+2025-04-26 13:40:22,417 - INFO - TrainMain - Model loading complete.
+2025-04-26 13:40:22,417 - INFO - TrainMain - Setting up Trainer...
+2025-04-26 13:40:26,138 - INFO - TrainMain - Trainer setup complete.
+2025-04-26 13:40:26,138 - INFO - TrainMain - *** Starting Training ***
+2025-04-26 13:41:14,323 - INFO - TrainMain - Parsing configuration from command line arguments.
+2025-04-26 13:41:14,468 - INFO - TrainMain - --- Data Configuration ---
+2025-04-26 13:41:14,468 - INFO - TrainMain - DataConfig(dataset_path='./coding_task/data/atis/train.tsv', text_column='atis_text', label_column='atis_labels', task_type='multilabel', unpack_multi_labels=True, label_delimiter='+', use_dask=False, validation_split_ratio=0.2, max_seq_length=128, test_dataset_path='./coding_task/data/atis/test.tsv')
+2025-04-26 13:41:14,468 - INFO - TrainMain - --- Model Configuration ---
+2025-04-26 13:41:14,468 - INFO - TrainMain - ModelConfig(model_name_or_path='xlm-roberta-base', cache_dir=None, freeze_base_model=True)
+2025-04-26 13:41:14,468 - INFO - TrainMain - --- PEFT Configuration ---
+2025-04-26 13:41:14,469 - INFO - TrainMain - PeftConfig(method='lora', lora_r=256, lora_alpha=16, lora_dropout=0.1, lora_target_modules=None)
+2025-04-26 13:41:14,469 - INFO - TrainMain - --- Training Configuration ---
+2025-04-26 13:41:14,469 - INFO - TrainMain - TrainingConfig(output_dir='./results/atis_multilabel_xlmr_lora', num_train_epochs=50.0, per_device_train_batch_size=64, per_device_eval_batch_size=32, learning_rate=0.0001, weight_decay=0.01, lr_scheduler_type='linear', warmup_ratio=0.06, logging_dir='/home/fe/gururaj/LRP_Experiment/zendesk-mle-master/coding_task/logs/training_logs', logging_steps=25, evaluation_strategy='epoch', eval_steps=None, save_strategy='epoch', save_steps=None, save_total_limit=2, load_best_model_at_end=True, metric_for_best_model='eval_f1_micro', greater_is_better=True, fp16=True, gradient_accumulation_steps=1, gradient_checkpointing=False, seed=42, report_to=['tensorboard'])
+2025-04-26 13:41:14,471 - INFO - TrainMain - Set random seed to: 42
+2025-04-26 13:41:14,471 - INFO - TrainMain - Output directory: ./results/atis_multilabel_xlmr_lora
+2025-04-26 13:41:14,471 - INFO - TrainMain - Loading tokenizer: xlm-roberta-base
+2025-04-26 13:41:16,111 - INFO - TrainMain - Starting data processing for Train/Validation...
+2025-04-26 13:41:16,667 - INFO - TrainMain - Data processing complete. Number of labels: 17
+2025-04-26 13:41:16,667 - INFO - TrainMain - Label mapping (id2label): {0: 'abbreviation', 1: 'aircraft', 2: 'airfare', 3: 'airline', 4: 'airport', 5: 'capacity', 6: 'cheapest', 7: 'city', 8: 'distance', 9: 'flight', 10: 'flight_no', 11: 'flight_time', 12: 'ground_fare', 13: 'ground_service', 14: 'meal', 15: 'quantity', 16: 'restriction'}
+2025-04-26 13:41:16,668 - INFO - TrainMain - Label mappings saved to ./results/atis_multilabel_xlmr_lora
+2025-04-26 13:41:16,668 - INFO - TrainMain - Loading model for training...
+2025-04-26 13:41:19,699 - INFO - TrainMain - Model loading complete.
+2025-04-26 13:41:19,699 - INFO - TrainMain - Setting up Trainer...
+2025-04-26 13:41:23,413 - INFO - TrainMain - Trainer setup complete.
+2025-04-26 13:41:23,413 - INFO - TrainMain - *** Starting Training ***
+2025-04-26 13:41:58,314 - INFO - TrainMain - *** Training Finished ***
+2025-04-26 13:41:58,316 - INFO - TrainMain - Training metrics: {'train_runtime': 34.6429, 'train_samples_per_second': 5350.295, 'train_steps_per_second': 83.711, 'train_loss': 0.27267061430832434, 'epoch': 4.0}
+2025-04-26 13:41:58,316 - INFO - TrainMain - *** Starting Final Evaluation on Validation Set ***
+2025-04-26 13:41:59,134 - INFO - TrainMain - Final validation metrics: {'eval_eval_loss': 0.5071843862533569, 'eval_eval_precision_micro': 0.7195253505933118, 'eval_eval_recall_micro': 0.714898177920686, 'eval_eval_f1_micro': 0.7172043010752689, 'eval_eval_precision_macro': 0.042325020623135985, 'eval_eval_recall_macro': 0.058823529411764705, 'eval_eval_f1_macro': 0.049228725367185776, 'eval_eval_precision_weighted': 0.5143873621069014, 'eval_eval_recall_weighted': 0.714898177920686, 'eval_eval_f1_weighted': 0.5982899431281024, 'eval_eval_precision_samples': 0.7195253505933118, 'eval_eval_recall_samples': 0.717727436174038, 'eval_eval_f1_samples': 0.7182668104998201, 'eval_eval_f1': 0.7172043010752689, 'eval_eval_subset_accuracy': 0.7162891046386192, 'eval_eval_hamming_loss': 0.03337775239545657, 'eval_eval_jaccard_micro': 0.559094719195306, 'eval_eval_jaccard_macro': 0.042325020623135985, 'eval_eval_jaccard_weighted': 0.5143873621069014, 'eval_eval_jaccard_samples': 0.717727436174038, 'eval_eval_roc_auc_micro': nan, 'eval_eval_roc_auc_macro': nan, 'eval_eval_roc_auc_weighted': nan, 'eval_eval_roc_auc': nan, 'eval_eval_avg_precision_micro': 0.6785861230299219, 'eval_eval_avg_precision_macro': nan, 'eval_eval_avg_precision_weighted': 0.6667286265561279, 'eval_eval_avg_precision': 0.6785861230299219, 'eval_eval_runtime': 0.8072, 'eval_eval_samples_per_second': 1148.386, 'eval_eval_steps_per_second': 35.926, 'eval_epoch': 4.0}
+2025-04-26 13:41:59,134 - INFO - TrainMain - *** Starting Test Set Evaluation ***
+2025-04-26 13:41:59,134 - INFO - TrainMain - Loading test dataset from: ./coding_task/data/atis/test.tsv
+2025-04-26 13:41:59,284 - INFO - TrainMain - *** Starting Test Set Evaluation ***
+2025-04-26 13:41:59,940 - INFO - TrainMain - Test set evaluation metrics: {'test_eval_loss': 0.5052198171615601, 'test_eval_precision_micro': 0.7376470588235294, 'test_eval_recall_micro': 0.7265353418308227, 'test_eval_f1_micro': 0.7320490367775832, 'test_eval_precision_macro': 0.04339100346020761, 'test_eval_recall_macro': 0.058823529411764705, 'test_eval_f1_macro': 0.04994225178222948, 'test_eval_precision_weighted': 0.5359266580328539, 'test_eval_recall_weighted': 0.7265353418308227, 'test_eval_f1_weighted': 0.6168417864968528, 'test_eval_precision_samples': 0.7376470588235294, 'test_eval_recall_samples': 0.7294117647058823, 'test_eval_f1_samples': 0.732156862745098, 'test_eval_f1': 0.7320490367775832, 'test_eval_subset_accuracy': 0.7211764705882353, 'test_eval_hamming_loss': 0.03176470588235294, 'test_eval_jaccard_micro': 0.5773480662983426, 'test_eval_jaccard_macro': 0.04339100346020761, 'test_eval_jaccard_weighted': 0.5359266580328539, 'test_eval_jaccard_samples': 0.7294117647058823, 'test_eval_roc_auc_micro': nan, 'test_eval_roc_auc_macro': nan, 'test_eval_roc_auc_weighted': nan, 'test_eval_roc_auc': nan, 'test_eval_avg_precision_micro': 0.6990859508160492, 'test_eval_avg_precision_macro': nan, 'test_eval_avg_precision_weighted': 0.6896861272975314, 'test_eval_avg_precision': 0.6990859508160492, 'test_eval_runtime': 0.6455, 'test_eval_samples_per_second': 1316.8, 'test_eval_steps_per_second': 41.828, 'test_epoch': 4.0}
+2025-04-26 13:41:59,941 - INFO - TrainMain - *** Evaluation Finished ***
+2025-04-26 13:41:59,941 - INFO - TrainMain - Saving final model/adapter to ./results/atis_multilabel_xlmr_lora
+2025-04-26 13:42:00,490 - INFO - TrainMain - Tokenizer saved to ./results/atis_multilabel_xlmr_lora
+2025-04-26 13:42:00,491 - ERROR - TrainMain - Failed to save training arguments: 'TrainingConfig' object has no attribute 'to_dict'
+2025-04-26 13:42:00,491 - INFO - TrainMain - Script finished successfully.
+2025-04-26 13:43:21,191 - INFO - TrainMain - Parsing configuration from command line arguments.
+2025-04-26 13:43:21,339 - INFO - TrainMain - --- Data Configuration ---
+2025-04-26 13:43:21,339 - INFO - TrainMain - DataConfig(dataset_path='./coding_task/data/atis/train.tsv', text_column='atis_text', label_column='atis_labels', task_type='multilabel', unpack_multi_labels=True, label_delimiter='+', use_dask=False, validation_split_ratio=0.2, max_seq_length=128, test_dataset_path='./coding_task/data/atis/test.tsv')
+2025-04-26 13:43:21,340 - INFO - TrainMain - --- Model Configuration ---
+2025-04-26 13:43:21,340 - INFO - TrainMain - ModelConfig(model_name_or_path='xlm-roberta-base', cache_dir=None, freeze_base_model=True)
+2025-04-26 13:43:21,340 - INFO - TrainMain - --- PEFT Configuration ---
+2025-04-26 13:43:21,340 - INFO - TrainMain - PeftConfig(method='lora', lora_r=256, lora_alpha=16, lora_dropout=0.1, lora_target_modules=None)
+2025-04-26 13:43:21,340 - INFO - TrainMain - --- Training Configuration ---
+2025-04-26 13:43:21,340 - INFO - TrainMain - TrainingConfig(output_dir='./results/atis_multilabel_xlmr_lora', num_train_epochs=50.0, per_device_train_batch_size=32, per_device_eval_batch_size=32, learning_rate=0.0001, weight_decay=0.01, lr_scheduler_type='linear', warmup_ratio=0.06, logging_dir='/home/fe/gururaj/LRP_Experiment/zendesk-mle-master/coding_task/logs/training_logs', logging_steps=25, evaluation_strategy='epoch', eval_steps=None, save_strategy='epoch', save_steps=None, save_total_limit=2, load_best_model_at_end=True, metric_for_best_model='eval_f1_micro', greater_is_better=True, fp16=True, gradient_accumulation_steps=1, gradient_checkpointing=False, seed=42, report_to=['tensorboard'])
+2025-04-26 13:43:21,342 - INFO - TrainMain - Set random seed to: 42
+2025-04-26 13:43:21,342 - INFO - TrainMain - Output directory: ./results/atis_multilabel_xlmr_lora
+2025-04-26 13:43:21,342 - INFO - TrainMain - Loading tokenizer: xlm-roberta-base
+2025-04-26 13:43:23,437 - INFO - TrainMain - Starting data processing for Train/Validation...
+2025-04-26 13:43:23,938 - INFO - TrainMain - Data processing complete. Number of labels: 17
+2025-04-26 13:43:23,939 - INFO - TrainMain - Label mapping (id2label): {0: 'abbreviation', 1: 'aircraft', 2: 'airfare', 3: 'airline', 4: 'airport', 5: 'capacity', 6: 'cheapest', 7: 'city', 8: 'distance', 9: 'flight', 10: 'flight_no', 11: 'flight_time', 12: 'ground_fare', 13: 'ground_service', 14: 'meal', 15: 'quantity', 16: 'restriction'}
+2025-04-26 13:43:23,940 - INFO - TrainMain - Label mappings saved to ./results/atis_multilabel_xlmr_lora
+2025-04-26 13:43:23,940 - INFO - TrainMain - Loading model for training...
+2025-04-26 13:43:27,169 - INFO - TrainMain - Model loading complete.
+2025-04-26 13:43:27,169 - INFO - TrainMain - Setting up Trainer...
+2025-04-26 13:43:30,910 - INFO - TrainMain - Trainer setup complete.
+2025-04-26 13:43:30,910 - INFO - TrainMain - *** Starting Training ***
+2025-04-26 13:48:55,374 - INFO - TrainMain - *** Training Finished ***
+2025-04-26 13:48:55,383 - INFO - TrainMain - Training metrics: {'train_runtime': 324.1999, 'train_samples_per_second': 571.715, 'train_steps_per_second': 17.89, 'train_loss': 0.05585620197216428, 'epoch': 22.0}
+2025-04-26 13:48:55,383 - INFO - TrainMain - *** Starting Final Evaluation on Validation Set ***
+2025-04-26 13:48:56,204 - INFO - TrainMain - Final validation metrics: {'eval_eval_loss': 0.009323909878730774, 'eval_eval_precision_micro': 0.9892008639308856, 'eval_eval_recall_micro': 0.9817792068595927, 'eval_eval_f1_micro': 0.9854760623991393, 'eval_eval_precision_macro': 0.8087064169619536, 'eval_eval_recall_macro': 0.7086148263941721, 'eval_eval_f1_macro': 0.7408587170195007, 'eval_eval_precision_weighted': 0.9882358364857164, 'eval_eval_recall_weighted': 0.9817792068595927, 'eval_eval_f1_weighted': 0.9837921880890257, 'eval_eval_precision_samples': 0.9854368932038835, 'eval_eval_recall_samples': 0.9841783531103918, 'eval_eval_f1_samples': 0.9843581445523193, 'eval_eval_f1': 0.9854760623991393, 'eval_eval_subset_accuracy': 0.9816612729234089, 'eval_eval_hamming_loss': 0.0017133066818960593, 'eval_eval_jaccard_micro': 0.9713679745493107, 'eval_eval_jaccard_macro': 0.6960633764439718, 'eval_eval_jaccard_weighted': 0.9717322330127954, 'eval_eval_jaccard_samples': 0.9836389787846098, 'eval_eval_roc_auc_micro': nan, 'eval_eval_roc_auc_macro': nan, 'eval_eval_roc_auc_weighted': nan, 'eval_eval_roc_auc': nan, 'eval_eval_avg_precision_micro': 0.9938919113500376, 'eval_eval_avg_precision_macro': nan, 'eval_eval_avg_precision_weighted': 0.9921066443367014, 'eval_eval_avg_precision': 0.9938919113500376, 'eval_eval_runtime': 0.8098, 'eval_eval_samples_per_second': 1144.752, 'eval_eval_steps_per_second': 35.812, 'eval_epoch': 22.0}
+2025-04-26 13:48:56,204 - INFO - TrainMain - *** Starting Test Set Evaluation ***
+2025-04-26 13:48:56,204 - INFO - TrainMain - Loading test dataset from: ./coding_task/data/atis/test.tsv
+2025-04-26 13:48:56,361 - INFO - TrainMain - *** Starting Test Set Evaluation ***
+2025-04-26 13:48:57,023 - INFO - TrainMain - Test set evaluation metrics: {'test_eval_loss': 0.01200496219098568, 'test_eval_precision_micro': 0.9801401869158879, 'test_eval_recall_micro': 0.9721900347624566, 'test_eval_f1_micro': 0.9761489237929029, 'test_eval_precision_macro': 0.8158555290908232, 'test_eval_recall_macro': 0.8074595319583393, 'test_eval_f1_macro': 0.7954893131047212, 'test_eval_precision_weighted': 0.9859034396983414, 'test_eval_recall_weighted': 0.9721900347624566, 'test_eval_f1_weighted': 0.9772462913445245, 'test_eval_precision_samples': 0.9788235294117648, 'test_eval_recall_samples': 0.9758823529411764, 'test_eval_f1_samples': 0.9756862745098038, 'test_eval_f1': 0.9761489237929029, 'test_eval_subset_accuracy': 0.9623529411764706, 'test_eval_hamming_loss': 0.002837370242214533, 'test_eval_jaccard_micro': 0.9534090909090909, 'test_eval_jaccard_macro': 0.7417206377305859, 'test_eval_jaccard_weighted': 0.959038265977764, 'test_eval_jaccard_samples': 0.9723529411764706, 'test_eval_roc_auc_micro': nan, 'test_eval_roc_auc_macro': nan, 'test_eval_roc_auc_weighted': nan, 'test_eval_roc_auc': nan, 'test_eval_avg_precision_micro': 0.9921139575393756, 'test_eval_avg_precision_macro': nan, 'test_eval_avg_precision_weighted': 0.9928565411812939, 'test_eval_avg_precision': 0.9921139575393756, 'test_eval_runtime': 0.6506, 'test_eval_samples_per_second': 1306.453, 'test_eval_steps_per_second': 41.499, 'test_epoch': 22.0}
+2025-04-26 13:48:57,023 - INFO - TrainMain - *** Evaluation Finished ***
+2025-04-26 13:48:57,023 - INFO - TrainMain - Saving final model/adapter to ./results/atis_multilabel_xlmr_lora
+2025-04-26 13:48:57,575 - INFO - TrainMain - Tokenizer saved to ./results/atis_multilabel_xlmr_lora
+2025-04-26 13:48:57,575 - ERROR - TrainMain - Failed to save training arguments: 'TrainingConfig' object has no attribute 'to_dict'
+2025-04-26 13:48:57,575 - INFO - TrainMain - Script finished successfully.
+2025-04-26 13:50:40,402 - INFO - TrainMain - Parsing configuration from command line arguments.
+2025-04-26 13:50:40,547 - INFO - TrainMain - --- Data Configuration ---
+2025-04-26 13:50:40,548 - INFO - TrainMain - DataConfig(dataset_path='./coding_task/data/atis/train.tsv', text_column='atis_text', label_column='atis_labels', task_type='multilabel', unpack_multi_labels=True, label_delimiter='+', use_dask=False, validation_split_ratio=0.2, max_seq_length=128, test_dataset_path='./coding_task/data/atis/test.tsv')
+2025-04-26 13:50:40,548 - INFO - TrainMain - --- Model Configuration ---
+2025-04-26 13:50:40,548 - INFO - TrainMain - ModelConfig(model_name_or_path='xlm-roberta-base', cache_dir=None, freeze_base_model=True)
+2025-04-26 13:50:40,548 - INFO - TrainMain - --- PEFT Configuration ---
+2025-04-26 13:50:40,548 - INFO - TrainMain - PeftConfig(method='lora', lora_r=256, lora_alpha=16, lora_dropout=0.1, lora_target_modules=None)
+2025-04-26 13:50:40,548 - INFO - TrainMain - --- Training Configuration ---
+2025-04-26 13:50:40,548 - INFO - TrainMain - TrainingConfig(output_dir='./results/atis_multilabel_xlmr_lora', num_train_epochs=50.0, per_device_train_batch_size=64, per_device_eval_batch_size=32, learning_rate=0.0001, weight_decay=0.01, lr_scheduler_type='linear', warmup_ratio=0.06, logging_dir='/home/fe/gururaj/LRP_Experiment/zendesk-mle-master/coding_task/logs/training_logs', logging_steps=25, evaluation_strategy='epoch', eval_steps=None, save_strategy='epoch', save_steps=None, save_total_limit=2, load_best_model_at_end=True, metric_for_best_model='eval_f1_micro', greater_is_better=True, fp16=True, gradient_accumulation_steps=1, gradient_checkpointing=False, seed=42, report_to=['tensorboard'])
+2025-04-26 13:50:40,550 - INFO - TrainMain - Set random seed to: 42
+2025-04-26 13:50:40,550 - INFO - TrainMain - Output directory: ./results/atis_multilabel_xlmr_lora
+2025-04-26 13:50:40,550 - INFO - TrainMain - Loading tokenizer: xlm-roberta-base
+2025-04-26 13:50:42,523 - INFO - TrainMain - Starting data processing for Train/Validation...
+2025-04-26 13:50:43,107 - INFO - TrainMain - Data processing complete. Number of labels: 17
+2025-04-26 13:50:43,107 - INFO - TrainMain - Label mapping (id2label): {0: 'abbreviation', 1: 'aircraft', 2: 'airfare', 3: 'airline', 4: 'airport', 5: 'capacity', 6: 'cheapest', 7: 'city', 8: 'distance', 9: 'flight', 10: 'flight_no', 11: 'flight_time', 12: 'ground_fare', 13: 'ground_service', 14: 'meal', 15: 'quantity', 16: 'restriction'}
+2025-04-26 13:50:43,109 - INFO - TrainMain - Label mappings saved to ./results/atis_multilabel_xlmr_lora
+2025-04-26 13:50:43,109 - INFO - TrainMain - Loading model for training...
+2025-04-26 13:50:46,143 - INFO - TrainMain - Model loading complete.
+2025-04-26 13:50:46,144 - INFO - TrainMain - Setting up Trainer...
+2025-04-26 13:50:49,901 - INFO - TrainMain - Trainer setup complete.
+2025-04-26 13:50:49,901 - INFO - TrainMain - *** Starting Training ***
+2025-04-26 13:51:24,053 - INFO - TrainMain - *** Training Finished ***
+2025-04-26 13:51:24,057 - INFO - TrainMain - Training metrics: {'train_runtime': 33.8909, 'train_samples_per_second': 5469.018, 'train_steps_per_second': 85.569, 'train_loss': 0.27267061430832434, 'epoch': 4.0}
+2025-04-26 13:51:24,057 - INFO - TrainMain - *** Starting Final Evaluation on Validation Set ***
+2025-04-26 13:51:24,878 - INFO - TrainMain - Final validation metrics: {'eval_eval_loss': 0.5071843862533569, 'eval_eval_precision_micro': 0.7195253505933118, 'eval_eval_recall_micro': 0.714898177920686, 'eval_eval_f1_micro': 0.7172043010752689, 'eval_eval_precision_macro': 0.042325020623135985, 'eval_eval_recall_macro': 0.058823529411764705, 'eval_eval_f1_macro': 0.049228725367185776, 'eval_eval_precision_weighted': 0.5143873621069014, 'eval_eval_recall_weighted': 0.714898177920686, 'eval_eval_f1_weighted': 0.5982899431281024, 'eval_eval_precision_samples': 0.7195253505933118, 'eval_eval_recall_samples': 0.717727436174038, 'eval_eval_f1_samples': 0.7182668104998201, 'eval_eval_f1': 0.7172043010752689, 'eval_eval_subset_accuracy': 0.7162891046386192, 'eval_eval_hamming_loss': 0.03337775239545657, 'eval_eval_jaccard_micro': 0.559094719195306, 'eval_eval_jaccard_macro': 0.042325020623135985, 'eval_eval_jaccard_weighted': 0.5143873621069014, 'eval_eval_jaccard_samples': 0.717727436174038, 'eval_eval_roc_auc_micro': nan, 'eval_eval_roc_auc_macro': nan, 'eval_eval_roc_auc_weighted': nan, 'eval_eval_roc_auc': nan, 'eval_eval_avg_precision_micro': 0.6785861230299219, 'eval_eval_avg_precision_macro': nan, 'eval_eval_avg_precision_weighted': 0.6667286265561279, 'eval_eval_avg_precision': 0.6785861230299219, 'eval_eval_runtime': 0.8096, 'eval_eval_samples_per_second': 1145.003, 'eval_eval_steps_per_second': 35.82, 'eval_epoch': 4.0}
+2025-04-26 13:51:24,878 - INFO - TrainMain - *** Starting Test Set Evaluation ***
+2025-04-26 13:51:24,878 - INFO - TrainMain - Loading test dataset from: ./coding_task/data/atis/test.tsv
+2025-04-26 13:51:25,033 - INFO - TrainMain - *** Starting Test Set Evaluation ***
+2025-04-26 13:51:25,700 - INFO - TrainMain - Test set evaluation metrics: {'test_eval_loss': 0.5052198171615601, 'test_eval_precision_micro': 0.7376470588235294, 'test_eval_recall_micro': 0.7265353418308227, 'test_eval_f1_micro': 0.7320490367775832, 'test_eval_precision_macro': 0.04339100346020761, 'test_eval_recall_macro': 0.058823529411764705, 'test_eval_f1_macro': 0.04994225178222948, 'test_eval_precision_weighted': 0.5359266580328539, 'test_eval_recall_weighted': 0.7265353418308227, 'test_eval_f1_weighted': 0.6168417864968528, 'test_eval_precision_samples': 0.7376470588235294, 'test_eval_recall_samples': 0.7294117647058823, 'test_eval_f1_samples': 0.732156862745098, 'test_eval_f1': 0.7320490367775832, 'test_eval_subset_accuracy': 0.7211764705882353, 'test_eval_hamming_loss': 0.03176470588235294, 'test_eval_jaccard_micro': 0.5773480662983426, 'test_eval_jaccard_macro': 0.04339100346020761, 'test_eval_jaccard_weighted': 0.5359266580328539, 'test_eval_jaccard_samples': 0.7294117647058823, 'test_eval_roc_auc_micro': nan, 'test_eval_roc_auc_macro': nan, 'test_eval_roc_auc_weighted': nan, 'test_eval_roc_auc': nan, 'test_eval_avg_precision_micro': 0.6990859508160492, 'test_eval_avg_precision_macro': nan, 'test_eval_avg_precision_weighted': 0.6896861272975314, 'test_eval_avg_precision': 0.6990859508160492, 'test_eval_runtime': 0.6577, 'test_eval_samples_per_second': 1292.466, 'test_eval_steps_per_second': 41.055, 'test_epoch': 4.0}
+2025-04-26 13:51:25,701 - INFO - TrainMain - *** Evaluation Finished ***
+2025-04-26 13:51:25,701 - INFO - TrainMain - Saving final model/adapter to ./results/atis_multilabel_xlmr_lora
+2025-04-26 13:51:26,241 - INFO - TrainMain - Tokenizer saved to ./results/atis_multilabel_xlmr_lora
+2025-04-26 13:51:26,241 - ERROR - TrainMain - Failed to save training arguments: 'TrainingConfig' object has no attribute 'to_dict'
+2025-04-26 13:51:26,241 - INFO - TrainMain - Script finished successfully.
+2025-04-26 13:52:27,470 - INFO - TrainMain - Parsing configuration from command line arguments.
+2025-04-26 13:52:27,617 - INFO - TrainMain - --- Data Configuration ---
+2025-04-26 13:52:27,617 - INFO - TrainMain - DataConfig(dataset_path='./coding_task/data/atis/train.tsv', text_column='atis_text', label_column='atis_labels', task_type='multilabel', unpack_multi_labels=True, label_delimiter='+', use_dask=False, validation_split_ratio=0.2, max_seq_length=128, test_dataset_path='./coding_task/data/atis/test.tsv')
+2025-04-26 13:52:27,617 - INFO - TrainMain - --- Model Configuration ---
+2025-04-26 13:52:27,617 - INFO - TrainMain - ModelConfig(model_name_or_path='xlm-roberta-base', cache_dir=None, freeze_base_model=True)
+2025-04-26 13:52:27,617 - INFO - TrainMain - --- PEFT Configuration ---
+2025-04-26 13:52:27,617 - INFO - TrainMain - PeftConfig(method='lora', lora_r=256, lora_alpha=16, lora_dropout=0.1, lora_target_modules=None)
+2025-04-26 13:52:27,617 - INFO - TrainMain - --- Training Configuration ---
+2025-04-26 13:52:27,617 - INFO - TrainMain - TrainingConfig(output_dir='./results/atis_multilabel_xlmr_lora', num_train_epochs=50.0, per_device_train_batch_size=32, per_device_eval_batch_size=32, learning_rate=0.0001, weight_decay=0.01, lr_scheduler_type='linear', warmup_ratio=0.06, logging_dir='/home/fe/gururaj/LRP_Experiment/zendesk-mle-master/coding_task/logs/training_logs', logging_steps=25, evaluation_strategy='epoch', eval_steps=None, save_strategy='epoch', save_steps=None, save_total_limit=2, load_best_model_at_end=True, metric_for_best_model='eval_f1_micro', greater_is_better=True, fp16=True, gradient_accumulation_steps=1, gradient_checkpointing=False, seed=42, report_to=['tensorboard'])
+2025-04-26 13:52:27,619 - INFO - TrainMain - Set random seed to: 42
+2025-04-26 13:52:27,620 - INFO - TrainMain - Output directory: ./results/atis_multilabel_xlmr_lora
+2025-04-26 13:52:27,620 - INFO - TrainMain - Loading tokenizer: xlm-roberta-base
+2025-04-26 13:52:29,288 - INFO - TrainMain - Starting data processing for Train/Validation...
+2025-04-26 13:52:29,782 - INFO - TrainMain - Data processing complete. Number of labels: 17
+2025-04-26 13:52:29,782 - INFO - TrainMain - Label mapping (id2label): {0: 'abbreviation', 1: 'aircraft', 2: 'airfare', 3: 'airline', 4: 'airport', 5: 'capacity', 6: 'cheapest', 7: 'city', 8: 'distance', 9: 'flight', 10: 'flight_no', 11: 'flight_time', 12: 'ground_fare', 13: 'ground_service', 14: 'meal', 15: 'quantity', 16: 'restriction'}
+2025-04-26 13:52:29,783 - INFO - TrainMain - Label mappings saved to ./results/atis_multilabel_xlmr_lora
+2025-04-26 13:52:29,783 - INFO - TrainMain - Loading model for training...
+2025-04-26 13:52:32,768 - INFO - TrainMain - Model loading complete.
+2025-04-26 13:52:32,768 - INFO - TrainMain - Setting up Trainer...
+2025-04-26 13:52:36,508 - INFO - TrainMain - Trainer setup complete.
+2025-04-26 13:52:36,508 - INFO - TrainMain - *** Starting Training ***
+2025-04-26 13:57:55,686 - INFO - TrainMain - *** Training Finished ***
+2025-04-26 13:57:55,694 - INFO - TrainMain - Training metrics: {'train_runtime': 318.9152, 'train_samples_per_second': 581.189, 'train_steps_per_second': 18.187, 'train_loss': 0.05585620197216428, 'epoch': 22.0}
+2025-04-26 13:57:55,695 - INFO - TrainMain - *** Starting Final Evaluation on Validation Set ***
+2025-04-26 13:57:56,542 - INFO - TrainMain - Final validation metrics: {'eval_eval_loss': 0.009323909878730774, 'eval_eval_precision_micro': 0.9892008639308856, 'eval_eval_recall_micro': 0.9817792068595927, 'eval_eval_f1_micro': 0.9854760623991393, 'eval_eval_precision_macro': 0.8087064169619536, 'eval_eval_recall_macro': 0.7086148263941721, 'eval_eval_f1_macro': 0.7408587170195007, 'eval_eval_precision_weighted': 0.9882358364857164, 'eval_eval_recall_weighted': 0.9817792068595927, 'eval_eval_f1_weighted': 0.9837921880890257, 'eval_eval_precision_samples': 0.9854368932038835, 'eval_eval_recall_samples': 0.9841783531103918, 'eval_eval_f1_samples': 0.9843581445523193, 'eval_eval_f1': 0.9854760623991393, 'eval_eval_subset_accuracy': 0.9816612729234089, 'eval_eval_hamming_loss': 0.0017133066818960593, 'eval_eval_jaccard_micro': 0.9713679745493107, 'eval_eval_jaccard_macro': 0.6960633764439718, 'eval_eval_jaccard_weighted': 0.9717322330127954, 'eval_eval_jaccard_samples': 0.9836389787846098, 'eval_eval_roc_auc_micro': nan, 'eval_eval_roc_auc_macro': nan, 'eval_eval_roc_auc_weighted': nan, 'eval_eval_roc_auc': nan, 'eval_eval_avg_precision_micro': 0.9938919113500376, 'eval_eval_avg_precision_macro': nan, 'eval_eval_avg_precision_weighted': 0.9921066443367014, 'eval_eval_avg_precision': 0.9938919113500376, 'eval_eval_runtime': 0.8367, 'eval_eval_samples_per_second': 1107.988, 'eval_eval_steps_per_second': 34.662, 'eval_epoch': 22.0}
+2025-04-26 13:57:56,542 - INFO - TrainMain - *** Starting Test Set Evaluation ***
+2025-04-26 13:57:56,542 - INFO - TrainMain - Loading test dataset from: ./coding_task/data/atis/test.tsv
+2025-04-26 13:57:56,685 - INFO - TrainMain - *** Starting Test Set Evaluation ***
+2025-04-26 13:57:57,343 - INFO - TrainMain - Test set evaluation metrics: {'test_eval_loss': 0.01200496219098568, 'test_eval_precision_micro': 0.9801401869158879, 'test_eval_recall_micro': 0.9721900347624566, 'test_eval_f1_micro': 0.9761489237929029, 'test_eval_precision_macro': 0.8158555290908232, 'test_eval_recall_macro': 0.8074595319583393, 'test_eval_f1_macro': 0.7954893131047212, 'test_eval_precision_weighted': 0.9859034396983414, 'test_eval_recall_weighted': 0.9721900347624566, 'test_eval_f1_weighted': 0.9772462913445245, 'test_eval_precision_samples': 0.9788235294117648, 'test_eval_recall_samples': 0.9758823529411764, 'test_eval_f1_samples': 0.9756862745098038, 'test_eval_f1': 0.9761489237929029, 'test_eval_subset_accuracy': 0.9623529411764706, 'test_eval_hamming_loss': 0.002837370242214533, 'test_eval_jaccard_micro': 0.9534090909090909, 'test_eval_jaccard_macro': 0.7417206377305859, 'test_eval_jaccard_weighted': 0.959038265977764, 'test_eval_jaccard_samples': 0.9723529411764706, 'test_eval_roc_auc_micro': nan, 'test_eval_roc_auc_macro': nan, 'test_eval_roc_auc_weighted': nan, 'test_eval_roc_auc': nan, 'test_eval_avg_precision_micro': 0.9921139575393756, 'test_eval_avg_precision_macro': nan, 'test_eval_avg_precision_weighted': 0.9928565411812939, 'test_eval_avg_precision': 0.9921139575393756, 'test_eval_runtime': 0.6467, 'test_eval_samples_per_second': 1314.276, 'test_eval_steps_per_second': 41.748, 'test_epoch': 22.0}
+2025-04-26 13:57:57,343 - INFO - TrainMain - *** Evaluation Finished ***
+2025-04-26 13:57:57,343 - INFO - TrainMain - Saving final model/adapter to ./results/atis_multilabel_xlmr_lora
+2025-04-26 13:57:57,828 - INFO - TrainMain - Tokenizer saved to ./results/atis_multilabel_xlmr_lora
+2025-04-26 13:57:57,828 - ERROR - TrainMain - Failed to save training arguments: 'TrainingConfig' object has no attribute 'to_dict'
+2025-04-26 13:57:57,828 - INFO - TrainMain - Script finished successfully.
