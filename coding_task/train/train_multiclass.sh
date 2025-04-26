@@ -16,7 +16,7 @@ python -m coding_task.train.main \
     --lora_r 32 \
     --lora_alpha 16 \
     --report_to tensorboard \
-    --logging_steps 20 \
+    --logging_steps 25 \
     --evaluation_strategy epoch \
     --save_strategy epoch \
     --load_best_model_at_end True \
