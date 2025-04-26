@@ -1,0 +1,19 @@
+{
+  "abbreviation": 0,
+  "aircraft": 1,
+  "airfare": 2,
+  "airline": 3,
+  "airport": 4,
+  "capacity": 5,
+  "cheapest": 6,
+  "city": 7,
+  "distance": 8,
+  "flight": 9,
+  "flight_no": 10,
+  "flight_time": 11,
+  "ground_fare": 12,
+  "ground_service": 13,
+  "meal": 14,
+  "quantity": 15,
+  "restriction": 16
+}

@@ -57,7 +57,7 @@ cover/
 *.pot
 
 # Django stuff:
-*.log
+# *.log
 local_settings.py
 db.sqlite3
 db.sqlite3-journal
@@ -178,5 +178,4 @@ cython_debug/
 __MACOSX/
 
 # Ignore tensorboard results & HF training binaries
-results/
 coding_task/logs/training_logs/
