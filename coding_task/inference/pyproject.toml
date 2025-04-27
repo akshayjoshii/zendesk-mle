@@ -11,6 +11,15 @@ python = ">=3.9, <=3.12.1"
 dask = "^2025.4.0"
 datasets = "^3.5.0"
 scikit-learn = "^1.6.1"
+peft = "^0.13.0"
+evaluate = "^0.4.3"
+transformers = "^4.40.2"
+accelerate = "^1.6.0"
+pandas = "^2.2.3"
+wandb = "^0.19.10"
+tensorboard = "^2.19.0"
+tensorboardX = "^2.6.2.2"
+torch = "^2.6.0"
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
