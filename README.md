@@ -1,6 +1,10 @@
 # Zendesk Senior MLE Coding Challenge
 
-Follow the instructions in the [README](README.md) to setup the environments and run the code.
+Before we start, I would like to thank you for the opportunity. If you'd like to see the demo in action, you can check out this link: [Zendesk Intent Classifier](https://zendesk.akjo.tech/)
+
+<!-- Insert a snapshot of the demo -->
+![Demo](/coding_task/docs/zendesk_streamlit_ui.png)
+
 
 ## 1. Setup Environments
 
