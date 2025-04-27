@@ -24,7 +24,6 @@ env/
 Thumbs.db
 
 # Test files and reports (optional, depends if needed in image)
-tests/
 *.test.py
 htmlcov/
 .coverage
@@ -34,16 +33,6 @@ pytest_cache/
 dist/
 build/
 *.egg-info/
-
-# Large data files not needed for runtime/training inside image
-# These should be mounted as volumes
-data/
-*.csv
-*.tsv
-
-# Logs and results (don't copy previous runs into image)
-logs/
-results/
 
 # Other specific files/dirs to ignore
 # e.g., notebooks/
