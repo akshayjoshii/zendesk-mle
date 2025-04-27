@@ -62,11 +62,13 @@ Before we actually start with the modeling, we need to understand the task & the
 
 ## 4. Model Training [IMPORTANT]
 
+Before you actually go ahead and start the training process, I would recommend you to read the [Intent Classification PEFT Training](/coding_task/train/README.md) document in the `train` dir to understand the model architecture, training process & the different training parameters used in the pipeline.
+
 To train the model, I have provided 2 scripts that will run the training process. You can start the model training via these 2 methods:
 
 ### 4.1 Bash Scripts [PREFERRED]
 
-You can run the training process using the bash scripts provided in the `training` directory. The scripts does not use docker but instead directly start the training process in the local environment.
+You can run the training process using the bash scripts provided in the `train` directory. The scripts does not use docker but instead directly start the training process in the local environment.
 
 Before you could actually run the training process, you need to make sure that you have installed all the dependencies in the `requirements.txt` file & be in the **ROOT directory** of the project.
 
