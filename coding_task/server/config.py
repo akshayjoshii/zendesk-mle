@@ -1,7 +1,7 @@
 import os
 import torch
 from pydantic_settings import BaseSettings
-from pydantic import Field, DirectoryPath, FilePath, PositiveInt, validator
+from pydantic import Field, DirectoryPath, PositiveInt, validator
 
 
 # Helper function to determine default device
@@ -42,7 +42,7 @@ class ServerSettings(BaseSettings):
         alias="API_PORT"
     )
 
-    log_file: FilePath = Field(
+    log_file: str = Field(
         default_factory=get_default_log_path,
         description="Path to the API server log file.",
         alias="API_LOG_FILE"
