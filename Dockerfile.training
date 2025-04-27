@@ -1,0 +1,82 @@
+# TODO: I have to finish this, but no time left to build this during this challenge
+# WARNING: this file has not been tested yet & is still in development!!!
+
+# Builder - Install dependencies using a CUDA development image
+FROM nvidia/cuda:12.1.1-devel-ubuntu22.04 AS builder
+
+# Block interacive screen promts
+ENV DEBIAN_FRONTEND=noninteractive
+WORKDIR /opt/builder
+
+# build essentials
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+    python3.10 \
+    python3.10-venv \
+    python3-pip \
+    build-essential \
+    && rm -rf /var/lib/apt/lists/*
+
+# Ensure python3 points to python3.12
+RUN update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.10 1
+
+# Copy only the requirements file first to leverage Docker cache
+COPY requirements.txt .
+
+# Create and specify a virtual environment (recommended for isolation)
+ENV VIRTUAL_ENV=/opt/venv
+RUN python3 -m venv $VIRTUAL_ENV
+ENV PATH="$VIRTUAL_ENV/bin:$PATH"
+
+# dependencies & torch cuda install
+RUN pip install --no-cache-dir --upgrade pip && \
+    pip install --no-cache-dir torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121 && \
+    pip install --no-cache-dir -r requirements.txt
+
+
+# Runtime - the same CUDA development base image for runtime
+FROM nvidia/cuda:12.1.1-devel-ubuntu22.04
+
+# Set environment variables for Python, locale, and CUDA visibility
+ENV PYTHONUNBUFFERED=1 \
+    PYTHONIOENCODING=utf-8 \
+    LC_ALL=C.UTF-8 \
+    LANG=C.UTF-8 \
+    NVIDIA_VISIBLE_DEVICES=all \
+    NVIDIA_DRIVER_CAPABILITIES=compute,utility \
+    VIRTUAL_ENV=/opt/venv \
+    PATH="/opt/venv/bin:$PATH"
+
+# Create a non-root user and group for security
+ARG UID=1000
+ARG GID=1000
+RUN groupadd --system --gid ${GID} appgroup && \
+    useradd --system --uid ${UID} --gid ${GID} --create-home appuser
+
+WORKDIR /app
+
+# Copy virtual env with dependencies from builder stage
+COPY --from=builder ${VIRTUAL_ENV} ${VIRTUAL_ENV}
+
+# Copy application code from the build context
+COPY --chown=appuser:appgroup ./coding_task /app/coding_task
+
+# Copy the entrypoint script
+COPY --chown=appuser:appgroup ./entrypoint.sh /app/entrypoint.sh
+
+# Make entrypoint and original train scripts executable (though entrypoint now calls python directly)
+RUN chmod +x /app/entrypoint.sh \
+    /app/coding_task/train/train_multiclass.sh \
+    /app/coding_task/train/train_multilabel.sh
+
+# Create standard mount points and set permissions
+RUN mkdir -p /app/data /app/output /app/logs && \
+    chown -R appuser:appgroup /app /app/data /app/output /app/logs
+
+# Switch to the non-root user
+USER appuser
+
+ENTRYPOINT ["/app/entrypoint.sh"]
+
+# This specifies the default run type if none is provided during 'docker run'
+CMD ["multiclass"]
