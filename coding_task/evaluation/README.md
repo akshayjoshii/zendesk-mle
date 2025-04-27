@@ -1,4 +1,6 @@
-# ATIS Dataset - Exploratory Data Analysis
+# ATIS Dataset - Exploratory Data Analysis & Decisions
+
+If exploratory data analysis (EDA) is not your thing, you can skip to the [Modeling Decisions](#important-next-steps) section. However, I highly recommend going through this EDA as it will help us understand the dataset better and make informed decisions about the model training process.
 
 ## Overview
 
@@ -48,6 +50,25 @@ A key observation from the EDA is the presence of combined intent labels (e.g., 
 *   **Cons:**
     *   Requires more complex data preprocessing.
     *   Requires adjustments to the model architecture, loss function, and evaluation metrics compared to standard multi-class setup.
+
+
+## IMPORTANT: NEXT STEPS
+
+As we have seen above, given that the combined labels are very rare and represent a real phenomenon of multi-intent utterances, pursuing the **Multi-Label Classification** approach (outlined in the **3rd section**) is likely to yield a more robust and representative model, despite the increased implementation complexity.
+
+This will involve:
+
+* Preprocessing the labels to unpack combined intents into their constituent parts.
+
+* Select a pretrained multilingual baseline & a SOTA LLMmodel architecture capable of multi-label classification.
+
+* Implement light-weight adapters or fine-tuning strategies to adapt the model for multi-label outputs.
+
+* Implement a multi-label loss function and different evaluation metrics.
+
+* Evaluate the model on the test set, considering the data drift and class imbalance.
+
+* Benchmark the **multi-label** baseline model's performance against the **multi-class** baseline approach to validate the benefits of the multi-label strategy.
 
 
 ## EDA Script
@@ -245,17 +266,3 @@ Comparing the test set analysis against the training set reveals several key dif
 The differences in class distribution (missing/new classes), imbalance ratio, and particularly the shift in common entities (locations) and phrasing (n-grams) strongly suggest **data drift** between the train and test sets. The model's ability to generalize to the different location focus and potentially different phrasing styles present in the test set will be crucial for performance. 
 
 The presence of an unseen class (`day_name`) guarantees some errors and highlights a limitation of the training data coverage relative to this specific test set. Evaluating performance requires careful consideration of these distributional differences.
-
-
-## IMPORTANT: Next Steps
-
-As we have seen above, given that the combined labels are very rare and represent a real phenomenon of multi-intent utterances, pursuing the **Multi-Label Classification** approach (outlined in the **3rd section**) is likely to yield a more robust and representative model, despite the increased implementation complexity.
-
-This will involve:
-
-*   Preprocessing the labels to unpack combined intents into their constituent parts.
-*   Select a pretrained multilingual baseline & a SOTA LLMmodel architecture capable of multi-label classification.
-*   Implement light-weight adapters or fine-tuning strategies to adapt the model for multi-label outputs.
-*   Implement a multi-label loss function and evaluation metrics.
-*   Evaluate the model on the test set, considering the data drift and class imbalance.
-*   [**Optional, if time permits**]: Benchmark the multi-label baseline & SOTA model's performance against the multi-class baseline approach to validate the benefits of the multi-label strategy.
