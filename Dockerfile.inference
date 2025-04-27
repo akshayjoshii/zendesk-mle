@@ -1,0 +1,89 @@
+# Install dependencies using a standard Python image
+FROM python:3.12-slim AS builder
+
+# TODO: If you'd like CUDA support to run model on GPU, you can use this instead:
+# nvidia/cuda:12.8.1-cudnn-runtime-ubuntu22.04
+
+# working directory
+WORKDIR /opt/builder
+
+# Install build tools
+RUN apt-get update && apt-get install -y --no-install-recommends build-essential gcc && rm -rf /var/lib/apt/list s/*
+
+# Copy only the requirements file first to leverage Docker cache
+COPY requirements.txt .
+
+# Create and specify a virtual environment
+ENV VIRTUAL_ENV=/opt/venv
+RUN python3 -m venv $VIRTUAL_ENV
+ENV PATH="$VIRTUAL_ENV/bin:$PATH"
+
+# Use --no-cache-dir to reduce layer size
+# WARNING: we're installing CPU-only version of torch to keep it simple for now
+# TODO: you're free to change this to install a GPU version using this command:
+# pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu128
+RUN pip install --no-cache-dir --upgrade pip && \
+    pip install --no-cache-dir -r requirements.txt
+
+
+
+# Runtime - Use a slim Python base image as CUDA is not needed
+FROM python:3.12-slim
+
+# Set environment variables for Python, locale, and application defaults
+ENV PYTHONUNBUFFERED=1 \
+    PYTHONIOENCODING=utf-8 \
+    LC_ALL=C.UTF-8 \
+    LANG=C.UTF-8 \
+    # set path to include venv copied from builder
+    VIRTUAL_ENV=/opt/venv \
+    PATH="/opt/venv/bin:$PATH" \
+    # Default port, can be overridden by ServerSettings/ENV Var at runtime
+    API_PORT=8000 \
+    # WARNING: Default device to CPU, can be overridden but GPU won't work with this base image that we've picked
+    INFERENCE_DEVICE=cpu
+
+# Create a non-root user and group for security
+ARG UID=1000
+ARG GID=1000
+RUN groupadd --system --gid ${GID} appgroup && \
+    useradd --system --uid ${UID} --gid ${GID} --create-home appuser
+
+# working directory
+WORKDIR /app
+
+# copy virtual env with dependencies from builder stage
+COPY --from=builder ${VIRTUAL_ENV} ${VIRTUAL_ENV}
+
+
+# Default path assumes 'results/BEST...' is inside the build context (project_root)
+ARG MODEL_ARTIFACTS_PATH=./results/BEST_atis_multilabel_xlmr_lora
+
+# Copy model artifacts into the image to a designated location
+COPY --chown=appuser:appgroup ${MODEL_ARTIFACTS_PATH} /app/model_artifacts/
+
+# Set the MODEL_PATH environment variable for the application's config loader
+# path inside the container is where the model artifacts will be found
+ENV MODEL_PATH=/app/model_artifacts/
+
+# Copy application code from the build context
+COPY --chown=appuser:appgroup ./coding_task /app/coding_task
+
+# Create log directory and set permissions (if using file logging)
+# The path should match ServerSettings default or env variable
+RUN mkdir -p /app/logs && chown -R appuser:appgroup /app/logs
+ENV LOG_DIR=/app/logs
+
+# switch to the non-root user
+USER appuser
+
+# Expose the port the application will run on (matches ENV var and uvicorn default)
+EXPOSE ${API_PORT}
+
+# Checks if the /ready endpoint returns 200 OK
+HEALTHCHECK --interval=15s --timeout=5s --start-period=30s --retries=3 \
+  CMD curl --fail http://localhost:${API_PORT}/ready || exit 1
+
+# Command to run the application using Uvicorn
+# The ServerSettings will pick up MODEL_PATH, API_PORT, INFERENCE_DEVICE etc. from ENV vars
+CMD ["gunicorn", "-k", "uvicorn.workers.UvicornWorker", "--bind", "0.0.0.0:8000", "--workers", "2", "coding_task.server.server:app"]
