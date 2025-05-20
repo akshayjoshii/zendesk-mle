@@ -53,6 +53,33 @@ class ServerSettings(BaseSettings):
         alias="LOG_LEVEL"
     )
 
+    # Redis Configuration
+    redis_host: str = Field(
+        default="127.0.0.1",
+        description="Hostname or IP address of the Redis server.",
+        alias="REDIS_HOST"
+    )
+    redis_port: int = Field(
+        default=6379,
+        description="Port number of the Redis server.",
+        alias="REDIS_PORT"
+    )
+    redis_queue_name: str = Field(
+        default="intent_requests",
+        description="Name of the Redis list to be used as the request queue.",
+        alias="REDIS_QUEUE_NAME"
+    )
+    redis_result_channel_prefix: str = Field(
+        default="results:",
+        description="Prefix for Redis Pub/Sub channels used for publishing results. Full channel will be prefix + request_id.",
+        alias="REDIS_RESULT_CHANNEL_PREFIX"
+    )
+    redis_request_timeout: int = Field(
+        default=30,
+        description="Timeout in seconds for waiting for a result from Redis Pub/Sub for a given request.",
+        alias="REDIS_REQUEST_TIMEOUT"
+    )
+
     # TODO: Inference specific settings if needed at server level
     # e.g., override predictor's batch size via server config
     # inference_batch_size: Optional[PositiveInt] = Field(default=None, alias="INFERENCE_BATCH_SIZE")

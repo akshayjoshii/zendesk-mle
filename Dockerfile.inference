@@ -29,6 +29,9 @@ RUN pip install --no-cache-dir --upgrade pip && \
 # Runtime - Use a slim Python base image as CUDA is not needed
 FROM python:3.12-slim
 
+# Install Redis
+RUN apt-get update && apt-get install -y redis-server && rm -rf /var/lib/apt/lists/*
+
 # Set environment variables for Python, locale, and application defaults
 ENV PYTHONUNBUFFERED=1 \
     PYTHONIOENCODING=utf-8 \
@@ -78,11 +81,17 @@ USER appuser
 
 # Expose the port the application will run on (matches ENV var and uvicorn default)
 EXPOSE ${API_PORT}
+EXPOSE 6379
 
 # Checks if the /ready endpoint returns 200 OK
 HEALTHCHECK --interval=15s --timeout=5s --start-period=30s --retries=3 \
   CMD curl --fail http://localhost:${API_PORT}/ready || exit 1
 
-# Command to run the application using Uvicorn
+# Copy entrypoint script
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+
+# Command to run the application using Uvicorn is now in entrypoint.sh
 # The ServerSettings will pick up MODEL_PATH, API_PORT, INFERENCE_DEVICE etc. from ENV vars
-CMD ["gunicorn", "-k", "uvicorn.workers.UvicornWorker", "--bind", "0.0.0.0:8000", "--workers", "2", "coding_task.server.server:app"]
+ENTRYPOINT ["/entrypoint.sh"]
+# CMD is removed as entrypoint.sh will handle the application startup
